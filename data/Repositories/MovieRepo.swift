@@ -15,13 +15,14 @@ class MovieRepo : MovieRepoProtocol {
     
     
     private let remoteDataSource:MovieRemoteDataSourceProtocol
-    private let localDataSource:MovieLocalDataSourceProtocol
-    let behaviorSubject = BehaviorSubject<MovieEntity?>.init(value: nil)
+   // private let localDataSource:MovieLocalDataSourceProtocol
+// let behaviorSubject = BehaviorSubject<MovieEntity?>.init(value: nil)
     
-    init(remoteDataSource:MovieRemoteDataSourceProtocol,
-         localDataSource:MovieLocalDataSourceProtocol){
+    init(remoteDataSource:MovieRemoteDataSourceProtocol
+        // localDataSource:MovieLocalDataSourceProtocol
+    ){
         self.remoteDataSource = remoteDataSource
-        self.localDataSource = localDataSource
+       // self.localDataSource = localDataSource
     }
     func getMovie() -> Promise<MovieEntity> {
         self.remoteDataSource.fetch().then { dto in

@@ -1,9 +1,4 @@
-//
-//  DataAssembly.swift
-//  data
-//
-//  Created by AziK's  MAC on 28.08.22.
-//
+
 
 import Foundation
 import Swinject
@@ -15,8 +10,9 @@ public class DataAssembly:Assembly {
     }
    public func assemble(container: Container) {
         container.register(MovieRepoProtocol.self) { r in
-            MovieRepo(remoteDataSource: r.resolve(MovieRemoteDataSourceProtocol.self)!,
-                      localDataSource: r.resolve(MovieLocalDataSourceProtocol.self)!)
+            MovieRepo(remoteDataSource: r.resolve(MovieRemoteDataSourceProtocol.self)!
+                      //localDataSource: r.resolve(MovieLocalDataSourceProtocol.self)!
+            )
         }
        container.register(MovieRemoteDataSourceProtocol.self) { r in
            MovieRemoteDataSource(networkProvider: r.resolve(Session.self)!)

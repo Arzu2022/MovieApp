@@ -17,6 +17,7 @@
 		FAB4E04328BB6ACA009C394D /* MovieLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E04228BB6ACA009C394D /* MovieLocalDataSource.swift */; };
 		FAB4E05028BE31F3009C394D /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = FAB4E04F28BE31F3009C394D /* Realm */; };
 		FAB4E05228BE31F3009C394D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB4E05128BE31F3009C394D /* RealmSwift */; };
+		FAB4E05E28C7A4DD009C394D /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E05D28C7A4DD009C394D /* Mapper.swift */; };
 		FAE9827F28BAB53300D9C0AC /* data.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE9827E28BAB53300D9C0AC /* data.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE982AC28BAB56900D9C0AC /* domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE982AB28BAB56900D9C0AC /* domain.framework */; };
 		FAE982AD28BAB56900D9C0AC /* domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAE982AB28BAB56900D9C0AC /* domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -46,6 +47,7 @@
 		FAB4E03E28BB6984009C394D /* MovieLocalDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLocalDataSourceProtocol.swift; sourceTree = "<group>"; };
 		FAB4E04028BB69ED009C394D /* MovieLocalDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLocalDTO.swift; sourceTree = "<group>"; };
 		FAB4E04228BB6ACA009C394D /* MovieLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLocalDataSource.swift; sourceTree = "<group>"; };
+		FAB4E05D28C7A4DD009C394D /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
 		FAE9827B28BAB53300D9C0AC /* data.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE9827E28BAB53300D9C0AC /* data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = data.h; sourceTree = "<group>"; };
 		FAE982AB28BAB56900D9C0AC /* domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,9 +104,18 @@
 			path = "Local data source";
 			sourceTree = "<group>";
 		};
+		FAB4E05C28C7A4C7009C394D /* Mapper */ = {
+			isa = PBXGroup;
+			children = (
+				FAB4E05D28C7A4DD009C394D /* Mapper.swift */,
+			);
+			path = Mapper;
+			sourceTree = "<group>";
+		};
 		FAE9827128BAB53300D9C0AC = {
 			isa = PBXGroup;
 			children = (
+				FAB4E05C28C7A4C7009C394D /* Mapper */,
 				FAB4E03628BB6028009C394D /* Local data source */,
 				FAB4E03528BB601B009C394D /* Remote data source */,
 				FAB4E02B28BAC642009C394D /* DI */,
@@ -233,6 +244,7 @@
 				FAB4E03D28BB613B009C394D /* MovieRemoteDataSource.swift in Sources */,
 				FAB4E02D28BAC655009C394D /* DataAssembly.swift in Sources */,
 				FAB4E04328BB6ACA009C394D /* MovieLocalDataSource.swift in Sources */,
+				FAB4E05E28C7A4DD009C394D /* Mapper.swift in Sources */,
 				FAB4E03F28BB6984009C394D /* MovieLocalDataSourceProtocol.swift in Sources */,
 				FAB4E03A28BB60C0009C394D /* MovieRemoteDTO.swift in Sources */,
 				FAB4E03828BB6054009C394D /* MovieRemoteDataSourceProtocol.swift in Sources */,
