@@ -1,9 +1,4 @@
-//
-//  SceneDelegate.swift
-//  MovieApp
-//
-//  Created by AziK's  MAC on 24.08.22.
-//
+
 
 import UIKit
 

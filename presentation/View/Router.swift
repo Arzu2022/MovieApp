@@ -1,30 +1,30 @@
-//
-//  Router.swift
-//  presentation
-//
-//  Created by AziK's  MAC on 28.08.22.
-//
-
 import Foundation
 import Swinject
 import domain
+import UIKit
 
 public protocol RouterProtocol {
-    func firstViewController() -> FirstViewController
+    func firstViewController() -> HomeVC
+    func tabbarController() -> TabBar
 }
-public class Router:RouterProtocol {
+
+public class Router: RouterProtocol {
+    private let resolver: Resolver
     
-    private let resolver:Resolver
-    
-    public init(resolver:Resolver){
+    public init(resolver: Resolver) {
         self.resolver = resolver
     }
-   public func firstViewController() -> FirstViewController {
-        let vc = FirstViewController()
+    
+    public func firstViewController() -> HomeVC {
+        let vc = HomeVC()
         vc.vm = resolver.resolve(FirstViewModel.self)!
         vc.router = self
         return vc
     }
     
+    public func tabbarController() -> TabBar {
+        let tabbar = TabBar()
+        return tabbar
+    }
     
 }

@@ -3,10 +3,11 @@
 import Foundation
 public struct MovieEntity {
     public let results: [ResultEntity]?
-    public init(
-               results:[ResultEntity]){
-               self.results = results
+    
+    public init(results:[ResultEntity]) {
+        self.results = results
     }
+    
     enum CodingKeys: String, CodingKey {
         case page, results
         case totalPages = "total_pages"
@@ -56,14 +57,6 @@ public struct MovieEntity {
             self.voteAverage = voteAverage
             self.voteCount = voteCount
         }
-        
-//        public enum OriginalLanguageEntity: String {
-//            case en = "en"
-//            case es = "es"
-//            case ja = "ja"
-//            case pl = "pl"
-//        }
-        
     }
     
     

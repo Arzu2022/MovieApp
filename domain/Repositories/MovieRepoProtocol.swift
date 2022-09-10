@@ -11,6 +11,4 @@ import RxSwift
 
 public protocol MovieRepoProtocol {
     func getMovie() -> Promise<MovieEntity>
-//    func observeMovie() -> Observable<MovieEntity>
-//    func syncMovie() -> Promise<Void>
 }

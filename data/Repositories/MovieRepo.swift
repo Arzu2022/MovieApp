@@ -11,9 +11,6 @@ import Promises
 import RxSwift
 
 class MovieRepo : MovieRepoProtocol {
-
-    
-    
     private let remoteDataSource:MovieRemoteDataSourceProtocol
    // private let localDataSource:MovieLocalDataSourceProtocol
 // let behaviorSubject = BehaviorSubject<MovieEntity?>.init(value: nil)

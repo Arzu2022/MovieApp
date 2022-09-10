@@ -12,26 +12,12 @@ import RxSwift
 public class FirstViewModel {
     
     private let getMovieUseCase: GetMovieUseCase
-//    private let syncMovieUseCase: SyncMovieUseCase
-//    private let observeMovieUseCase: ObserveMovieUseCase
-    
-    public init(
-        getMovieUseCase: GetMovieUseCase
-//        syncMovieUseCase: SyncMovieUseCase,
-//        observeMovieUseCase: ObserveMovieUseCase
-    ){
+    public init(getMovieUseCase: GetMovieUseCase) {
         self.getMovieUseCase = getMovieUseCase
-//        self.syncMovieUseCase = syncMovieUseCase
-//        self.observeMovieUseCase = observeMovieUseCase
     }
+    
     func getMovie() -> Promise<MovieEntity> {
         let useCase = self.getMovieUseCase
         return useCase.execute()
     }
-//    func syncMovie() {
-//        self.syncMovieUseCase.execute()
-//    }
-//    func observeMovie() -> Observable<MovieEntity> {
-//        return self.observeMovieUseCase.execute()
-//    }
 }

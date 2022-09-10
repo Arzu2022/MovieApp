@@ -3,12 +3,12 @@
 import Foundation
 import domain
 
- struct MovieRemoteDTO : Decodable {
-     let page: Int?
-     let results: [Result]?
-     let totalPages, totalResults: Int?
-     
+struct MovieRemoteDTO: Decodable {
+    let page: Int?
+    let results: [Result]?
+    let totalPages, totalResults: Int?
 }
+
 struct Result:Decodable {
     let adult: Bool?
     let backdropPath: String?

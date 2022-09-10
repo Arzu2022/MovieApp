@@ -1,18 +1,7 @@
-//
-//  Mapper.swift
-//  data
-//
-//  Created by AziK's  MAC on 06.09.22.
-//
+
 
 import Foundation
 import domain
-//
-//extension OriginalLanguage {
-//    func toDomain() -> MovieEntity.ResultEntity.OriginalLanguageEntity {
-//        return MovieEntity.ResultEntity.OriginalLanguageEntity.init(rawValue: self.rawValue) ?? MovieEntity.ResultEntity.OriginalLanguageEntity.en
-//    }
-//}
 
 extension Result {
     func toDomain() -> MovieEntity.ResultEntity {
@@ -21,7 +10,7 @@ extension Result {
 }
 
 extension MovieRemoteDTO {
-    func toDomain() -> MovieEntity{
+    func toDomain() -> MovieEntity {
         return MovieEntity.init(results: self.results.map({$0.map {$0.toDomain()}})!)
     }
 }

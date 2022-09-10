@@ -5,4 +5,5 @@ import Promises
 
 protocol MovieRemoteDataSourceProtocol{
     func fetch() -> Promise<MovieRemoteDTO>
+    func search()
 }
