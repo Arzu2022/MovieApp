@@ -7,9 +7,9 @@
 
 import UIKit
 
-class ProfileVC: UIViewController {
+public class ProfileVC: BaseViewController<FirstViewModel> {
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
     }

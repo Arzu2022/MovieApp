@@ -14,9 +14,9 @@
 		FAB4E06C28C8EEDB009C394D /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E06B28C8EEDB009C394D /* TabBar.swift */; };
 		FAB4E06E28C8EF74009C394D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E06D28C8EF74009C394D /* SearchVC.swift */; };
 		FAB4E07228C8F063009C394D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E07128C8F063009C394D /* ProfileVC.swift */; };
-		FAB4E07B28CB51B1009C394D /* GetMovieTrailer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E07A28CB51B1009C394D /* GetMovieTrailer.swift */; };
 		FAB4E08628CB5531009C394D /* ExtentionForTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E08528CB5531009C394D /* ExtentionForTableView.swift */; };
 		FAB4E08828CB55A4009C394D /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E08728CB55A4009C394D /* CustomTableViewCell.swift */; };
+		FAB4E09028CCBBA8009C394D /* Generated in Resources */ = {isa = PBXBuildFile; fileRef = FAB4E08F28CCBBA8009C394D /* Generated */; };
 		FAE9826528BAB50A00D9C0AC /* presentation.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE9826428BAB50A00D9C0AC /* presentation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE982A728BAB55F00D9C0AC /* domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE982A628BAB55F00D9C0AC /* domain.framework */; };
 		FAE982A828BAB55F00D9C0AC /* domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAE982A628BAB55F00D9C0AC /* domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -47,9 +47,9 @@
 		FAB4E06B28C8EEDB009C394D /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		FAB4E06D28C8EF74009C394D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		FAB4E07128C8F063009C394D /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
-		FAB4E07A28CB51B1009C394D /* GetMovieTrailer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMovieTrailer.swift; sourceTree = "<group>"; };
 		FAB4E08528CB5531009C394D /* ExtentionForTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionForTableView.swift; sourceTree = "<group>"; };
 		FAB4E08728CB55A4009C394D /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		FAB4E08F28CCBBA8009C394D /* Generated */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Generated; sourceTree = "<group>"; };
 		FAE9826128BAB50A00D9C0AC /* presentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = presentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE9826428BAB50A00D9C0AC /* presentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = presentation.h; sourceTree = "<group>"; };
 		FAE982A628BAB55F00D9C0AC /* domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,14 +78,6 @@
 			path = DI;
 			sourceTree = "<group>";
 		};
-		FAB4E07828CB5127009C394D /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-				FAB4E07A28CB51B1009C394D /* GetMovieTrailer.swift */,
-			);
-			path = Networking;
-			sourceTree = "<group>";
-		};
 		FAB4E07928CB5177009C394D /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,8 +90,8 @@
 		FAE9825728BAB50A00D9C0AC = {
 			isa = PBXGroup;
 			children = (
+				FAB4E08F28CCBBA8009C394D /* Generated */,
 				FAB4E07928CB5177009C394D /* Helper */,
-				FAB4E07828CB5127009C394D /* Networking */,
 				FAB4E02528BAC361009C394D /* DI */,
 				FAE982C928BAB89A00D9C0AC /* Assets */,
 				FAE982C628BAB81700D9C0AC /* View */,
@@ -232,6 +224,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB4E09028CCBBA8009C394D /* Generated in Resources */,
 				FAE982CB28BAB8AC00D9C0AC /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,7 +237,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB4E02728BAC37D009C394D /* PresentationAssembly.swift in Sources */,
-				FAB4E07B28CB51B1009C394D /* GetMovieTrailer.swift in Sources */,
 				FAB4E08828CB55A4009C394D /* CustomTableViewCell.swift in Sources */,
 				FAB4E08628CB5531009C394D /* ExtentionForTableView.swift in Sources */,
 				FAB4E02F28BAC7D9009C394D /* BaseViewController.swift in Sources */,

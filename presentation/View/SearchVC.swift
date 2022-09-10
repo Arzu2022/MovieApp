@@ -7,9 +7,9 @@
 
 import UIKit
 
-class SearchVC: UIViewController {
+public class SearchVC: BaseViewController<FirstViewModel> {
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .yellow
     }

@@ -8,7 +8,9 @@
 import Foundation
 import UIKit
 
-public class TabBar: UITabBarController {
+public class TabBar: BaseTabController<FirstViewModel> {
+    
+    
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,9 +18,9 @@ public class TabBar: UITabBarController {
     }
     
     private func setUp() {
-        let homeVC = HomeVC()
-        let searchVC = SearchVC()
-        let profileVC = ProfileVC()
+        let homeVC = router.homeVCfunc()
+        let searchVC = router.searchVc()
+        let profileVC = router.profileVC()
         
         let homeNav = UINavigationController(rootViewController: homeVC)
         let searchNav = UINavigationController(rootViewController: searchVC)
@@ -43,3 +45,4 @@ public class TabBar: UITabBarController {
         viewControllers = [homeNav, searchNav, profileNav]
     }
 }
+

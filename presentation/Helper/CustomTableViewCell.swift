@@ -92,15 +92,16 @@ class CustomTableViewCell:UITableViewCell {
         contentView.addSubview(originalLanguage)
         contentView.addSubview(backdropPath)
         backdropPath.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(20)
+            make.left.equalToSuperview().offset(40)
             make.top.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
-            make.height.width.equalTo(250)
+            make.right.equalToSuperview().offset(-40)
+//            make.height.equalTo(100)
+//            make.width.equalTo(50)
         }
         title.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(20)
+            make.left.equalToSuperview().offset(40)
             make.top.equalTo(backdropPath.snp.bottom).offset(10)
-            make.right.equalToSuperview().offset(-20)
+            make.right.equalToSuperview().offset(-40)
             make.bottom.equalToSuperview().offset(-20)
         }
 //        articleDescription.snp.makeConstraints { make in

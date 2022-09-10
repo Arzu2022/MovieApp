@@ -3,13 +3,13 @@
 import Foundation
 import domain
 
-struct MovieRemoteDTO: Decodable {
+public struct MovieRemoteDTO: Decodable {
     let page: Int?
     let results: [Result]?
     let totalPages, totalResults: Int?
 }
 
-struct Result:Decodable {
+public struct Result:Decodable {
     let adult: Bool?
     let backdropPath: String?
     let genreIDS: [Int]?
