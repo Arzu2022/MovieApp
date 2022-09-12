@@ -21,8 +21,8 @@ class MovieRepo : MovieRepoProtocol {
         self.remoteDataSource = remoteDataSource
        // self.localDataSource = localDataSource
     }
-    func getMovie() -> Promise<MovieEntity> {
-        self.remoteDataSource.fetch().then { dto in
+    func getMovie(typeOfMovie:String) -> Promise<MovieEntity> {
+        self.remoteDataSource.fetch(typeOf: typeOfMovie).then { dto in
             dto.toDomain()
         }
     }

@@ -14,9 +14,13 @@
 		FAB4E06C28C8EEDB009C394D /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E06B28C8EEDB009C394D /* TabBar.swift */; };
 		FAB4E06E28C8EF74009C394D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E06D28C8EF74009C394D /* SearchVC.swift */; };
 		FAB4E07228C8F063009C394D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E07128C8F063009C394D /* ProfileVC.swift */; };
-		FAB4E08628CB5531009C394D /* ExtentionForTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E08528CB5531009C394D /* ExtentionForTableView.swift */; };
+		FAB4E08628CB5531009C394D /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E08528CB5531009C394D /* Extentions.swift */; };
 		FAB4E08828CB55A4009C394D /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E08728CB55A4009C394D /* CustomTableViewCell.swift */; };
-		FAB4E09028CCBBA8009C394D /* Generated in Resources */ = {isa = PBXBuildFile; fileRef = FAB4E08F28CCBBA8009C394D /* Generated */; };
+		FAB4E0A228CD4767009C394D /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = FAB4E0A128CD4767009C394D /* Fonts */; };
+		FAB4E0A628CD51A8009C394D /* TableViewDidSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0A528CD51A8009C394D /* TableViewDidSelected.swift */; };
+		FAB4E0AA28CDF7E3009C394D /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = FAB4E0A928CDF7E3009C394D /* swiftgen.yml */; };
+		FAB4E0B228CDFE0A009C394D /* images+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0B128CDFE0A009C394D /* images+Generated.swift */; };
+		FAB4E0B428CE7FB4009C394D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0B328CE7FB4009C394D /* Fonts.swift */; };
 		FAE9826528BAB50A00D9C0AC /* presentation.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE9826428BAB50A00D9C0AC /* presentation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE982A728BAB55F00D9C0AC /* domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE982A628BAB55F00D9C0AC /* domain.framework */; };
 		FAE982A828BAB55F00D9C0AC /* domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAE982A628BAB55F00D9C0AC /* domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -47,9 +51,14 @@
 		FAB4E06B28C8EEDB009C394D /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		FAB4E06D28C8EF74009C394D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		FAB4E07128C8F063009C394D /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
-		FAB4E08528CB5531009C394D /* ExtentionForTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionForTableView.swift; sourceTree = "<group>"; };
+		FAB4E08528CB5531009C394D /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		FAB4E08728CB55A4009C394D /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
-		FAB4E08F28CCBBA8009C394D /* Generated */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Generated; sourceTree = "<group>"; };
+		FAB4E0A128CD4767009C394D /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		FAB4E0A328CD4843009C394D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FAB4E0A528CD51A8009C394D /* TableViewDidSelected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDidSelected.swift; sourceTree = "<group>"; };
+		FAB4E0A928CDF7E3009C394D /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
+		FAB4E0B128CDFE0A009C394D /* images+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "images+Generated.swift"; sourceTree = "<group>"; };
+		FAB4E0B328CE7FB4009C394D /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		FAE9826128BAB50A00D9C0AC /* presentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = presentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE9826428BAB50A00D9C0AC /* presentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = presentation.h; sourceTree = "<group>"; };
 		FAE982A628BAB55F00D9C0AC /* domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,20 +90,40 @@
 		FAB4E07928CB5177009C394D /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				FAB4E08528CB5531009C394D /* ExtentionForTableView.swift */,
+				FAB4E08528CB5531009C394D /* Extentions.swift */,
 				FAB4E08728CB55A4009C394D /* CustomTableViewCell.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		FAB4E0A428CD5180009C394D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FAB4E0A528CD51A8009C394D /* TableViewDidSelected.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FAB4E0B028CDFD4D009C394D /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				FAB4E0B328CE7FB4009C394D /* Fonts.swift */,
+				FAB4E0B128CDFE0A009C394D /* images+Generated.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		FAE9825728BAB50A00D9C0AC = {
 			isa = PBXGroup;
 			children = (
-				FAB4E08F28CCBBA8009C394D /* Generated */,
+				FAB4E0B028CDFD4D009C394D /* Generated */,
+				FAB4E0A928CDF7E3009C394D /* swiftgen.yml */,
+				FAB4E0A428CD5180009C394D /* Views */,
+				FAB4E0A128CD4767009C394D /* Fonts */,
 				FAB4E07928CB5177009C394D /* Helper */,
 				FAB4E02528BAC361009C394D /* DI */,
 				FAE982C928BAB89A00D9C0AC /* Assets */,
-				FAE982C628BAB81700D9C0AC /* View */,
+				FAE982C628BAB81700D9C0AC /* View Controllers */,
 				FAE9826328BAB50A00D9C0AC /* presentation */,
 				FAE9826228BAB50A00D9C0AC /* Products */,
 				FAE982A528BAB55F00D9C0AC /* Frameworks */,
@@ -112,6 +141,7 @@
 		FAE9826328BAB50A00D9C0AC /* presentation */ = {
 			isa = PBXGroup;
 			children = (
+				FAB4E0A328CD4843009C394D /* Info.plist */,
 				FAE9826428BAB50A00D9C0AC /* presentation.h */,
 			);
 			path = presentation;
@@ -125,7 +155,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FAE982C628BAB81700D9C0AC /* View */ = {
+		FAE982C628BAB81700D9C0AC /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				FAE982C728BAB83D00D9C0AC /* HomeVC.swift */,
@@ -136,7 +166,7 @@
 				FAB4E06D28C8EF74009C394D /* SearchVC.swift */,
 				FAB4E07128C8F063009C394D /* ProfileVC.swift */,
 			);
-			path = View;
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		FAE982C928BAB89A00D9C0AC /* Assets */ = {
@@ -224,8 +254,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAB4E09028CCBBA8009C394D /* Generated in Resources */,
 				FAE982CB28BAB8AC00D9C0AC /* Media.xcassets in Resources */,
+				FAB4E0A228CD4767009C394D /* Fonts in Resources */,
+				FAB4E0AA28CDF7E3009C394D /* swiftgen.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,8 +268,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB4E02728BAC37D009C394D /* PresentationAssembly.swift in Sources */,
+				FAB4E0B228CDFE0A009C394D /* images+Generated.swift in Sources */,
+				FAB4E0B428CE7FB4009C394D /* Fonts.swift in Sources */,
 				FAB4E08828CB55A4009C394D /* CustomTableViewCell.swift in Sources */,
-				FAB4E08628CB5531009C394D /* ExtentionForTableView.swift in Sources */,
+				FAB4E08628CB5531009C394D /* Extentions.swift in Sources */,
 				FAB4E02F28BAC7D9009C394D /* BaseViewController.swift in Sources */,
 				FAB4E03128BAC7F8009C394D /* Router.swift in Sources */,
 				FAB4E06C28C8EEDB009C394D /* TabBar.swift in Sources */,
@@ -246,6 +279,7 @@
 				FAE982C828BAB83D00D9C0AC /* HomeVC.swift in Sources */,
 				FAB4E02428BAC1A8009C394D /* FirstViewModel.swift in Sources */,
 				FAB4E06E28C8EF74009C394D /* SearchVC.swift in Sources */,
+				FAB4E0A628CD51A8009C394D /* TableViewDidSelected.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +418,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = presentation/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -414,6 +449,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = presentation/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (

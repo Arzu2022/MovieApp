@@ -16,8 +16,8 @@ public class FirstViewModel {
         self.getMovieUseCase = getMovieUseCase
     }
     
-    func getMovie() -> Promise<MovieEntity> {
+    func getMovie(typeOfMovie:String) -> Promise<MovieEntity> {
         let useCase = self.getMovieUseCase
-        return useCase.execute()
+        return useCase.execute(typeOfMovie: typeOfMovie)
     }
 }

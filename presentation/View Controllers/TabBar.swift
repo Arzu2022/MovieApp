@@ -25,22 +25,24 @@ public class TabBar: BaseTabController<FirstViewModel> {
         let homeNav = UINavigationController(rootViewController: homeVC)
         let searchNav = UINavigationController(rootViewController: searchVC)
         let profileNav = UINavigationController(rootViewController: profileVC)
-        
         tabBar.tintColor = .red
         tabBar.barTintColor = .white
-        tabBar.backgroundColor = .black
-        
+        let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.configureWithOpaqueBackground()
+        tabBarAppearance.backgroundColor = .black
+        tabBar.standardAppearance = tabBarAppearance
+        tabBar.scrollEdgeAppearance = tabBarAppearance
         homeNav.tabBarItem = UITabBarItem(title: "Home",
-                                          image: UIImage(named: "ic_home"),
-                                          selectedImage: UIImage(named: "ic_home"))
+                                          image: Asset.icHome.image,
+                                          selectedImage: Asset.icHome.image)
         
         searchNav.tabBarItem = UITabBarItem(title: "Search",
-                                            image: UIImage(named: "ic_search"),
-                                            selectedImage: UIImage(named: "ic_search"))
+                                            image: Asset.icSearch.image,
+                                            selectedImage: Asset.icSearch.image)
         
         profileNav.tabBarItem = UITabBarItem(title: "Profile",
-                                             image: UIImage(named: "ic_profile"),
-                                             selectedImage: UIImage(named: "ic_profile"))
+                                             image: Asset.icProfile.image,
+                                             selectedImage: Asset.icProfile.image)
         
         viewControllers = [homeNav, searchNav, profileNav]
     }

@@ -8,10 +8,19 @@ class MovieRemoteDataSource: MovieRemoteDataSourceProtocol {
         
         self.networkProvider = networkProvider
     }
-    func fetch() -> Promise<MovieRemoteDTO> {
+    func fetch(typeOf:String) -> Promise<MovieRemoteDTO> {
         let promise = Promise<MovieRemoteDTO>.pending()
-        
-        networkProvider.request("https://api.themoviedb.org/3/discover/movie?api_key=3a0a1bb6b1ceffd7114757c7a605777d")
+        var url:String = "https://api.themoviedb.org/3/movie/popular?api_key=3a0a1bb6b1ceffd7114757c7a605777d"
+        if typeOf == "top_rated" {
+            url = "https://api.themoviedb.org/3/movie/top_rated?api_key=3a0a1bb6b1ceffd7114757c7a605777d"
+        }
+        else if typeOf == "upcoming" {
+        url = "https://api.themoviedb.org/3/movie/upcoming?api_key=3a0a1bb6b1ceffd7114757c7a605777d"
+        }
+        else if typeOf == "kids" {
+            url = "https://api.themoviedb.org/3/discover/movie?api_key=3a0a1bb6b1ceffd7114757c7a605777d&with_genres=16"
+        }
+        networkProvider.request(url)
             .responseDecodable(of: MovieRemoteDTO.self){ response in
                 if let status = response.response?.statusCode {
                     print(status)
@@ -25,17 +34,6 @@ class MovieRemoteDataSource: MovieRemoteDataSourceProtocol {
                 } else{
                     promise.reject(ParsingError())
                 }
-        
-        
-//        AF.request("https://api.themoviedb.org/3/discover/movie?api_key=3a0a1bb6b1ceffd7114757c7a605777d", method: .get, headers: .default).responseJSON { response in
-//            if let status = response.response?.statusCode {
-//                switch(status){
-//                case 201:
-//                    print(response.value)
-//                default:
-//                    print("is not 201")
-//                }
-//        }
             }
         return promise
         

@@ -10,8 +10,8 @@ import Swinject
 
 
 public class DomainAssembly:Assembly {
+    
     public init() {
-        
     }
    public  func assemble(container: Container) {
         container.register(GetMovieUseCase.self) { r in

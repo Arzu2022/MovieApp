@@ -10,5 +10,5 @@ import Promises
 import RxSwift
 
 public protocol MovieRepoProtocol {
-    func getMovie() -> Promise<MovieEntity>
+    func getMovie(typeOfMovie:String) -> Promise<MovieEntity>
 }

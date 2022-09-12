@@ -22,29 +22,18 @@ public class HomeVC: BaseViewController<FirstViewModel> {
         self.view.addSubview(tableViewTopMovie)
         setup()
         getData()
+        //self.tableViewTopMovie.reloadData()
     }
     
-//    public override func viewWillAppear(_ animated: Bool) {
-//        print("view will appear")
-//        self.vm?.getMovie().then({ m in
-//            print(m.results?[3].originalLanguage ?? "tt")
-//        })
-//    }
     private func setup() {
-        tableViewTopMovie.snp.makeConstraints { make in
-            make.left.right.top.bottom.equalToSuperview()
+            self.tableViewTopMovie.snp.makeConstraints { make in
+                make.left.right.top.bottom.equalToSuperview()
         }
-        
     }
     private func getData() {
-
-        self.vm?.getMovie().then({ m in
-                if m.results != nil {
-                    print("results is not nil")
-                }
+        self.vm?.getMovie(typeOfMovie: "kids").then({ m in
             self.dataForTableView = m.results ?? []
-            self.tableViewTopMovie.reloadData()
-            print(m.results?.count)
+                self.tableViewTopMovie.reloadData()
         }).catch({ err in
             print(err)
         })

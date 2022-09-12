@@ -13,35 +13,35 @@ class CustomTableViewCell:UITableViewCell {
         let text = UILabel()
         text.textColor = .black
         text.numberOfLines = 0
-        text.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        text.font = UIFont(font: FontFamily.PTSans.regular, size: 20)
         return text
     }()
     lazy var voteCount: UILabel = {
         let text = UILabel()
         text.textColor = .black
         text.numberOfLines = 0
-        text.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        text.font = UIFont(font: FontFamily.PTSans.regular, size: 20)
         return text
     }()
     lazy var voteAverage: UILabel = {
         let text = UILabel()
         text.textColor = .black
         text.numberOfLines = 0
-        text.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        text.font = UIFont(font: FontFamily.PTSans.regular, size: 20)
         return text
     }()
     lazy var releaseDate: UILabel = {
         let text = UILabel()
         text.textColor = .black
         text.numberOfLines = 0
-        text.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        text.font = UIFont(font: FontFamily.PTSans.regular, size: 20)
         return text
     }()
     lazy var popularity: UILabel = {
         let text = UILabel()
         text.textColor = .black
         text.numberOfLines = 0
-        text.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        text.font = UIFont(font: FontFamily.PTSans.regular, size: 20)
         return text
     }()
     
@@ -49,27 +49,28 @@ class CustomTableViewCell:UITableViewCell {
         let text = UILabel()
         text.textColor = .black
         text.numberOfLines = 0
-        text.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        text.font = UIFont(font: FontFamily.PTSans.regular, size: 20)
         return text
     }()
     lazy var overview: UILabel = {
         let text = UILabel()
         text.textColor = .black
         text.numberOfLines = 0
-        text.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        text.font = UIFont(font: FontFamily.PTSans.regular, size: 20)
         return text
     }()
     lazy var originalLanguage: UILabel = {
         let text = UILabel()
         text.textColor = .black
         text.numberOfLines = 0
-        text.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        text.font = UIFont(font: FontFamily.PTSans.regular, size: 20)
         return text
     }()
     lazy var backdropPath: UIImageView = {
         let icon = UIImageView()
-        //icon.clipsToBounds = true
-        icon.layer.cornerRadius = 64
+        icon.clipsToBounds = true
+        icon.layer.masksToBounds = true
+        icon.layer.cornerRadius = 24
         return icon
     }()
     
@@ -95,7 +96,7 @@ class CustomTableViewCell:UITableViewCell {
             make.left.equalToSuperview().offset(40)
             make.top.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-40)
-//            make.height.equalTo(100)
+//           make.height.equalTo(100)
 //            make.width.equalTo(50)
         }
         title.snp.makeConstraints { make in
