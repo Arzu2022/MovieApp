@@ -11,22 +11,29 @@ import SnapKit
 import CloudKit
 
 public class DidSelectVC: BaseViewController<TrailerViewModel> {
-    var trailerArr : [TrailerEntity.ResultTrailer] = []
+  //  var trailerArr : [TrailerEntity.ResultTrailer] = []
     private let allData: MovieEntity.ResultEntity
     let base = "https://image.tmdb.org/t/p/w500"
-    public init(allData: MovieEntity.ResultEntity){
+    var urlTrailer = URL(string: "https://www.youtube.com/watch?v=W9JHZwtObqs")
+    
+    init(allData: MovieEntity.ResultEntity,
+         vm: TrailerViewModel,
+         router: RouterProtocol
+    ){
         self.allData = allData
-        super.init(nibName: nil, bundle: nil)
+        super.init(vm: vm, router: router)
     }
     
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     private let scrollStackViewContainer: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -40,17 +47,23 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         }
     }
     @objc func onClickTrailer(){
-        print(trailerArr[0].key)
-        if let url = URL(string: "https://www.youtube.com/watch?v=\(trailerArr[0].key)") {
-            UIApplication.shared.open(url)
-        }
+        //if let url = URL(string: "https://www.youtube.com/watch?v=\(trailerArr[0].key)") {
+        UIApplication.shared.open(urlTrailer!)
+        //}
     }
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.title = allData.title
+        
+        self.vm.getTrailer(id: allData.id)
+            .then({ tr in
+//                self.trailerArr = tr.results
+                self.urlTrailer = URL(string: "https://www.youtube.com/watch?v=\(tr.results[0].key)")!
+            })
         setup()
-      //  getTrailerLink(id: allData.id ?? 324)
     }
+    
     private func getLabel(name:String,main:Bool) -> UILabel{
         let name = UILabel()
         if main == true{
@@ -64,12 +77,7 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         name.textColor = .black
         return name
     }
-//    private func getTrailerLink(id:Int) {
-//        let didSlectRouter = router?.didSelectVC(allData: allData)
-//        didSlectRouter?.vm?.getTrailer(id: id).then({ tr in
-//            self.trailerArr = tr.results
-//        })
-//    }
+    
     private func setup(){
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(scrollStackViewContainer)
@@ -84,24 +92,26 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
-        let overview = getLabel(name: "overview",main: true)
-        overview.text = allData.overview
-        overview.snp.makeConstraints { make in
-            make.top.equalTo(image.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
-        }
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(overview.snp.bottom).offset(5)
+            make.top.equalTo(image.snp.bottom).offset(20)
             make.left.right.bottom.equalToSuperview()
         }
         scrollStackViewContainer.snp.makeConstraints { make in
             make.left.right.top.bottom.equalToSuperview()
+            make.centerX.equalTo(self.scrollView.snp.centerX)
+        }
+        let overview = getLabel(name: "overview",main: false)
+        overview.text = allData.overview
+        overview.numberOfLines = 0
+        overview.snp.makeConstraints { make in
+            make.top.equalTo(self.scrollStackViewContainer.snp.top).offset(5)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
         let originalLan = getLabel(name: "originalLan",main: false)
         originalLan.text = "Language: \(allData.originalLanguage ?? "en")"
         originalLan.snp.makeConstraints { make in
-            make.top.equalTo(self.scrollStackViewContainer.snp.top)
+            make.top.equalTo(overview.snp.bottom).offset(20)
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
@@ -140,36 +150,34 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
-//        print("Trailer Key: -\(trailerArr[0].key)")
-        
-//        let getTrailerLink = UIButton()
-//        self.scrollStackViewContainer.addArrangedSubview(getTrailerLink)
-//        getTrailerLink.setTitle("https://www.youtube.com/watch?v=\(trailerArr[0].key)", for: .normal)
-//        getTrailerLink.titleLabel?.numberOfLines = 0
-//        getTrailerLink.setTitleColor(.blue, for: .normal)
-//        getTrailerLink.addTarget(self, action: #selector(onClickTrailer), for: .touchUpInside)
-//        getTrailerLink.snp.makeConstraints { make in
-//            make.top.equalTo(getTrailerText.snp.bottom)
-//            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-//            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
-//        }
-//        let moreInfo = getLabel(name: "moreInfo",main: false)
-//        moreInfo.text = "More information:"
-//        moreInfo.snp.makeConstraints { make in
-//            make.top.equalTo(getTrailerLink.snp.bottom).offset(20)
-//            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-//            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
-//        }
-//        let moreInfoLink = UIButton()
-//        self.scrollStackViewContainer.addArrangedSubview(moreInfoLink)
-//        moreInfoLink.setTitle("https://www.themoviedb.org/movie/\(allData.id ?? 45673)-\((allData.title ?? "luck").exchangeWrapToDash(name: allData.title ?? "luck"))", for: .normal)
-//        moreInfoLink.titleLabel?.numberOfLines = 0
-//        moreInfoLink.setTitleColor(.blue, for: .normal)
-//        moreInfoLink.addTarget(self, action: #selector(onClick), for: .touchUpInside)
-//        moreInfoLink.snp.makeConstraints { make in
-//            make.top.equalTo(moreInfo.snp.bottom)
-//            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-//            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
-//        }
+        let getTrailerLink = UIButton()
+        self.scrollStackViewContainer.addArrangedSubview(getTrailerLink)
+        getTrailerLink.setTitle("https://www.youtube.com/watch?v=bGasd5t", for: .normal)
+        getTrailerLink.titleLabel?.numberOfLines = 0
+        getTrailerLink.setTitleColor(.blue, for: .normal)
+        getTrailerLink.addTarget(self, action: #selector(onClickTrailer), for: .touchUpInside)
+        getTrailerLink.snp.makeConstraints { make in
+            make.top.equalTo(getTrailerText.snp.bottom)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+        }
+        let moreInfo = getLabel(name: "moreInfo",main: false)
+        moreInfo.text = "More information:"
+        moreInfo.snp.makeConstraints { make in
+            make.top.equalTo(getTrailerLink.snp.bottom).offset(20)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+        }
+        let moreInfoLink = UIButton()
+        self.scrollStackViewContainer.addArrangedSubview(moreInfoLink)
+        moreInfoLink.setTitle("https://www.themoviedb.org/movie/fqRbu2u", for: .normal)
+        moreInfoLink.titleLabel?.numberOfLines = 0
+        moreInfoLink.setTitleColor(.blue, for: .normal)
+        moreInfoLink.addTarget(self, action: #selector(onClick), for: .touchUpInside)
+        moreInfoLink.snp.makeConstraints { make in
+            make.top.equalTo(moreInfo.snp.bottom)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+        }
     }
 }

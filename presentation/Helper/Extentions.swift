@@ -3,25 +3,6 @@
 import Foundation
 import UIKit
 
-extension HomeVC:UITableViewDelegate,UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataForTableView.count
-    }
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
-                let url = "\(self.baseImageUrl)\((self.dataForTableView[indexPath.row].backdropPath) ?? "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")"
-                cell.backdropPath.imageFromServerURL(url, placeHolder:nil)
-                cell.title.text = self.dataForTableView[indexPath.row].title
-            
-        return cell
-    
-       }
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = DidSelectVC(allData: dataForTableView[indexPath.row])
-        vc.title = dataForTableView[indexPath.row].title
-        navigationController?.pushViewController(vc, animated: true)
-    }
-}
 
 extension UIImageView {
         func imageFromServerURL(_ URLString: String, placeHolder: UIImage?) {

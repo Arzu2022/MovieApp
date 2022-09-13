@@ -11,7 +11,7 @@ public struct MovieEntity {
         public let adult: Bool?
         public let backdropPath: String?
         public let genreIDS: [Int]?
-        public let id: Int?
+        public let id: Int
         public let originalLanguage: String?
         public let originalTitle, overview: String?
         public let popularity: Double?
@@ -22,7 +22,7 @@ public struct MovieEntity {
         public init(adult: Bool?,
                     backdropPath: String?,
                     genreIDS: [Int]?,
-                    id: Int?,
+                    id: Int,
                     originalLanguage: String?,
                     originalTitle: String?,
                     overview: String?,

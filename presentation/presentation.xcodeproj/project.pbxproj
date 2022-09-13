@@ -82,6 +82,7 @@
 		FAB4E02528BAC361009C394D /* DI */ = {
 			isa = PBXGroup;
 			children = (
+				FAB4E0B028CDFD4D009C394D /* Generated */,
 				FAB4E02628BAC37D009C394D /* PresentationAssembly.swift */,
 			);
 			path = DI;
@@ -117,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				FAB4E0C828D0A771009C394D /* ViewModel */,
-				FAB4E0B028CDFD4D009C394D /* Generated */,
 				FAB4E0A928CDF7E3009C394D /* swiftgen.yml */,
 				FAB4E0A128CD4767009C394D /* Fonts */,
 				FAB4E07928CB5177009C394D /* Helper */,

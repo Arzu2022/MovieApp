@@ -39,6 +39,7 @@ class CustomTableViewCell:UITableViewCell {
             make.left.equalToSuperview().offset(40)
             make.top.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-40)
+            make.height.width.equalTo(200)
         }
         title.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(40)

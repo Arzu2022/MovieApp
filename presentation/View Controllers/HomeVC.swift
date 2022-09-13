@@ -30,12 +30,32 @@ public class HomeVC: BaseViewController<MovieViewModel> {
         }
     }
     private func getData() {
-        self.vm?.getMovie(typeOfMovie: "kids").then({ m in
+        self.vm.getMovie(typeOfMovie: "kids").then({ m in
             self.dataForTableView = m.results ?? []
                 self.tableViewTopMovie.reloadData()
         }).catch({ err in
             print(err)
         })
         
+    }
+}
+
+extension HomeVC:UITableViewDelegate,UITableViewDataSource {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataForTableView.count
+    }
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
+        
+                let url = "\(self.baseImageUrl)\((self.dataForTableView[indexPath.row].backdropPath) ?? "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")"
+                cell.backdropPath.imageFromServerURL(url, placeHolder:nil)
+                cell.title.text = self.dataForTableView[indexPath.row].title
+        
+        return cell
+    
+       }
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = self.router.detailsVC(allData: dataForTableView[indexPath.row])
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

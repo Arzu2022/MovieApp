@@ -15,7 +15,7 @@ public struct TrailerEntity {
   public struct ResultTrailer {
        public let key: String
        public let official: Bool
-      public init(key:String,official:Bool){
+       public init(key:String,official:Bool){
           self.key = key
           self.official = official
       }

@@ -11,13 +11,14 @@ import Promises
 class TrailerRemoteDataSource: TrailerRemoteDataSourceProtocol {
 
     private let networkProvider: Session
+    
     init(networkProvider:Session){
         self.networkProvider = networkProvider
     }
     
     func fetch(id: Int) -> Promise<TrailerRemoteDTO> {
         let promise = Promise<TrailerRemoteDTO>.pending()
-        let url:String = "https://api.themoviedb.org/3/movie/popular?api_key=3a0a1bb6b1ceffd7114757c7a605777d"
+        let url:String = "https://api.themoviedb.org/3/movie/\(id)/videos?api_key=3a0a1bb6b1ceffd7114757c7a605777d"
         networkProvider.request(url)
             .responseDecodable(of: TrailerRemoteDTO.self){ response in
                 if let status = response.response?.statusCode {
