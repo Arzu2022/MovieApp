@@ -4,9 +4,9 @@ import RxSwift
 import SnapKit
 import domain
 
-public class HomeVC: BaseViewController<FirstViewModel> {
+public class HomeVC: BaseViewController<MovieViewModel> {
     
-    let baseImageUrl = "https://image.tmdb.org/t/p/w500"
+   public let baseImageUrl = "https://image.tmdb.org/t/p/w500"
     var dataForTableView: [MovieEntity.ResultEntity] = []
     
     private lazy var tableViewTopMovie: UITableView = {

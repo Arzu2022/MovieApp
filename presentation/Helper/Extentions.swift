@@ -17,7 +17,9 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource {
     
        }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let vc = DidSelectVC(allData: dataForTableView[indexPath.row])
+        vc.title = dataForTableView[indexPath.row].title
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -42,5 +44,10 @@ extension UIImageView {
                 }
             }).resume()
         }
+    }
+}
+extension String {
+    func exchangeWrapToDash(name:String){
+         name.replacingOccurrences(of: " ", with: "-")
     }
 }

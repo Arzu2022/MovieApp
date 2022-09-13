@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-public class TabBar: BaseTabController<FirstViewModel> {
+public class TabBar: BaseTabController<MovieViewModel> {
     
     
     

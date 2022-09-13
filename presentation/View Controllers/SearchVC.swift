@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class SearchVC: BaseViewController<FirstViewModel> {
+public class SearchVC: BaseViewController<MovieViewModel> {
     
     public override func viewDidLoad() {
         super.viewDidLoad()

@@ -7,54 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F2D26A02-CBF0-46E0-9137-721F66DAFF9E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "data/Remote data source/MovieRemoteDataSource.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "fetch(typeOf:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F2D26A02-CBF0-46E0-9137-721F66DAFF9E - c234b98a05eff579"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "data.MovieRemoteDataSource.fetch() -&gt; Promises.Promise&lt;data.MovieRemoteDTO&gt;"
-                  moduleName = "data"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Desktop/MovieApp/data/Remote%20data%20source/MovieRemoteDataSource.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "28"
-                  endingLineNumber = "28"
-                  offsetFromSymbolStart = "64">
-               </Location>
-               <Location
-                  uuid = "F2D26A02-CBF0-46E0-9137-721F66DAFF9E - c234b98a05eff704"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "data.MovieRemoteDataSource.fetch() -&gt; Promises.Promise&lt;data.MovieRemoteDTO&gt;"
-                  moduleName = "data"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Desktop/MovieApp/data/Remote%20data%20source/MovieRemoteDataSource.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "15"
-                  endingLineNumber = "15"
-                  offsetFromSymbolStart = "78">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "E3CF8086-558F-4012-8392-28CCAC609B88"
             shouldBeEnabled = "No"
             ignoreCount = "0"

@@ -14,3 +14,13 @@ extension MovieRemoteDTO {
         return MovieEntity.init(results: self.results.map({$0.map {$0.toDomain()}})!)
     }
 }
+extension ResultTrailer {
+    func trailerToDomain() -> TrailerEntity.ResultTrailer {
+        return TrailerEntity.ResultTrailer(key: self.key ?? "key", official: self.official ?? true)
+    }
+}
+extension TrailerRemoteDTO {
+    func trailerToDomain() -> TrailerEntity {
+        return TrailerEntity.init(results: self.results.map({$0.map {$0.trailerToDomain()}})!)
+    }
+}

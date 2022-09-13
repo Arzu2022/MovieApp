@@ -13,6 +13,9 @@
 		FAB4E02A28BAC55B009C394D /* DomainAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E02928BAC55B009C394D /* DomainAssembly.swift */; };
 		FAB4E04528BB72B9009C394D /* SyncMovieUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E04428BB72B9009C394D /* SyncMovieUseCase.swift */; };
 		FAB4E04728BB72FF009C394D /* ObserveMovieUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E04628BB72FF009C394D /* ObserveMovieUseCase.swift */; };
+		FAB4E0B628CFDCAA009C394D /* TrailerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0B528CFDCAA009C394D /* TrailerEntity.swift */; };
+		FAB4E0B828CFDE40009C394D /* TrailerRepoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0B728CFDE40009C394D /* TrailerRepoProtocol.swift */; };
+		FAB4E0BA28CFDFFE009C394D /* GetTrailerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0B928CFDFFE009C394D /* GetTrailerUseCase.swift */; };
 		FAE9829928BAB54D00D9C0AC /* domain.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE9829828BAB54D00D9C0AC /* domain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE982B928BAB5C300D9C0AC /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = FAE982B828BAB5C300D9C0AC /* RxBlocking */; };
 		FAE982BB28BAB5C300D9C0AC /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = FAE982BA28BAB5C300D9C0AC /* RxRelay */; };
@@ -29,6 +32,9 @@
 		FAB4E02928BAC55B009C394D /* DomainAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainAssembly.swift; sourceTree = "<group>"; };
 		FAB4E04428BB72B9009C394D /* SyncMovieUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMovieUseCase.swift; sourceTree = "<group>"; };
 		FAB4E04628BB72FF009C394D /* ObserveMovieUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveMovieUseCase.swift; sourceTree = "<group>"; };
+		FAB4E0B528CFDCAA009C394D /* TrailerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerEntity.swift; sourceTree = "<group>"; };
+		FAB4E0B728CFDE40009C394D /* TrailerRepoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerRepoProtocol.swift; sourceTree = "<group>"; };
+		FAB4E0B928CFDFFE009C394D /* GetTrailerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTrailerUseCase.swift; sourceTree = "<group>"; };
 		FAE9829528BAB54D00D9C0AC /* domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE9829828BAB54D00D9C0AC /* domain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = domain.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -54,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				FAB4E01B28BABB89009C394D /* MovieRepoProtocol.swift */,
+				FAB4E0B728CFDE40009C394D /* TrailerRepoProtocol.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -64,6 +71,7 @@
 				FAB4E02128BAC094009C394D /* GetMovieUseCase.swift */,
 				FAB4E04428BB72B9009C394D /* SyncMovieUseCase.swift */,
 				FAB4E04628BB72FF009C394D /* ObserveMovieUseCase.swift */,
+				FAB4E0B928CFDFFE009C394D /* GetTrailerUseCase.swift */,
 			);
 			path = "Use cases";
 			sourceTree = "<group>";
@@ -108,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				FAB4E01828BABA59009C394D /* MovieEntity.swift */,
+				FAB4E0B528CFDCAA009C394D /* TrailerEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -205,12 +214,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB4E0B628CFDCAA009C394D /* TrailerEntity.swift in Sources */,
 				FAB4E01C28BABB89009C394D /* MovieRepoProtocol.swift in Sources */,
 				FAB4E02228BAC094009C394D /* GetMovieUseCase.swift in Sources */,
 				FAB4E01928BABA59009C394D /* MovieEntity.swift in Sources */,
 				FAB4E04728BB72FF009C394D /* ObserveMovieUseCase.swift in Sources */,
 				FAB4E02A28BAC55B009C394D /* DomainAssembly.swift in Sources */,
+				FAB4E0BA28CFDFFE009C394D /* GetTrailerUseCase.swift in Sources */,
 				FAB4E04528BB72B9009C394D /* SyncMovieUseCase.swift in Sources */,
+				FAB4E0B828CFDE40009C394D /* TrailerRepoProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

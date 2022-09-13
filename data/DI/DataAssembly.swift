@@ -11,13 +11,18 @@ public class DataAssembly:Assembly {
     }
    let session = Session(eventMonitors: [ AlamofireLogger() ])
    public func assemble(container: Container) {
-        container.register(MovieRepoProtocol.self) { r in
-            MovieRepo(remoteDataSource: r.resolve(MovieRemoteDataSourceProtocol.self)!
-                      //localDataSource: r.resolve(MovieLocalDataSourceProtocol.self)!
-            )
+       container.register(MovieRepoProtocol.self) { r in
+            MovieRepo(remoteDataSource: r.resolve(MovieRemoteDataSourceProtocol.self)!)
         }
        container.register(MovieRemoteDataSourceProtocol.self) { r in
            MovieRemoteDataSource(networkProvider: r.resolve(Session.self)!)
+       }.inObjectScope(.container)
+       
+       container.register(TrailerRepoProtocol.self) { r in
+            TrailerRepo(remoteDataSourceT: r.resolve(TrailerRemoteDataSource.self)!)
+        }
+       container.register(TrailerRemoteDataSource.self) { r in
+           TrailerRemoteDataSource(networkProvider: r.resolve(Session.self)!)
        }.inObjectScope(.container)
        
        container.register(Session.self) { _ in

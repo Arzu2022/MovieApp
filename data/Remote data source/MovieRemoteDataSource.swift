@@ -5,7 +5,6 @@ import Promises
 class MovieRemoteDataSource: MovieRemoteDataSourceProtocol {
     private let networkProvider: Session
     init(networkProvider:Session){
-        
         self.networkProvider = networkProvider
     }
     func fetch(typeOf:String) -> Promise<MovieRemoteDTO> {

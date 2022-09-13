@@ -13,14 +13,14 @@ public protocol RouterProtocol {
 public class Router: RouterProtocol {
     public func searchVc() -> SearchVC {
         let vc = SearchVC()
-        vc.vm = resolver.resolve(FirstViewModel.self)!
+        vc.vm = resolver.resolve(MovieViewModel.self)!
         vc.router = self
         return vc
     }
     
     public func profileVC() -> ProfileVC {
         let vc = ProfileVC()
-        vc.vm = resolver.resolve(FirstViewModel.self)!
+        vc.vm = resolver.resolve(MovieViewModel.self)!
         vc.router = self
         return vc
     }
@@ -34,14 +34,14 @@ public class Router: RouterProtocol {
     
     public func homeVCfunc() -> HomeVC {
         let vc = HomeVC()
-        vc.vm = resolver.resolve(FirstViewModel.self)!
+        vc.vm = resolver.resolve(MovieViewModel.self)!
         vc.router = self
         return vc
     }
     
     public func tabbarController() -> TabBar {
         let tabbar = TabBar(
-            vm: resolver.resolve(FirstViewModel.self)!,
+            vm: resolver.resolve(MovieViewModel.self)!,
             router: self
         )
         return tabbar

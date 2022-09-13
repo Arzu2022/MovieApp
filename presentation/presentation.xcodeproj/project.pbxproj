@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FAB4E02428BAC1A8009C394D /* FirstViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E02328BAC1A8009C394D /* FirstViewModel.swift */; };
+		FAB4E02428BAC1A8009C394D /* ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E02328BAC1A8009C394D /* ViewModels.swift */; };
 		FAB4E02728BAC37D009C394D /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E02628BAC37D009C394D /* PresentationAssembly.swift */; };
 		FAB4E02F28BAC7D9009C394D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E02E28BAC7D9009C394D /* BaseViewController.swift */; };
 		FAB4E03128BAC7F8009C394D /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E03028BAC7F8009C394D /* Router.swift */; };
@@ -21,6 +21,7 @@
 		FAB4E0AA28CDF7E3009C394D /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = FAB4E0A928CDF7E3009C394D /* swiftgen.yml */; };
 		FAB4E0B228CDFE0A009C394D /* images+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0B128CDFE0A009C394D /* images+Generated.swift */; };
 		FAB4E0B428CE7FB4009C394D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0B328CE7FB4009C394D /* Fonts.swift */; };
+		FAB4E0C428CFEA2B009C394D /* DidSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0C328CFEA2A009C394D /* DidSelectVC.swift */; };
 		FAE9826528BAB50A00D9C0AC /* presentation.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE9826428BAB50A00D9C0AC /* presentation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE982A728BAB55F00D9C0AC /* domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE982A628BAB55F00D9C0AC /* domain.framework */; };
 		FAE982A828BAB55F00D9C0AC /* domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAE982A628BAB55F00D9C0AC /* domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -44,7 +45,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FAB4E02328BAC1A8009C394D /* FirstViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewModel.swift; sourceTree = "<group>"; };
+		FAB4E02328BAC1A8009C394D /* ViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModels.swift; sourceTree = "<group>"; };
 		FAB4E02628BAC37D009C394D /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		FAB4E02E28BAC7D9009C394D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		FAB4E03028BAC7F8009C394D /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -59,6 +60,7 @@
 		FAB4E0A928CDF7E3009C394D /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		FAB4E0B128CDFE0A009C394D /* images+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "images+Generated.swift"; sourceTree = "<group>"; };
 		FAB4E0B328CE7FB4009C394D /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		FAB4E0C328CFEA2A009C394D /* DidSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DidSelectVC.swift; sourceTree = "<group>"; };
 		FAE9826128BAB50A00D9C0AC /* presentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = presentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE9826428BAB50A00D9C0AC /* presentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = presentation.h; sourceTree = "<group>"; };
 		FAE982A628BAB55F00D9C0AC /* domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,12 +161,13 @@
 			isa = PBXGroup;
 			children = (
 				FAE982C728BAB83D00D9C0AC /* HomeVC.swift */,
-				FAB4E02328BAC1A8009C394D /* FirstViewModel.swift */,
+				FAB4E02328BAC1A8009C394D /* ViewModels.swift */,
 				FAB4E02E28BAC7D9009C394D /* BaseViewController.swift */,
 				FAB4E03028BAC7F8009C394D /* Router.swift */,
 				FAB4E06B28C8EEDB009C394D /* TabBar.swift */,
 				FAB4E06D28C8EF74009C394D /* SearchVC.swift */,
 				FAB4E07128C8F063009C394D /* ProfileVC.swift */,
+				FAB4E0C328CFEA2A009C394D /* DidSelectVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 			files = (
 				FAB4E02728BAC37D009C394D /* PresentationAssembly.swift in Sources */,
 				FAB4E0B228CDFE0A009C394D /* images+Generated.swift in Sources */,
+				FAB4E0C428CFEA2B009C394D /* DidSelectVC.swift in Sources */,
 				FAB4E0B428CE7FB4009C394D /* Fonts.swift in Sources */,
 				FAB4E08828CB55A4009C394D /* CustomTableViewCell.swift in Sources */,
 				FAB4E08628CB5531009C394D /* Extentions.swift in Sources */,
@@ -277,7 +281,7 @@
 				FAB4E06C28C8EEDB009C394D /* TabBar.swift in Sources */,
 				FAB4E07228C8F063009C394D /* ProfileVC.swift in Sources */,
 				FAE982C828BAB83D00D9C0AC /* HomeVC.swift in Sources */,
-				FAB4E02428BAC1A8009C394D /* FirstViewModel.swift in Sources */,
+				FAB4E02428BAC1A8009C394D /* ViewModels.swift in Sources */,
 				FAB4E06E28C8EF74009C394D /* SearchVC.swift in Sources */,
 				FAB4E0A628CD51A8009C394D /* TableViewDidSelected.swift in Sources */,
 			);

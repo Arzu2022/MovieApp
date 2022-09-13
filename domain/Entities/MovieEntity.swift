@@ -7,14 +7,6 @@ public struct MovieEntity {
     public init(results:[ResultEntity]) {
         self.results = results
     }
-    
-//    enum CodingKeys: String, CodingKey {
-//        case page, results
-//        case totalPages = "total_pages"
-//        case totalResults = "total_results"
-//    }
-    
-    
     public struct ResultEntity {
         public let adult: Bool?
         public let backdropPath: String?
@@ -58,9 +50,6 @@ public struct MovieEntity {
             self.voteCount = voteCount
         }
     }
-    
-    
-    
 }
 
 

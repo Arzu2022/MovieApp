@@ -18,6 +18,10 @@
 		FAB4E05028BE31F3009C394D /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = FAB4E04F28BE31F3009C394D /* Realm */; };
 		FAB4E05228BE31F3009C394D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB4E05128BE31F3009C394D /* RealmSwift */; };
 		FAB4E05E28C7A4DD009C394D /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E05D28C7A4DD009C394D /* Mapper.swift */; };
+		FAB4E0BC28CFE0ED009C394D /* TrailerRemoteDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0BB28CFE0ED009C394D /* TrailerRemoteDataSourceProtocol.swift */; };
+		FAB4E0BE28CFE12D009C394D /* TrailerRemoteDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0BD28CFE12D009C394D /* TrailerRemoteDTO.swift */; };
+		FAB4E0C028CFE216009C394D /* TrailerRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0BF28CFE216009C394D /* TrailerRemoteDataSource.swift */; };
+		FAB4E0C228CFE5F3009C394D /* TrailerRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E0C128CFE5F3009C394D /* TrailerRepo.swift */; };
 		FAE9827F28BAB53300D9C0AC /* data.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE9827E28BAB53300D9C0AC /* data.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE982AC28BAB56900D9C0AC /* domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE982AB28BAB56900D9C0AC /* domain.framework */; };
 		FAE982AD28BAB56900D9C0AC /* domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAE982AB28BAB56900D9C0AC /* domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -48,6 +52,10 @@
 		FAB4E04028BB69ED009C394D /* MovieLocalDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLocalDTO.swift; sourceTree = "<group>"; };
 		FAB4E04228BB6ACA009C394D /* MovieLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLocalDataSource.swift; sourceTree = "<group>"; };
 		FAB4E05D28C7A4DD009C394D /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
+		FAB4E0BB28CFE0ED009C394D /* TrailerRemoteDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerRemoteDataSourceProtocol.swift; sourceTree = "<group>"; };
+		FAB4E0BD28CFE12D009C394D /* TrailerRemoteDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerRemoteDTO.swift; sourceTree = "<group>"; };
+		FAB4E0BF28CFE216009C394D /* TrailerRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerRemoteDataSource.swift; sourceTree = "<group>"; };
+		FAB4E0C128CFE5F3009C394D /* TrailerRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerRepo.swift; sourceTree = "<group>"; };
 		FAE9827B28BAB53300D9C0AC /* data.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE9827E28BAB53300D9C0AC /* data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = data.h; sourceTree = "<group>"; };
 		FAE982AB28BAB56900D9C0AC /* domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				FAB4E01E28BABCD6009C394D /* MovieRepo.swift */,
+				FAB4E0C128CFE5F3009C394D /* TrailerRepo.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -90,6 +99,9 @@
 				FAB4E03728BB6054009C394D /* MovieRemoteDataSourceProtocol.swift */,
 				FAB4E03928BB60C0009C394D /* MovieRemoteDTO.swift */,
 				FAB4E03C28BB613B009C394D /* MovieRemoteDataSource.swift */,
+				FAB4E0BB28CFE0ED009C394D /* TrailerRemoteDataSourceProtocol.swift */,
+				FAB4E0BD28CFE12D009C394D /* TrailerRemoteDTO.swift */,
+				FAB4E0BF28CFE216009C394D /* TrailerRemoteDataSource.swift */,
 			);
 			path = "Remote data source";
 			sourceTree = "<group>";
@@ -240,14 +252,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB4E0BE28CFE12D009C394D /* TrailerRemoteDTO.swift in Sources */,
 				FAB4E01F28BABCD6009C394D /* MovieRepo.swift in Sources */,
+				FAB4E0C028CFE216009C394D /* TrailerRemoteDataSource.swift in Sources */,
 				FAB4E03D28BB613B009C394D /* MovieRemoteDataSource.swift in Sources */,
+				FAB4E0BC28CFE0ED009C394D /* TrailerRemoteDataSourceProtocol.swift in Sources */,
 				FAB4E02D28BAC655009C394D /* DataAssembly.swift in Sources */,
 				FAB4E04328BB6ACA009C394D /* MovieLocalDataSource.swift in Sources */,
 				FAB4E05E28C7A4DD009C394D /* Mapper.swift in Sources */,
 				FAB4E03F28BB6984009C394D /* MovieLocalDataSourceProtocol.swift in Sources */,
 				FAB4E03A28BB60C0009C394D /* MovieRemoteDTO.swift in Sources */,
 				FAB4E03828BB6054009C394D /* MovieRemoteDataSourceProtocol.swift in Sources */,
+				FAB4E0C228CFE5F3009C394D /* TrailerRepo.swift in Sources */,
 				FAB4E04128BB69ED009C394D /* MovieLocalDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

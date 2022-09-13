@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class ProfileVC: BaseViewController<FirstViewModel> {
+public class ProfileVC: BaseViewController<MovieViewModel> {
 
     public override func viewDidLoad() {
         super.viewDidLoad()

@@ -17,6 +17,9 @@ public class DomainAssembly:Assembly {
         container.register(GetMovieUseCase.self) { r in
             GetMovieUseCase.init(repo: r.resolve(MovieRepoProtocol.self)!)
         }
+       container.register(GetTrailerUseCase.self) { r in
+           GetTrailerUseCase.init(repo: r.resolve(TrailerRepoProtocol.self)!)
+       }
 //       container.register(SyncMovieUseCase.self) { r in
 //           SyncMovieUseCase.init(repo: r.resolve(MovieRepoProtocol.self)!)
 //       }
