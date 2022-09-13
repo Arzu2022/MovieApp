@@ -7,10 +7,18 @@ public protocol RouterProtocol {
     func homeVCfunc() -> HomeVC
     func searchVc() -> SearchVC
     func profileVC() -> ProfileVC
+    func didSelectVC(allData:MovieEntity.ResultEntity) -> DidSelectVC
     func tabbarController() -> TabBar
 }
 
 public class Router: RouterProtocol {
+    public func didSelectVC(allData:MovieEntity.ResultEntity) -> DidSelectVC {
+        let vc = DidSelectVC(allData: allData)
+        vc.vm = resolver.resolve(TrailerViewModel.self)!
+        vc.router = self
+        return vc
+    }
+    
     public func searchVc() -> SearchVC {
         let vc = SearchVC()
         vc.vm = resolver.resolve(MovieViewModel.self)!
@@ -24,7 +32,6 @@ public class Router: RouterProtocol {
         vc.router = self
         return vc
     }
-    
     
     private let resolver: Resolver
 

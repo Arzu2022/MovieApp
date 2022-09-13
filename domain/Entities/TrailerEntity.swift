@@ -8,13 +8,13 @@
 import Foundation
 
 public struct TrailerEntity {
-    let results: [ResultTrailer]
+   public let results: [ResultTrailer]
     public init (results: [ResultTrailer]){
         self.results = results
     }
   public struct ResultTrailer {
-        let key: String
-        let official: Bool
+       public let key: String
+       public let official: Bool
       public init(key:String,official:Bool){
           self.key = key
           self.official = official

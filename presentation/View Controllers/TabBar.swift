@@ -9,9 +9,7 @@ import Foundation
 import UIKit
 
 public class TabBar: BaseTabController<MovieViewModel> {
-    
-    
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUp()

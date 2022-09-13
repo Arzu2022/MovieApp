@@ -22,7 +22,6 @@ public class HomeVC: BaseViewController<MovieViewModel> {
         self.view.addSubview(tableViewTopMovie)
         setup()
         getData()
-        //self.tableViewTopMovie.reloadData()
     }
     
     private func setup() {

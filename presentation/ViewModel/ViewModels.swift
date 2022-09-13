@@ -15,7 +15,7 @@ public class MovieViewModel {
         self.getMovieUseCase = getMovieUseCase
     }
     
-    func getMovie(typeOfMovie:String) -> Promise<MovieEntity> {
+    public func getMovie(typeOfMovie:String) -> Promise<MovieEntity> {
         let useCase = self.getMovieUseCase
         return useCase.execute(typeOfMovie: typeOfMovie)
     }
@@ -26,7 +26,7 @@ public class TrailerViewModel {
     public init(getTrailerUseCase: GetTrailerUseCase) {
         self.getTrailerUseCase = getTrailerUseCase
     }
-    func getTrailer(id:Int) -> Promise<TrailerEntity> {
+   public func getTrailer(id:Int) -> Promise<TrailerEntity> {
         return getTrailerUseCase.execute(id: id)
     }
 }
