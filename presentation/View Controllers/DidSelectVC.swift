@@ -55,7 +55,6 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = allData.title
-        
         self.vm.getTrailer(id: allData.id)
             .then({ tr in
 //                self.trailerArr = tr.results
@@ -82,10 +81,13 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(scrollStackViewContainer)
         let url = "\(self.base)\((self.allData.backdropPath) ?? "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")"
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+//        tap.numberOfTapsRequired = 2
         let image = UIImageView()
         self.view.addSubview(image)
         image.layer.cornerRadius = 24
         image.layer.masksToBounds = true
+//        image.addGestureRecognizer(tap)
         image.imageFromServerURL(url, placeHolder: nil)
         image.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(100)
@@ -108,45 +110,47 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
-        let originalLan = getLabel(name: "originalLan",main: false)
-        originalLan.text = "Language: \(allData.originalLanguage ?? "en")"
-        originalLan.snp.makeConstraints { make in
+        let viewForVoteAvarage = setupAvarage(voteAvarage: allData.voteAverage ?? 0.0)
+        self.scrollStackViewContainer.addArrangedSubview(viewForVoteAvarage)
+        viewForVoteAvarage.snp.makeConstraints { make in
             make.top.equalTo(overview.snp.bottom).offset(20)
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+            make.height.equalTo(30)
+            //make.width.equalTo(95)
         }
         let popularity = getLabel(name: "popularity",main: false)
         popularity.text = "Popularity: \(allData.popularity ?? 156.765)"
         popularity.snp.makeConstraints { make in
-            make.top.equalTo(originalLan.snp.bottom).offset(20)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
-        }
-        let releaseDate = getLabel(name: "releaseDate",main: false)
-        releaseDate.text = "Release Date: \(allData.releaseDate ?? "2022 05 07")"
-        releaseDate.snp.makeConstraints { make in
-            make.top.equalTo(popularity.snp.bottom).offset(20)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
-        }
-        let voteAverage = getLabel(name: "voteAverage",main: false)
-        voteAverage.text = "Vote Average: \(allData.voteAverage ?? 5.5)"
-        voteAverage.snp.makeConstraints { make in
-            make.top.equalTo(releaseDate.snp.bottom).offset(20)
+            make.top.equalTo(viewForVoteAvarage.snp.bottom).offset(20)
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
         let voteCount = getLabel(name: "voteCount",main: false)
         voteCount.text = "Vote Count: \(allData.voteCount ?? 21)"
         voteCount.snp.makeConstraints { make in
-            make.top.equalTo(voteAverage.snp.bottom).offset(20)
+            make.top.equalTo(popularity.snp.bottom).offset(20)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+        }
+        let originalLan = getLabel(name: "originalLan",main: false)
+        originalLan.text = "Language: \(allData.originalLanguage ?? "en")"
+        originalLan.snp.makeConstraints { make in
+            make.top.equalTo(voteCount.snp.bottom).offset(20)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+        }
+        let releaseDate = getLabel(name: "releaseDate",main: false)
+        releaseDate.text = "Release Date: \(allData.releaseDate ?? "2022 05 07")"
+        releaseDate.snp.makeConstraints { make in
+            make.top.equalTo(originalLan.snp.bottom).offset(20)
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
         let getTrailerText = getLabel(name: "Trailer:", main: false)
         getTrailerText.text = "Trailer:"
         getTrailerText.snp.makeConstraints { make in
-            make.top.equalTo(voteCount.snp.bottom).offset(20)
+            make.top.equalTo(releaseDate.snp.bottom).offset(20)
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
@@ -179,5 +183,258 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
+    }
+//    @objc func doubleTapped() {
+//        print("double clicked")
+//
+//
+//    }
+    private func setupAvarage(voteAvarage:Double) ->UIStackView {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 0
+        view.alignment = .center
+        view.translatesAutoresizingMaskIntoConstraints = false
+        print(voteAvarage)
+        func getStar(yellow:Bool)-> UIImageView {
+            let image = UIImageView()
+            if yellow == true {
+                image.image = Asset.icStarYellow.image
+            } else {
+                image.image = Asset.icStar.image
+            }
+            return image
+        }
+        let t: Double = voteAvarage/2
+        if t<2 {
+            // a star
+            let v1 = getStar(yellow: true)
+            view.addArrangedSubview(v1)
+            v1.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalToSuperview()
+                make.width.height.equalTo(15)
+            }
+            let v2 = getStar(yellow: false)
+            view.addArrangedSubview(v2)
+            v2.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v1.snp.right).offset(5)
+                make.width.height.equalTo(16)
+            }
+            let v3 = getStar(yellow: false)
+            view.addArrangedSubview(v3)
+            v3.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v2.snp.right).offset(5)
+                make.width.height.equalTo(16)
+            }
+            let v4 = getStar(yellow: false)
+            view.addArrangedSubview(v4)
+            v4.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v3.snp.right).offset(5)
+                make.width.height.equalTo(16)
+            }
+            let v5 = getStar(yellow: false)
+            view.addArrangedSubview(v5)
+            v5.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v4.snp.right).offset(5)
+                make.width.height.equalTo(16)
+            }
+//            let v6 = UIImageView()
+//            v6.image = UIImage(named: "testForBug")
+//            view.addArrangedSubview(v6)
+//            v6.snp.makeConstraints { make in
+//                make.centerY.equalToSuperview()
+//                make.left.equalTo(v5.snp.right).offset(5)
+//                make.width.height.equalTo(15)
+//            }
+        }
+        else if t<3 {
+            // 2 stars
+            let v1 = getStar(yellow: true)
+            view.addArrangedSubview(v1)
+            v1.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalToSuperview()
+                make.width.height.equalTo(15)
+            }
+            let v2 = getStar(yellow: true)
+            view.addArrangedSubview(v2)
+            v2.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v1.snp.right).offset(5)
+                make.width.height.equalTo(15)
+            }
+            let v3 = getStar(yellow: false)
+            view.addArrangedSubview(v3)
+            v3.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v2.snp.right).offset(5)
+                make.width.height.equalTo(17)
+            }
+            let v4 = getStar(yellow: false)
+            view.addArrangedSubview(v4)
+            v4.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v3.snp.right).offset(5)
+                make.width.height.equalTo(17)
+            }
+            let v5 = getStar(yellow: false)
+            view.addArrangedSubview(v5)
+            v5.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v4.snp.right).offset(5)
+                make.width.height.equalTo(17)
+            }
+//            let v6 = UIImageView()
+//            v6.image = UIImage(named: "testForBug")
+//            view.addArrangedSubview(v6)
+//            v6.snp.makeConstraints { make in
+//                make.centerY.equalToSuperview()
+//                make.left.equalTo(v5.snp.right).offset(5)
+//                make.width.height.equalTo(15)
+//            }
+        }
+        else if t<4 {
+           // 3 stars
+            let v1 = getStar(yellow: true)
+            view.addArrangedSubview(v1)
+            v1.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalToSuperview()
+                make.width.height.equalTo(15)
+            }
+            let v2 = getStar(yellow: true)
+            view.addArrangedSubview(v2)
+            v2.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v1.snp.right).offset(5)
+                make.width.height.equalTo(15)
+            }
+            let v3 = getStar(yellow: true)
+            view.addArrangedSubview(v3)
+            v3.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v2.snp.right).offset(5)
+                make.width.height.equalTo(15)
+            }
+            let v4 = getStar(yellow: false)
+            view.addArrangedSubview(v4)
+            v4.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v3.snp.right).offset(5)
+                make.width.height.equalTo(17)
+            }
+            let v5 = getStar(yellow: false)
+            view.addArrangedSubview(v5)
+            v5.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v4.snp.right).offset(5)
+                make.width.height.equalTo(17)
+            }
+//            let v6 = UIImageView()
+//            v6.image = UIImage(named: "testForBug")
+//            view.addArrangedSubview(v6)
+//            v6.snp.makeConstraints { make in
+//                make.centerY.equalToSuperview()
+//                make.left.equalTo(v5.snp.right).offset(5)
+//                make.width.height.equalTo(15)
+//            }
+        }
+        else if t<5 {
+            // 4 stars
+            let v1 = getStar(yellow: true)
+            view.addArrangedSubview(v1)
+            v1.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalToSuperview()
+                make.width.height.equalTo(15)
+            }
+            let v2 = getStar(yellow: true)
+            view.addArrangedSubview(v2)
+            v2.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v1.snp.right).offset(5)
+                make.width.height.equalTo(15)
+            }
+            let v3 = getStar(yellow: true)
+            view.addArrangedSubview(v3)
+            v3.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v2.snp.right).offset(5)
+                make.width.height.equalTo(15)
+            }
+            let v4 = getStar(yellow: true)
+            view.addArrangedSubview(v4)
+            v4.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v3.snp.right).offset(5)
+                make.width.height.equalTo(15)
+            }
+            let v5 = getStar(yellow: false)
+            view.addArrangedSubview(v5)
+            v5.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v4.snp.right).offset(5)
+                make.width.height.equalTo(16)
+            }
+//            let v6 = UIImageView()
+//            v6.image = UIImage(named: "testForBug")
+//            view.addArrangedSubview(v6)
+//            v6.snp.makeConstraints { make in
+//                make.centerY.equalToSuperview()
+//                make.left.equalTo(v5.snp.right).offset(5)
+//                make.width.height.equalTo(17)
+//            }
+        }
+        else {
+            let v1 = getStar(yellow: true)
+            view.addArrangedSubview(v1)
+            v1.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalToSuperview()
+                make.width.height.equalTo(15)
+            }
+            let v2 = getStar(yellow: true)
+            view.addArrangedSubview(v2)
+            v2.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v1.snp.right).offset(5)
+                make.width.height.equalTo(15)
+            }
+            let v3 = getStar(yellow: true)
+            view.addArrangedSubview(v3)
+            v3.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v2.snp.right).offset(5)
+                make.width.height.equalTo(15)
+            }
+            let v4 = getStar(yellow: true)
+            view.addArrangedSubview(v4)
+            v4.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v3.snp.right).offset(5)
+                make.width.height.equalTo(15)
+            }
+            let v5 = getStar(yellow: true)
+            view.addArrangedSubview(v5)
+            v5.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v4.snp.right).offset(5)
+                make.width.height.equalTo(15)
+            }
+//            let v6 = UIImageView()
+//            v6.image = UIImage(named: "testForBug")
+//            view.addArrangedSubview(v6)
+//            v6.snp.makeConstraints { make in
+//                make.centerY.equalToSuperview()
+//                make.left.equalTo(v5.snp.right).offset(5)
+//                make.width.height.equalTo(15)
+//            }
+        }
+        return view
     }
 }

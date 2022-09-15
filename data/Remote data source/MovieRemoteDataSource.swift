@@ -9,15 +9,20 @@ class MovieRemoteDataSource: MovieRemoteDataSourceProtocol {
     }
     func fetch(typeOf:String) -> Promise<MovieRemoteDTO> {
         let promise = Promise<MovieRemoteDTO>.pending()
-        var url:String = "https://api.themoviedb.org/3/movie/popular?api_key=3a0a1bb6b1ceffd7114757c7a605777d"
+        var url:String = "https://api.themoviedb.org/3/discover/movie?api_key=3a0a1bb6b1ceffd7114757c7a605777d"
         if typeOf == "top_rated" {
             url = "https://api.themoviedb.org/3/movie/top_rated?api_key=3a0a1bb6b1ceffd7114757c7a605777d"
         }
-        else if typeOf == "upcoming" {
-        url = "https://api.themoviedb.org/3/movie/upcoming?api_key=3a0a1bb6b1ceffd7114757c7a605777d"
+        else if typeOf == "general" {
+            url = "https://api.themoviedb.org/3/discover/movie?api_key=3a0a1bb6b1ceffd7114757c7a605777d"
+        }
+        else if typeOf == "popular" {
+        url = "https://api.themoviedb.org/3/movie/popular?api_key=3a0a1bb6b1ceffd7114757c7a605777d"
         }
         else if typeOf == "kids" {
             url = "https://api.themoviedb.org/3/discover/movie?api_key=3a0a1bb6b1ceffd7114757c7a605777d&with_genres=16"
+        } else {
+         url = "https://api.themoviedb.org/3/search/movie?api_key=3a0a1bb6b1ceffd7114757c7a605777d&query=\(typeOf)"
         }
         networkProvider.request(url)
             .responseDecodable(of: MovieRemoteDTO.self){ response in

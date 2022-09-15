@@ -20,7 +20,7 @@ class CustomTableViewCell:UITableViewCell {
         let icon = UIImageView()
         icon.clipsToBounds = true
         icon.layer.masksToBounds = true
-        icon.layer.cornerRadius = 12
+        icon.layer.cornerRadius = 18
         return icon
     }()
     
@@ -39,13 +39,13 @@ class CustomTableViewCell:UITableViewCell {
             make.left.equalToSuperview().offset(40)
             make.top.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-40)
-            make.height.width.equalTo(200)
+            make.height.width.equalTo(250)
         }
         title.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(40)
             make.top.equalTo(backdropPath.snp.bottom).offset(10)
             make.right.equalToSuperview().offset(-40)
-            make.bottom.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-10)
         }
     }
     
