@@ -23,7 +23,7 @@ import domain
         let tbView = UITableView()
         tbView.delegate = self
         tbView.dataSource = self
-        tbView.register(CustomTableViewCell.self, forCellReuseIdentifier: "cell")
+        tbView.register(CustomHomeVCTableViewCell.self, forCellReuseIdentifier: "cell")
       //tbView.separatorStyle = .none
         return tbView
     }()
@@ -61,12 +61,15 @@ import domain
     @objc func handleChanged(){
         if segmentedControl.selectedSegmentIndex == 0 {
             getData(typeOf: "general")
+            tableViewTopMovie.scrollToRow(at: NSIndexPath(row: 0, section: 0) as IndexPath, at: .top, animated: true)
         }
         else if segmentedControl.selectedSegmentIndex == 1 {
             getData(typeOf: "top_rated")
+            tableViewTopMovie.scrollToRow(at: NSIndexPath(row: 0, section: 0) as IndexPath, at: .top, animated: true)
         }
         else if segmentedControl.selectedSegmentIndex == 2 {
             getData(typeOf: "kids")
+            tableViewTopMovie.scrollToRow(at: NSIndexPath(row: 0, section: 0) as IndexPath, at: .top, animated: true)
         }
     }
 }
@@ -75,7 +78,7 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource {
         return dataForTableView.count
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomHomeVCTableViewCell
         cell.backgroundColor = .systemBackground
                 let url = "\(self.baseImageUrl)\((self.dataForTableView[indexPath.row].backdropPath) ?? "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")"
                 cell.backdropPath.imageFromServerURL(url, placeHolder:nil)

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class CustomTableViewCell:UITableViewCell {
+class CustomHomeVCTableViewCell:UITableViewCell {
     lazy var title: UILabel = {
         let text = UILabel()
         text.textColor = .black

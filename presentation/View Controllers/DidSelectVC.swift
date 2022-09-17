@@ -11,10 +11,37 @@ import SnapKit
 import CloudKit
 
 public class DidSelectVC: BaseViewController<TrailerViewModel> {
-  //  var trailerArr : [TrailerEntity.ResultTrailer] = []
     private let allData: MovieEntity.ResultEntity
     let base = "https://image.tmdb.org/t/p/w500"
     var urlTrailer = URL(string: "https://www.youtube.com/watch?v=W9JHZwtObqs")
+    private let scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let scrollStackViewContainer: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 13
+        view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+    }()
+    
+    private lazy var addComment:UITextField = {
+        let view = UITextField()
+        view.placeholder = "add comment"
+        view.textColor = .black
+        return view
+    }()
+    
+    private lazy var addCommentTableView:UITableView = {
+        let view = UITableView()
+        view.delegate = self
+        view.dataSource = self
+        view.register(CustomDidSelectTableViewCell.self, forCellReuseIdentifier: "cell")
+        return view
+    }()
     
     init(allData: MovieEntity.ResultEntity,
          vm: TrailerViewModel,
@@ -28,37 +55,13 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private let scrollView: UIScrollView = {
-        let view = UIScrollView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let scrollStackViewContainer: UIStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.spacing = 15
-        view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-    }()
-    @objc func onClick(){
-        if let url = URL(string: "https://www.themoviedb.org/movie/\(allData.id ?? 45673)-\((allData.title ?? "luck").exchangeWrapToDash(name: allData.title ?? "luck") )") {
-            UIApplication.shared.open(url)
-        }
-    }
-    @objc func onClickTrailer(){
-        //if let url = URL(string: "https://www.youtube.com/watch?v=\(trailerArr[0].key)") {
-        UIApplication.shared.open(urlTrailer!)
-        //}
-    }
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = allData.title
         self.vm.getTrailer(id: allData.id)
             .then({ tr in
-//                self.trailerArr = tr.results
-                self.urlTrailer = URL(string: "https://www.youtube.com/watch?v=\(tr.results[0].key)")!
+                self.urlTrailer = URL(string: "https://www.youtube.com/watch?v=\(tr.results[0].key ?? "W9JHZwtObqs")")!
             })
         setup()
     }
@@ -76,18 +79,24 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         name.textColor = .black
         return name
     }
-    
+    @objc func onClick(){
+        if let url = URL(string: "https://www.themoviedb.org/movie/\(allData.id ?? 45673)-\((allData.title ?? "luck").exchangeWrapToDash(name: allData.title ?? "luck") )") {
+            UIApplication.shared.open(url)
+        }
+    }
+    @objc func onClickTrailer(){
+        //if let url = URL(string: "https://www.youtube.com/watch?v=\(trailerArr[0].key)") {
+        UIApplication.shared.open(urlTrailer!)
+        //}
+    }
     private func setup(){
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(scrollStackViewContainer)
         let url = "\(self.base)\((self.allData.backdropPath) ?? "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")"
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
-//        tap.numberOfTapsRequired = 2
         let image = UIImageView()
         self.view.addSubview(image)
         image.layer.cornerRadius = 24
         image.layer.masksToBounds = true
-//        image.addGestureRecognizer(tap)
         image.imageFromServerURL(url, placeHolder: nil)
         image.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(100)
@@ -150,7 +159,7 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         let getTrailerText = getLabel(name: "Trailer:", main: false)
         getTrailerText.text = "Trailer:"
         getTrailerText.snp.makeConstraints { make in
-            make.top.equalTo(releaseDate.snp.bottom).offset(20)
+            make.top.equalTo(releaseDate.snp.bottom).offset(10)
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
@@ -161,14 +170,15 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         getTrailerLink.setTitleColor(.blue, for: .normal)
         getTrailerLink.addTarget(self, action: #selector(onClickTrailer), for: .touchUpInside)
         getTrailerLink.snp.makeConstraints { make in
-            make.top.equalTo(getTrailerText.snp.bottom)
+            make.top.equalTo(getTrailerText.snp.bottom).offset(5)
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+            make.centerX.equalTo(self.scrollStackViewContainer.snp.centerX)
+           // make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
         let moreInfo = getLabel(name: "moreInfo",main: false)
-        moreInfo.text = "More information:"
+        moreInfo.text = "More information in official site:"
         moreInfo.snp.makeConstraints { make in
-            make.top.equalTo(getTrailerLink.snp.bottom).offset(20)
+            make.top.equalTo(getTrailerLink.snp.bottom).offset(10)
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
@@ -179,16 +189,27 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         moreInfoLink.setTitleColor(.blue, for: .normal)
         moreInfoLink.addTarget(self, action: #selector(onClick), for: .touchUpInside)
         moreInfoLink.snp.makeConstraints { make in
-            make.top.equalTo(moreInfo.snp.bottom)
+            make.top.equalTo(moreInfo.snp.bottom).offset(5)
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+            make.centerX.equalTo(self.scrollStackViewContainer.snp.centerX)
         }
+//        self.scrollStackViewContainer.addArrangedSubview(addComment)
+//        addComment.snp.makeConstraints { make in
+//            make.top.equalTo(getTrailerLink.snp.bottom).offset(20)
+//            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
+//            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+//        }
+//        self.scrollStackViewContainer.addArrangedSubview(addCommentTableView)
+//        addCommentTableView.snp.makeConstraints { make in
+//            make.top.equalTo(addComment.snp.bottom)
+//            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
+//            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+//            //make.bottom.equalTo(moreInfo.snp.top)
+//        }
+        
+        
     }
-//    @objc func doubleTapped() {
-//        print("double clicked")
-//
-//
-//    }
+
     private func setupAvarage(voteAvarage:Double) ->UIStackView {
         let view = UIStackView()
         view.axis = .horizontal
@@ -243,14 +264,14 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
                 make.left.equalTo(v4.snp.right).offset(5)
                 make.width.height.equalTo(16)
             }
-//            let v6 = UIImageView()
-//            v6.image = UIImage(named: "testForBug")
-//            view.addArrangedSubview(v6)
-//            v6.snp.makeConstraints { make in
-//                make.centerY.equalToSuperview()
-//                make.left.equalTo(v5.snp.right).offset(5)
-//                make.width.height.equalTo(15)
-//            }
+            let v6 = UIImageView()
+            v6.image = UIImage()
+            view.addArrangedSubview(v6)
+            v6.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v5.snp.right).offset(5)
+                make.width.height.equalTo(17)
+            }
         }
         else if t<3 {
             // 2 stars
@@ -289,14 +310,14 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
                 make.left.equalTo(v4.snp.right).offset(5)
                 make.width.height.equalTo(17)
             }
-//            let v6 = UIImageView()
-//            v6.image = UIImage(named: "testForBug")
-//            view.addArrangedSubview(v6)
-//            v6.snp.makeConstraints { make in
-//                make.centerY.equalToSuperview()
-//                make.left.equalTo(v5.snp.right).offset(5)
-//                make.width.height.equalTo(15)
-//            }
+            let v6 = UIImageView()
+            v6.image = UIImage()
+            view.addArrangedSubview(v6)
+            v6.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v5.snp.right).offset(5)
+                make.width.height.equalTo(17)
+            }
         }
         else if t<4 {
            // 3 stars
@@ -335,14 +356,14 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
                 make.left.equalTo(v4.snp.right).offset(5)
                 make.width.height.equalTo(17)
             }
-//            let v6 = UIImageView()
-//            v6.image = UIImage(named: "testForBug")
-//            view.addArrangedSubview(v6)
-//            v6.snp.makeConstraints { make in
-//                make.centerY.equalToSuperview()
-//                make.left.equalTo(v5.snp.right).offset(5)
-//                make.width.height.equalTo(15)
-//            }
+            let v6 = UIImageView()
+            v6.image = UIImage()
+            view.addArrangedSubview(v6)
+            v6.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v5.snp.right).offset(5)
+                make.width.height.equalTo(17)
+            }
         }
         else if t<5 {
             // 4 stars
@@ -381,14 +402,14 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
                 make.left.equalTo(v4.snp.right).offset(5)
                 make.width.height.equalTo(16)
             }
-//            let v6 = UIImageView()
-//            v6.image = UIImage(named: "testForBug")
-//            view.addArrangedSubview(v6)
-//            v6.snp.makeConstraints { make in
-//                make.centerY.equalToSuperview()
-//                make.left.equalTo(v5.snp.right).offset(5)
-//                make.width.height.equalTo(17)
-//            }
+            let v6 = UIImageView()
+            v6.image = UIImage()
+            view.addArrangedSubview(v6)
+            v6.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v5.snp.right).offset(5)
+                make.width.height.equalTo(17)
+            }
         }
         else {
             let v1 = getStar(yellow: true)
@@ -426,15 +447,42 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
                 make.left.equalTo(v4.snp.right).offset(5)
                 make.width.height.equalTo(15)
             }
-//            let v6 = UIImageView()
-//            v6.image = UIImage(named: "testForBug")
-//            view.addArrangedSubview(v6)
-//            v6.snp.makeConstraints { make in
-//                make.centerY.equalToSuperview()
-//                make.left.equalTo(v5.snp.right).offset(5)
-//                make.width.height.equalTo(15)
-//            }
+            let v6 = UIImageView()
+            v6.image = UIImage()
+            view.addArrangedSubview(v6)
+            v6.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.left.equalTo(v5.snp.right).offset(5)
+                make.width.height.equalTo(17)
+            }
         }
         return view
     }
+}
+extension DidSelectVC : UITableViewDelegate, UITableViewDataSource {
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomDidSelectTableViewCell
+        let label = UILabel()
+        cell.addSubview(label)
+        let name = ["azik","yunka"]
+        let surname = ["Heydarov","Azizli"]
+        let comment = ["That is so good","perfect!"]
+        let time = ["00:17 AM","03:13 AM"]
+        cell.backgroundColor = .systemBackground
+        label.text = name[indexPath.row]
+        cell.name = label
+        label.text = surname[indexPath.row]
+        cell.surname = label
+        label.text = comment[indexPath.row]
+        cell.comment = label
+        label.text = time[indexPath.row]
+        cell.time = label
+        return cell
+    }
+
 }

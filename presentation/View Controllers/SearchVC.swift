@@ -16,7 +16,7 @@ public class SearchVC: BaseViewController<MovieViewModel> {
         view.delegate = self
         view.dataSource = self
         //view.backgroundColor = .red
-        view.register(CustomTableViewCell.self, forCellReuseIdentifier: "cell")
+        view.register(CustomHomeVCTableViewCell.self, forCellReuseIdentifier: "cell")
       //tbView.separatorStyle = .none
         return view
     }()
@@ -66,7 +66,7 @@ extension SearchVC:UISearchResultsUpdating,UITableViewDelegate,UITableViewDataSo
         return dataForTableView.count
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomHomeVCTableViewCell
         
                 let url = "\(self.baseImageUrl)\((self.dataForTableView[indexPath.row].backdropPath) ?? "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")"
                 cell.backdropPath.imageFromServerURL(url, placeHolder:nil)
