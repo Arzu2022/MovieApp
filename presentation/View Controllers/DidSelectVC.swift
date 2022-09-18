@@ -13,7 +13,10 @@ import CloudKit
 public class DidSelectVC: BaseViewController<TrailerViewModel> {
     private let allData: MovieEntity.ResultEntity
     let base = "https://image.tmdb.org/t/p/w500"
+   // go on
+   // var youtubeBase = "https://img.youtube.com/vi/\(key)/0.jpg"
     var urlTrailer = URL(string: "https://www.youtube.com/watch?v=W9JHZwtObqs")
+    var keyForYoutube :String?
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -62,8 +65,10 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         self.vm.getTrailer(id: allData.id)
             .then({ tr in
                 self.urlTrailer = URL(string: "https://www.youtube.com/watch?v=\(tr.results[0].key ?? "W9JHZwtObqs")")!
+                self.keyForYoutube = tr.results[0].key ?? "W9JHZwtObqs"
+                //print("keyForYoutube \( self.keyForYoutube ?? "tttt"))")
+                self.setup()
             })
-        setup()
     }
     
     private func getLabel(name:String,main:Bool) -> UILabel{
@@ -80,21 +85,22 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         return name
     }
     @objc func onClick(){
-        if let url = URL(string: "https://www.themoviedb.org/movie/\(allData.id ?? 45673)-\((allData.title ?? "luck").exchangeWrapToDash(name: allData.title ?? "luck") )") {
+        if let url = URL(string: "https://www.themoviedb.org/movie/\(allData.id )-\((allData.title ?? "luck").exchangeWrapToDash(name: allData.title ?? "luck") )") {
             UIApplication.shared.open(url)
         }
-    }
-    @objc func onClickTrailer(){
-        //if let url = URL(string: "https://www.youtube.com/watch?v=\(trailerArr[0].key)") {
-        UIApplication.shared.open(urlTrailer!)
-        //}
     }
     private func setup(){
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(scrollStackViewContainer)
         let url = "\(self.base)\((self.allData.backdropPath) ?? "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")"
+        
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(self.onClickMoreInfo(_:)))
+        tap2.numberOfTapsRequired = 2
+        
         let image = UIImageView()
         self.view.addSubview(image)
+        image.addGestureRecognizer(tap2)
+        image.isUserInteractionEnabled = true
         image.layer.cornerRadius = 24
         image.layer.masksToBounds = true
         image.imageFromServerURL(url, placeHolder: nil)
@@ -126,7 +132,6 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
             make.height.equalTo(30)
-            //make.width.equalTo(95)
         }
         let popularity = getLabel(name: "popularity",main: false)
         popularity.text = "Popularity: \(allData.popularity ?? 156.765)"
@@ -163,53 +168,40 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
         }
-        let getTrailerLink = UIButton()
-        self.scrollStackViewContainer.addArrangedSubview(getTrailerLink)
-        getTrailerLink.setTitle("https://www.youtube.com/watch?v=bGasd5t", for: .normal)
-        getTrailerLink.titleLabel?.numberOfLines = 0
-        getTrailerLink.setTitleColor(.blue, for: .normal)
-        getTrailerLink.addTarget(self, action: #selector(onClickTrailer), for: .touchUpInside)
-        getTrailerLink.snp.makeConstraints { make in
-            make.top.equalTo(getTrailerText.snp.bottom).offset(5)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.centerX.equalTo(self.scrollStackViewContainer.snp.centerX)
-           // make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
-        }
-        let moreInfo = getLabel(name: "moreInfo",main: false)
-        moreInfo.text = "More information in official site:"
-        moreInfo.snp.makeConstraints { make in
-            make.top.equalTo(getTrailerLink.snp.bottom).offset(10)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.onClickTrailer(_:)))
+        let imagePathToYoutube = UIImageView()
+        self.scrollStackViewContainer.addArrangedSubview(imagePathToYoutube)
+        imagePathToYoutube.layer.cornerRadius = 12
+        imagePathToYoutube.layer.masksToBounds = true
+        imagePathToYoutube.isUserInteractionEnabled = true
+        imagePathToYoutube.addGestureRecognizer(tap)
+        print("keyForYoutube \(keyForYoutube ?? "key in setup")")
+        imagePathToYoutube.imageFromServerURL("https://img.youtube.com/vi/\(keyForYoutube ?? "")/0.jpg", placeHolder: nil)
+        imagePathToYoutube.snp.makeConstraints { make in
+            make.top.equalTo(getTrailerText.snp.bottom).offset(100)
             make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
             make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+            make.height.equalTo(200)
         }
-        let moreInfoLink = UIButton()
-        self.scrollStackViewContainer.addArrangedSubview(moreInfoLink)
-        moreInfoLink.setTitle("https://www.themoviedb.org/movie/fqRbu2u", for: .normal)
-        moreInfoLink.titleLabel?.numberOfLines = 0
-        moreInfoLink.setTitleColor(.blue, for: .normal)
-        moreInfoLink.addTarget(self, action: #selector(onClick), for: .touchUpInside)
-        moreInfoLink.snp.makeConstraints { make in
-            make.top.equalTo(moreInfo.snp.bottom).offset(5)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.centerX.equalTo(self.scrollStackViewContainer.snp.centerX)
-        }
-//        self.scrollStackViewContainer.addArrangedSubview(addComment)
-//        addComment.snp.makeConstraints { make in
-//            make.top.equalTo(getTrailerLink.snp.bottom).offset(20)
-//            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-//            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
-//        }
-//        self.scrollStackViewContainer.addArrangedSubview(addCommentTableView)
-//        addCommentTableView.snp.makeConstraints { make in
-//            make.top.equalTo(addComment.snp.bottom)
-//            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-//            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
-//            //make.bottom.equalTo(moreInfo.snp.top)
-//        }
         
+        let imagePathToYoutubet = UIImageView()
+        self.view.addSubview(imagePathToYoutubet)
+        imagePathToYoutubet.image = Asset.icYoutube.image
+        imagePathToYoutubet.snp.makeConstraints { make in
+            make.height.equalTo(40)
+            make.width.equalTo(60)
+            make.center.equalTo(imagePathToYoutube.snp.center)
+        }
         
     }
-
+    @objc func onClickTrailer(_ sender: UITapGestureRecognizer){
+        UIApplication.shared.open(urlTrailer!)
+    }
+    @objc func onClickMoreInfo(_ sender: UITapGestureRecognizer){
+        if let url = URL(string: "https://www.themoviedb.org/movie/\(allData.id )-\((allData.title ?? "luck").exchangeWrapToDash(name: allData.title ?? "luck") )") {
+                    UIApplication.shared.open(url)
+                }
+    }
     private func setupAvarage(voteAvarage:Double) ->UIStackView {
         let view = UIStackView()
         view.axis = .horizontal
@@ -464,7 +456,6 @@ extension DidSelectVC : UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
-    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomDidSelectTableViewCell
         let label = UILabel()
