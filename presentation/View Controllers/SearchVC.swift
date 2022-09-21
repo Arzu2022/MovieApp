@@ -39,6 +39,7 @@ public class SearchVC: BaseViewController<MovieViewModel> {
         setup()
     }
     private func setup(){
+        self.title = "Search Page"
         self.view.addSubview(tableView)
         searchBar.searchResultsUpdater = self
         navigationItem.searchController = searchBar

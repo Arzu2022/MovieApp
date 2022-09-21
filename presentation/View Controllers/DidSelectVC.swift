@@ -13,8 +13,6 @@ import CloudKit
 public class DidSelectVC: BaseViewController<TrailerViewModel> {
     private let allData: MovieEntity.ResultEntity
     let base = "https://image.tmdb.org/t/p/w500"
-   // go on
-   // var youtubeBase = "https://img.youtube.com/vi/\(key)/0.jpg"
     var urlTrailer = URL(string: "https://www.youtube.com/watch?v=W9JHZwtObqs")
     var keyForYoutube :String?
     private let scrollView: UIScrollView = {
@@ -22,7 +20,6 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
     private let scrollStackViewContainer: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -30,14 +27,12 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         view.translatesAutoresizingMaskIntoConstraints = false
     return view
     }()
-    
     private lazy var addComment:UITextField = {
         let view = UITextField()
         view.placeholder = "add comment"
         view.textColor = .black
         return view
     }()
-    
     private lazy var addCommentTableView:UITableView = {
         let view = UITableView()
         view.delegate = self
@@ -45,7 +40,6 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         view.register(CustomDidSelectTableViewCell.self, forCellReuseIdentifier: "cell")
         return view
     }()
-    
     init(allData: MovieEntity.ResultEntity,
          vm: TrailerViewModel,
          router: RouterProtocol
@@ -53,20 +47,19 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         self.allData = allData
         super.init(vm: vm, router: router)
     }
-    
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = allData.title
         self.vm.getTrailer(id: allData.id)
             .then({ tr in
-                self.urlTrailer = URL(string: "https://www.youtube.com/watch?v=\(tr.results[0].key ?? "W9JHZwtObqs")")!
-                self.keyForYoutube = tr.results[0].key ?? "W9JHZwtObqs"
-                //print("keyForYoutube \( self.keyForYoutube ?? "tttt"))")
+                if tr.results[0].key != nil {
+                    self.urlTrailer = URL(string: "https://www.youtube.com/watch?v=\(tr.results[0].key ?? "W9JHZwtObqs")")!
+                    self.keyForYoutube = tr.results[0].key ?? "W9JHZwtObqs"
+                }
                 self.setup()
             })
     }
@@ -171,7 +164,7 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.onClickTrailer(_:)))
         let imagePathToYoutube = UIImageView()
         self.scrollStackViewContainer.addArrangedSubview(imagePathToYoutube)
-        imagePathToYoutube.layer.cornerRadius = 12
+        imagePathToYoutube.layer.cornerRadius = 18
         imagePathToYoutube.layer.masksToBounds = true
         imagePathToYoutube.isUserInteractionEnabled = true
         imagePathToYoutube.addGestureRecognizer(tap)

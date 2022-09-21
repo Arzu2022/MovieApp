@@ -7,7 +7,7 @@ import Alamofire
 
 public class DataAssembly:Assembly {
    public init(){
-        
+       
     }
    let session = Session(eventMonitors: [ AlamofireLogger() ])
    public func assemble(container: Container) {

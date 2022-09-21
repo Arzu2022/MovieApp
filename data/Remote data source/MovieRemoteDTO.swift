@@ -37,12 +37,5 @@ public struct Result:Decodable {
         case voteCount = "vote_count"
     }
 }
- 
-//public enum OriginalLanguage: String, Decodable {
-//    case en = "en"
-//    case te = "te"
-//    case es = "es"
-//    case ja = "ja"
-//    case pl = "pl"
-//}
+
 

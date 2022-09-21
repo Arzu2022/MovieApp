@@ -35,6 +35,7 @@ import domain
     }
     
     private func setup() {
+        self.title = "Home Page"
         self.view.backgroundColor = .black
         self.view.addSubview(segmentedControl)
         view.backgroundColor = .white

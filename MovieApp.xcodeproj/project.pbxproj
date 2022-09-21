@@ -86,8 +86,8 @@
 		FAE981D528B67C6400D9C0AC = {
 			isa = PBXGroup;
 			children = (
-				FAE9829F28BAB54D00D9C0AC /* domain.xcodeproj */,
 				FAE9828528BAB53300D9C0AC /* data.xcodeproj */,
+				FAE9829F28BAB54D00D9C0AC /* domain.xcodeproj */,
 				FAE9826B28BAB50A00D9C0AC /* presentation.xcodeproj */,
 				FAE981E028B67C6400D9C0AC /* MovieApp */,
 				FAE981DF28B67C6400D9C0AC /* Products */,
@@ -162,6 +162,8 @@
 			dependencies = (
 			);
 			name = MovieApp;
+			packageProductDependencies = (
+			);
 			productName = MovieApp;
 			productReference = FAE981DE28B67C6400D9C0AC /* MovieApp.app */;
 			productType = "com.apple.product-type.application";
@@ -190,6 +192,8 @@
 				Base,
 			);
 			mainGroup = FAE981D528B67C6400D9C0AC;
+			packageReferences = (
+			);
 			productRefGroup = FAE981DF28B67C6400D9C0AC /* Products */;
 			projectDirPath = "";
 			projectReferences = (
