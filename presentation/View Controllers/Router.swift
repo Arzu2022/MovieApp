@@ -54,11 +54,7 @@ public class Router: RouterProtocol {
     }
     
     public func tabbarController() -> TabBar {
-        let tabbar = TabBar(
-            vm: resolver.resolve(MovieViewModel.self)!,
-            router: self
-        )
-        return tabbar
+        resolver.resolve(TabBar.self)!
     }
     
 }

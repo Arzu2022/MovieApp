@@ -21,8 +21,10 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
         do {
             try auth.signOut()
             let loginvc:UIViewController = self.router.loginVC()
-            self.navigationController?.isNavigationBarHidden = true
-            self.navigationController?.pushViewController(loginvc, animated: true)
+            let tabBar = self.router.tabbarController()
+            tabBar.navigationController?.viewControllers = [loginvc]
+//            tabBar.navigationController?.isNavigationBarHidden = true
+//            tabBar.navigationController?.pushViewController(loginvc, animated: true)
         } catch {
             makeAlert(title: "Error!", message: error.localizedDescription)
         }
@@ -61,6 +63,12 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
         
         return view
     }()
+    override init(vm: MovieViewModel, router: RouterProtocol) {
+        super.init(vm: vm, router: router)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     public override func viewDidLoad() {
         super.viewDidLoad()
         //view.backgroundColor = .blue

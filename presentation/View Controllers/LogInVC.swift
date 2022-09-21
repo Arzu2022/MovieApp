@@ -13,6 +13,18 @@ import Alamofire
 import SwiftUI
 public class LogInVC:BaseViewController<MovieViewModel> {
     let auth = FirebaseAuth.Auth.auth()
+    private lazy var showPassword:UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage.init(systemName: "eye"), for: .normal)
+        btn.addTarget(self, action: #selector(onClickShowPassword), for: .touchUpInside)
+        return btn
+    }()
+    private lazy var showRepassword:UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(systemName: "eye"), for: .normal)
+        btn.addTarget(self, action: #selector(onClickShowRepassword), for: .touchUpInside)
+        return btn
+    }()
     private lazy var loginText:UILabel = {
         let text = UILabel()
         text.text = "Login Page"
@@ -136,22 +148,21 @@ public class LogInVC:BaseViewController<MovieViewModel> {
         text.addTarget(self, action: #selector(backLoginFunc), for: .touchUpInside)
         return text
     }()
-    
     private lazy var username:UITextField = {
-        let text = UITextField()
-        text.placeholder = "Enter username"
-        text.layer.borderWidth = 1
-        text.layer.masksToBounds = true
-        text.layer.cornerRadius = 8
-        text.textColor = .black
-        text.autocapitalizationType = .none
-        text.autocorrectionType = .no
-        text.layer.borderColor = UIColor.gray.cgColor
-        text.textAlignment = .left
-        text.addPaddingToTextField()
-        text.font = UIFont(font: FontFamily.PTSans.regular, size: 17)
-        return text
-    }()
+    let text = UITextField()
+    text.placeholder = "Enter username"
+    text.layer.borderWidth = 1
+    text.layer.masksToBounds = true
+    text.layer.cornerRadius = 8
+    text.textColor = .black
+    text.autocapitalizationType = .none
+    text.autocorrectionType = .no
+    text.layer.borderColor = UIColor.gray.cgColor
+    text.textAlignment = .left
+    text.addPaddingToTextField()
+    text.font = UIFont(font: FontFamily.PTSans.regular, size: 17)
+    return text
+}()
     private lazy var email:UITextField = {
         let text = UITextField()
         text.placeholder = "Enter email"
@@ -201,7 +212,23 @@ public class LogInVC:BaseViewController<MovieViewModel> {
         text.font = UIFont(font: FontFamily.PTSans.regular, size: 17)
         return text
     }()
-    
+    @objc func onClickShowPassword(){
+        if password.isSecureTextEntry {
+            showPassword.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        }else {
+            showPassword.setImage(UIImage(systemName: "eye"), for: .normal)
+        }
+        password.isSecureTextEntry.toggle()
+        
+    }
+    @objc func onClickShowRepassword(){
+        if repassword.isSecureTextEntry {
+            showRepassword.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        }else {
+            showRepassword.setImage(UIImage(systemName: "eye"), for: .normal)
+        }
+        repassword.isSecureTextEntry.toggle()
+    }
     override init(vm: MovieViewModel, router: RouterProtocol) {
         super.init(vm: vm, router: router)
     }
@@ -221,6 +248,8 @@ public class LogInVC:BaseViewController<MovieViewModel> {
         self.password.removeFromSuperview()
         self.login.removeFromSuperview()
         self.createAccount.removeFromSuperview()
+        self.showPassword.removeFromSuperview()
+        self.forgotPassword.removeFromSuperview()
         setupRegister()
         print("tapped to go signUp")
     }
@@ -234,6 +263,8 @@ public class LogInVC:BaseViewController<MovieViewModel> {
         self.repassword.removeFromSuperview()
         self.register.removeFromSuperview()
         self.backLogin.removeFromSuperview()
+        self.showPassword.removeFromSuperview()
+        self.showRepassword.removeFromSuperview()
         setupLogin()
         print("tapped to BackLogin")
     }
@@ -271,6 +302,8 @@ public class LogInVC:BaseViewController<MovieViewModel> {
         self.view.addSubview(repassword)
         self.view.addSubview(register)
         self.view.addSubview(backLogin)
+        self.view.addSubview(showPassword)
+        self.view.addSubview(showRepassword)
         password.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         repassword.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         email.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
@@ -299,12 +332,24 @@ public class LogInVC:BaseViewController<MovieViewModel> {
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
         }
+        showPassword.snp.makeConstraints { make in
+            make.centerY.equalTo(password.snp.centerY)
+            make.right.equalTo(password.snp.right).offset(-6)
+            make.height.equalTo(20)
+            make.width.equalTo(30)
+        }
         repassword.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(password.snp.bottom).offset(20)
             make.height.equalTo(40)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
+        }
+        showRepassword.snp.makeConstraints { make in
+            make.centerY.equalTo(repassword.snp.centerY)
+            make.right.equalTo(repassword.snp.right).offset(-6)
+            make.height.equalTo(20)
+            make.width.equalTo(30)
         }
         register.snp.makeConstraints { make in
             make.right.equalTo(self.repassword.snp.right)
@@ -324,6 +369,7 @@ public class LogInVC:BaseViewController<MovieViewModel> {
         self.view.addSubview(login)
         self.view.addSubview(createAccount)
         self.view.addSubview(forgotPassword)
+        self.view.addSubview(showPassword)
         password.addTarget(self, action: #selector(textFieldDidChangeLogin), for: .editingChanged)
         email.addTarget(self, action: #selector(textFieldDidChangeLogin), for: .editingChanged)
         password.snp.makeConstraints { make in
@@ -331,6 +377,12 @@ public class LogInVC:BaseViewController<MovieViewModel> {
             make.height.equalTo(40)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
+        }
+        showPassword.snp.makeConstraints { make in
+            make.centerY.equalTo(password.snp.centerY)
+            make.right.equalTo(password.snp.right).offset(-6)
+            make.height.equalTo(20)
+            make.width.equalTo(30)
         }
         email.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA0C29A328DB759300233A49 /* 10796-clapperboard-investment-movie.json in Resources */ = {isa = PBXBuildFile; fileRef = FA0C299E28DB759300233A49 /* 10796-clapperboard-investment-movie.json */; };
+		FA0C29A428DB759300233A49 /* 92678-movie.json in Resources */ = {isa = PBXBuildFile; fileRef = FA0C29A228DB759300233A49 /* 92678-movie.json */; };
 		FA8A845B28D61179004F4CCF /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8A845A28D61178004F4CCF /* Media.xcassets */; };
 		FAE981E228B67C6400D9C0AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE981E128B67C6400D9C0AC /* AppDelegate.swift */; };
 		FAE981EE28B67C6A00D9C0AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE981EC28B67C6A00D9C0AC /* LaunchScreen.storyboard */; };
@@ -59,6 +61,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FA0C299E28DB759300233A49 /* 10796-clapperboard-investment-movie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "10796-clapperboard-investment-movie.json"; sourceTree = "<group>"; };
+		FA0C29A228DB759300233A49 /* 92678-movie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "92678-movie.json"; sourceTree = "<group>"; };
 		FA8A845A28D61178004F4CCF /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		FAE981DE28B67C6400D9C0AC /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE981E128B67C6400D9C0AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 		FAE981E028B67C6400D9C0AC /* MovieApp */ = {
 			isa = PBXGroup;
 			children = (
+				FA0C299E28DB759300233A49 /* 10796-clapperboard-investment-movie.json */,
+				FA0C29A228DB759300233A49 /* 92678-movie.json */,
 				FAE981E128B67C6400D9C0AC /* AppDelegate.swift */,
 				FAE981EC28B67C6A00D9C0AC /* LaunchScreen.storyboard */,
 				FAE981EF28B67C6A00D9C0AC /* Info.plist */,
@@ -247,7 +253,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8A845B28D61179004F4CCF /* Media.xcassets in Resources */,
+				FA0C29A428DB759300233A49 /* 92678-movie.json in Resources */,
 				FAE981EE28B67C6A00D9C0AC /* LaunchScreen.storyboard in Resources */,
+				FA0C29A328DB759300233A49 /* 10796-clapperboard-investment-movie.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

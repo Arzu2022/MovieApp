@@ -56,9 +56,9 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         self.title = allData.title
         self.vm.getTrailer(id: allData.id)
             .then({ tr in
-                if tr.results[0].key != nil {
-                    self.urlTrailer = URL(string: "https://www.youtube.com/watch?v=\(tr.results[0].key ?? "W9JHZwtObqs")")!
-                    self.keyForYoutube = tr.results[0].key ?? "W9JHZwtObqs"
+                if let key = tr.results.first?.key {
+                    self.urlTrailer = URL(string: "https://www.youtube.com/watch?v=\(key)")!
+                    self.keyForYoutube = key
                 }
                 self.setup()
             })
@@ -468,5 +468,4 @@ extension DidSelectVC : UITableViewDelegate, UITableViewDataSource {
         cell.time = label
         return cell
     }
-
 }

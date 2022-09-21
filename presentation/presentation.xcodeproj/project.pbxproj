@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA0C29A728DB75B400233A49 /* Apploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C29A628DB75B400233A49 /* Apploader.swift */; };
 		FA1C255E28DA5B0E006678BF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1C255D28DA5B0E006678BF /* GoogleService-Info.plist */; };
 		FA1C256128DA600B006678BF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FA1C256028DA600B006678BF /* FirebaseAnalytics */; };
 		FA1C256328DA600B006678BF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FA1C256228DA600B006678BF /* FirebaseAuth */; };
@@ -52,6 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FA0C29A628DB75B400233A49 /* Apploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apploader.swift; sourceTree = "<group>"; };
 		FA1C255D28DA5B0E006678BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA8A845828D5CE9F004F4CCF /* CustomDidSelectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDidSelectTableViewCell.swift; sourceTree = "<group>"; };
 		FA8A848928D7B6E0004F4CCF /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
@@ -95,6 +97,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA0C29A528DB759E00233A49 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				FA0C29A628DB75B400233A49 /* Apploader.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
 		FAB4E02528BAC361009C394D /* DI */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +143,7 @@
 		FAE9825728BAB50A00D9C0AC = {
 			isa = PBXGroup;
 			children = (
+				FA0C29A528DB759E00233A49 /* Splash */,
 				FA1C255D28DA5B0E006678BF /* GoogleService-Info.plist */,
 				FAB4E0B028CDFD4D009C394D /* Generated */,
 				FAB4E0C828D0A771009C394D /* ViewModel */,
@@ -295,6 +306,7 @@
 			files = (
 				FAB4E02728BAC37D009C394D /* PresentationAssembly.swift in Sources */,
 				FAB4E0B228CDFE0A009C394D /* images+Generated.swift in Sources */,
+				FA0C29A728DB75B400233A49 /* Apploader.swift in Sources */,
 				FAB4E0C428CFEA2B009C394D /* DidSelectVC.swift in Sources */,
 				FAB4E0B428CE7FB4009C394D /* Fonts.swift in Sources */,
 				FAB4E08828CB55A4009C394D /* CustomHomeVCTableViewCell.swift in Sources */,
