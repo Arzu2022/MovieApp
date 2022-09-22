@@ -9,30 +9,113 @@ import UIKit
 import FirebaseAuth
 
 public class ProfileVC: BaseViewController<MovieViewModel> {
-    let auth = Auth.auth()
-    
-    private lazy var signOutBtn:UIButton = {
+    private func moveProfileTologin(){
+        let loginvc:UIViewController = self.router.loginVC()
+        let tabBar = self.router.tabbarController()
+        tabBar.navigationController?.viewControllers = [loginvc]
+    }
+    var auth = Auth.auth()
+    var newUsername = "wrap"
+    private lazy var settingBtn:UIButton = {
         let btn = UIButton()
-        btn.setTitle("Sigout", for: .normal)
-        btn.addTarget(self, action: #selector(onClickSignout), for: .touchUpInside)
+        btn.setImage(Asset.icSetting.image, for: .normal)
+        btn.addTarget(self, action: #selector(onClickSetting), for: .touchUpInside)
         return btn
     }()
-    @objc func onClickSignout(){
-        do {
-            try auth.signOut()
-            let loginvc:UIViewController = self.router.loginVC()
-            let tabBar = self.router.tabbarController()
-            tabBar.navigationController?.viewControllers = [loginvc]
-//            tabBar.navigationController?.isNavigationBarHidden = true
-//            tabBar.navigationController?.pushViewController(loginvc, animated: true)
-        } catch {
-            makeAlert(title: "Error!", message: error.localizedDescription)
+    @objc func onClickSetting(){
+        let alert = UIAlertController(title: "Settings", message: nil, preferredStyle: .alert)
+        let btn1 = UIAlertAction(title: "About Us", style: .default){ (action) in
+            if let url = URL(string: "https://instagram.com/Heydarov.21?igshid=YmMyMTA2M2Y"){
+                UIApplication.shared.open(url)
+            }
         }
+        alert.addAction(btn1)
+        
+        let btn2 = UIAlertAction(title: "Delete User", style: .default){ (action) in
+            self.auth.currentUser?.delete(completion: { error in
+                if let error = error {
+                    self.makeAlert(title: "Error", message: error.localizedDescription)
+                }
+                else{
+                    self.moveProfileTologin()
+                    self.showToast(message: "Deleted successfully", seconds: 2.3)
+                }
+            })
+        }
+        alert.addAction(btn2)
+        let btn3 = UIAlertAction(title: "Sign Out", style: .default){ (action) in
+            do {
+                try self.auth.signOut()
+                self.moveProfileTologin()
+                self.showToast(message: "Signed out successfully", seconds: 2.3)
+                }
+            catch {
+                self.makeAlert(title: "Error!", message: error.localizedDescription)
+            }
+        }
+        alert.addAction(btn3)
+        
+        let btn4 = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(btn4)
+        
+        self.present(alert, animated: true)
     }
+    private lazy var editProfile:UIButton = {
+        let btn = UIButton()
+        btn.setTitle("Edit Profile", for: .normal)
+        btn.setTitleColor(UIColor.black, for: .normal)
+        btn.addTarget(self, action: #selector(onClickEditProfile), for: .touchUpInside)
+        return btn
+    }()
+    @objc func onClickEditProfile(){
+        let alert = UIAlertController(title: "Edit", message: nil, preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.placeholder = "Add new username"
+            textField.addTarget(self, action: #selector(self.textFieldDidChange(_ :)), for: .editingChanged)
+        }
+        let btn1 = UIAlertAction(title: "Change Username", style: .default) { (action) in
+            let changeDisplay = self.auth.currentUser?.createProfileChangeRequest()
+            changeDisplay?.displayName = self.newUsername
+            changeDisplay?.commitChanges { error in
+                if let error = error {
+                    self.makeAlert(title: "Error", message: error.localizedDescription)
+                } else {
+                    self.auth = Auth.auth()
+                    self.username.text = self.auth.currentUser?.displayName
+                }
+            }
+        }
+        alert.addAction(btn1)
+        let btn2 = UIAlertAction(title: "Change Password", style: .default){ (action) in
+            self.auth.sendPasswordReset(withEmail: (self.auth.currentUser?.email)!) { error in
+                if let error = error {
+                    self.makeAlert(title: "Error", message: error.localizedDescription)
+                }else {
+                    self.moveProfileTologin()
+                    self.showToast(message: "Password changed successfully", seconds: 2.3)
+                }
+            }
+        }
+        alert.addAction(btn2)
+        let btn3 = UIAlertAction(title: "Change Image", style: .default){ (action) in
+            //next time
+            
+            
+        }
+        alert.addAction(btn3)
+        let btn4 = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(btn4)
+        self.present(alert, animated: true)
+    }
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if textField.text?.isEmpty == false {
+            self.newUsername = textField.text!
+        }
+        }
     private lazy var username:UILabel = {
         let text = UILabel()
         text.text = auth.currentUser?.displayName
-        text.font = UIFont(font: FontFamily.PTSans.regular, size: 30)
+        text.font = UIFont(font: FontFamily.PTSans.regular, size: 20)
         text.textColor = .black
         return text
     }()
@@ -71,7 +154,7 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
     }
     public override func viewDidLoad() {
         super.viewDidLoad()
-        //view.backgroundColor = .blue
+        view.backgroundColor = .yellow
         setup()
         
     }
@@ -83,14 +166,15 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
     }
     private func setup(){
         self.title = "Profile Page"
-        self.view.addSubview(signOutBtn)
+        self.view.addSubview(settingBtn)
         self.view.addSubview(username)
         self.view.addSubview(bio)
         self.view.addSubview(profileImage)
         self.view.addSubview(numberOfLikedMovie)
+        self.view.addSubview(editProfile)
         self.view.addSubview(tableForLiked)
         profileImage.snp.makeConstraints { make in
-            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(16)
+            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(12)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.width.height.equalTo(60)
         }
@@ -102,20 +186,24 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
             make.left.equalTo(self.username.safeAreaLayoutGuide.snp.left)
             make.top.equalTo(self.username.safeAreaLayoutGuide.snp.bottom).offset(3)
         }
-        signOutBtn.snp.makeConstraints { make in
-            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right).offset(-16)
+        settingBtn.snp.makeConstraints { make in
+            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right).offset(-12)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.height.width.equalTo(20)
+        }
+        editProfile.snp.makeConstraints { make in
+            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(12)
+            make.top.equalTo(self.profileImage.safeAreaLayoutGuide.snp.bottom).offset(6)
         }
         numberOfLikedMovie.snp.makeConstraints { make in
             make.centerX.equalTo(self.view.safeAreaLayoutGuide.snp.centerX)
-            make.top.equalTo(self.profileImage.safeAreaLayoutGuide.snp.bottom).offset(6)
+            make.top.equalTo(self.editProfile.safeAreaLayoutGuide.snp.bottom).offset(6)
         }
         tableForLiked.snp.makeConstraints { make in
             make.top.equalTo(self.numberOfLikedMovie.safeAreaLayoutGuide.snp.bottom).offset(6)
-            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(16)
-            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right).offset(-16)
+            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(12)
+            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right).offset(-12)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
     }
-
 }

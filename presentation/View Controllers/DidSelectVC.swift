@@ -27,19 +27,19 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         view.translatesAutoresizingMaskIntoConstraints = false
     return view
     }()
-    private lazy var addComment:UITextField = {
-        let view = UITextField()
-        view.placeholder = "add comment"
-        view.textColor = .black
-        return view
-    }()
-    private lazy var addCommentTableView:UITableView = {
-        let view = UITableView()
-        view.delegate = self
-        view.dataSource = self
-        view.register(CustomDidSelectTableViewCell.self, forCellReuseIdentifier: "cell")
-        return view
-    }()
+//    private lazy var addComment:UITextField = {
+//        let view = UITextField()
+//        view.placeholder = "add comment"
+//        view.textColor = .black
+//        return view
+//    }()
+//    private lazy var addCommentTableView:UITableView = {
+//        let view = UITableView()
+//        view.delegate = self
+//        view.dataSource = self
+//        view.register(CustomDidSelectTableViewCell.self, forCellReuseIdentifier: "cell")
+//        return view
+//    }()
     init(allData: MovieEntity.ResultEntity,
          vm: TrailerViewModel,
          router: RouterProtocol
@@ -99,8 +99,8 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         image.imageFromServerURL(url, placeHolder: nil)
         image.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(100)
-            make.left.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
+            make.left.equalToSuperview().offset(12)
+            make.right.equalToSuperview().offset(-12)
         }
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(image.snp.bottom).offset(20)
@@ -115,51 +115,51 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         overview.numberOfLines = 0
         overview.snp.makeConstraints { make in
             make.top.equalTo(self.scrollStackViewContainer.snp.top).offset(5)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(12)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-12)
         }
         let viewForVoteAvarage = setupAvarage(voteAvarage: allData.voteAverage ?? 0.0)
         self.scrollStackViewContainer.addArrangedSubview(viewForVoteAvarage)
         viewForVoteAvarage.snp.makeConstraints { make in
             make.top.equalTo(overview.snp.bottom).offset(20)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(12)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-12)
             make.height.equalTo(30)
         }
         let popularity = getLabel(name: "popularity",main: false)
         popularity.text = "Popularity: \(allData.popularity ?? 156.765)"
         popularity.snp.makeConstraints { make in
             make.top.equalTo(viewForVoteAvarage.snp.bottom).offset(20)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(12)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-12)
         }
         let voteCount = getLabel(name: "voteCount",main: false)
         voteCount.text = "Vote Count: \(allData.voteCount ?? 21)"
         voteCount.snp.makeConstraints { make in
             make.top.equalTo(popularity.snp.bottom).offset(20)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(12)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-12)
         }
         let originalLan = getLabel(name: "originalLan",main: false)
         originalLan.text = "Language: \(allData.originalLanguage ?? "en")"
         originalLan.snp.makeConstraints { make in
             make.top.equalTo(voteCount.snp.bottom).offset(20)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(12)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-12)
         }
         let releaseDate = getLabel(name: "releaseDate",main: false)
         releaseDate.text = "Release Date: \(allData.releaseDate ?? "2022 05 07")"
         releaseDate.snp.makeConstraints { make in
             make.top.equalTo(originalLan.snp.bottom).offset(20)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(12)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-12)
         }
         let getTrailerText = getLabel(name: "Trailer:", main: false)
         getTrailerText.text = "Trailer:"
         getTrailerText.snp.makeConstraints { make in
             make.top.equalTo(releaseDate.snp.bottom).offset(10)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(12)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-12)
         }
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.onClickTrailer(_:)))
         let imagePathToYoutube = UIImageView()
@@ -172,9 +172,9 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         imagePathToYoutube.imageFromServerURL("https://img.youtube.com/vi/\(keyForYoutube ?? "")/0.jpg", placeHolder: nil)
         imagePathToYoutube.snp.makeConstraints { make in
             make.top.equalTo(getTrailerText.snp.bottom).offset(100)
-            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(20)
-            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-20)
-            make.height.equalTo(200)
+            make.left.equalTo(self.scrollStackViewContainer.snp.left).offset(12)
+            make.right.equalTo(self.scrollStackViewContainer.snp.right).offset(-12)
+            make.height.equalTo(220)
         }
         
         let imagePathToYoutubet = UIImageView()

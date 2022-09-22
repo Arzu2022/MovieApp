@@ -61,65 +61,6 @@ public class LogInVC:BaseViewController<MovieViewModel> {
         text.addTarget(self, action: #selector(onClickSignup), for: .touchUpInside)
         return text
     }()
-    @objc func onClickSignup() {
-        if repassword.text != password.text {
-            self.showToast(message: "Passwords are not same!", seconds: 2.2)
-        }
-        else {
-            auth.createUser(withEmail: email.text!, password: password.text!) { result, error in
-                if error == nil {
-                    let changeRequest = self.auth.currentUser?.createProfileChangeRequest()
-                    changeRequest!.displayName = self.username.text
-                    changeRequest?.commitChanges()
-                    self.auth.currentUser?.sendEmailVerification(completion: { error in
-                        if let error = error {
-                            self.makeAlert(title: "Error", message: error.localizedDescription)
-                        }
-                        else {
-                            self.auth.currentUser?.reload(completion: { error in
-                                if error == nil {
-                                    if ((self.auth.currentUser?.isEmailVerified) != nil) {
-                                        let tabbar:UITabBarController = self.router.tabbarController()
-                                        self.navigationController?.pushViewController(tabbar, animated: true)
-                                    } else {
-                                        self.showToast(message: "Please, verify email.", seconds: 1.5)
-                                    }
-                                }
-                                else {
-                                    self.makeAlert(title: "Error", message: error!.localizedDescription)
-                                }
-                            })
-                        }
-                    })
-                }
-                else {
-                    self.makeAlert(title: "Error!", message: error!.localizedDescription)
-                }
-            }
-        }
-    }
-    @objc func onClickLogin() {
-        auth.signIn(withEmail: email.text!, password: password.text!) { [weak self] result, error in
-            guard let strongSelf = self else { return}
-            if error != nil {
-                strongSelf.showToast(message: error!.localizedDescription, seconds: 2.2)
-                
-            }
-            else {
-                strongSelf.auth.currentUser?.reload(completion: { error in
-                    if error == nil {
-                        if ((strongSelf.auth.currentUser?.isEmailVerified) != nil) {
-                            let tabbar:UITabBarController = strongSelf.router.tabbarController()
-                                   strongSelf.navigationController?.pushViewController(tabbar, animated: true)
-                                }
-                            }
-                            else {
-                                strongSelf.makeAlert(title: "Error", message: error!.localizedDescription)
-                            }
-                        })
-            }
-        }
-    }
     private lazy var createAccount:UIButton = {
         let text = UIButton()
         text.setTitle("Create Account", for: .normal)
@@ -134,13 +75,6 @@ public class LogInVC:BaseViewController<MovieViewModel> {
         text.addTarget(self, action: #selector(onClickForgetPass), for: .touchUpInside)
         return text
     }()
-    @objc func onClickForgetPass(){
-        auth.sendPasswordReset(withEmail: email.text!) { error in
-            if let error = error {
-                self.makeAlert(title: "Error", message: error.localizedDescription)
-            }
-        }
-    }
     private lazy var backLogin:UIButton = {
         let text = UIButton()
         text.setTitle("Back Login", for: .normal)
@@ -212,6 +146,72 @@ public class LogInVC:BaseViewController<MovieViewModel> {
         text.font = UIFont(font: FontFamily.PTSans.regular, size: 17)
         return text
     }()
+    @objc func onClickForgetPass(){
+        auth.sendPasswordReset(withEmail: email.text!) { error in
+            if let error = error {
+                self.makeAlert(title: "Error", message: error.localizedDescription)
+            }
+        }
+    }
+    @objc func onClickSignup() {
+        if repassword.text != password.text {
+            self.showToast(message: "Passwords are not same!", seconds: 2.2)
+        }
+        else {
+            auth.createUser(withEmail: email.text!, password: password.text!) { result, error in
+                if error == nil {
+                    let changeRequest = self.auth.currentUser?.createProfileChangeRequest()
+                    changeRequest!.displayName = self.username.text
+                    changeRequest?.commitChanges()
+                    self.auth.currentUser?.sendEmailVerification(completion: { error in
+                        if let error = error {
+                            self.makeAlert(title: "Error", message: error.localizedDescription)
+                        }
+                        else {
+                            self.auth.currentUser?.reload(completion: { error in
+                                if error == nil {
+                                    if ((self.auth.currentUser?.isEmailVerified) != nil) {
+                                        let tabbar:UITabBarController = self.router.tabbarController()
+                                        self.navigationController?.pushViewController(tabbar, animated: true)
+                                    } else {
+                                        self.showToast(message: "Please, verify email.", seconds: 1.5)
+                                    }
+                                }
+                                else {
+                                    self.makeAlert(title: "Error", message: error!.localizedDescription)
+                                }
+                            })
+                        }
+                    })
+                }
+                else {
+                    self.makeAlert(title: "Error!", message: error!.localizedDescription)
+                }
+            }
+        }
+    }
+    @objc func onClickLogin() {
+        auth.signIn(withEmail: email.text!, password: password.text!) { [weak self] result, error in
+            guard let strongSelf = self else { return}
+            if error != nil {
+                strongSelf.showToast(message: error!.localizedDescription, seconds: 2.2)
+                
+            }
+            else {
+                strongSelf.auth.currentUser?.reload(completion: { error in
+                    if error == nil {
+                        if ((strongSelf.auth.currentUser?.isEmailVerified) != nil) {
+                            let tabbar:UITabBarController = strongSelf.router.tabbarController()
+                                   strongSelf.navigationController?.pushViewController(tabbar, animated: true)
+                                }
+                            }
+                            else {
+                                strongSelf.makeAlert(title: "Error", message: error!.localizedDescription)
+                            }
+                        })
+            }
+        }
+    }
     @objc func onClickShowPassword(){
         if password.isSecureTextEntry {
             showPassword.setImage(UIImage(systemName: "eye.slash"), for: .normal)
@@ -228,17 +228,6 @@ public class LogInVC:BaseViewController<MovieViewModel> {
             showRepassword.setImage(UIImage(systemName: "eye"), for: .normal)
         }
         repassword.isSecureTextEntry.toggle()
-    }
-    override init(vm: MovieViewModel, router: RouterProtocol) {
-        super.init(vm: vm, router: router)
-    }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = .white
-        setupLogin()
     }
     @objc func goSignUp(){
         email.text = ""
@@ -287,6 +276,17 @@ public class LogInVC:BaseViewController<MovieViewModel> {
             login.backgroundColor = .gray
             login.isEnabled = false
         }
+    }
+    override init(vm: MovieViewModel, router: RouterProtocol) {
+        super.init(vm: vm, router: router)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .white
+        setupLogin()
     }
     func makeAlert(title:String,message:String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

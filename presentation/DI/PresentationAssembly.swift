@@ -3,9 +3,10 @@
 import Foundation
 import Swinject
 import domain
-
+import Firebase
 public class PresentationAssembly:Assembly {
     public init(){
+        FirebaseApp.configure()
     }
    public func assemble(container: Container) {
        container.register(MovieViewModel.self) { r in

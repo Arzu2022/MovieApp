@@ -3,7 +3,7 @@ import Swinject
 import domain
 import data
 import presentation
-import Firebase
+//import Firebase
 import FirebaseAuth
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -11,7 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
+        //FirebaseApp.configure()
         let assembler = Assembler([DomainAssembly(),DataAssembly(),PresentationAssembly()])
         let router :RouterProtocol = Router.init(resolver: assembler.resolver)
         window = UIWindow(frame: UIScreen.main.bounds)

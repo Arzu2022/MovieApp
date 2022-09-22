@@ -23,7 +23,6 @@ class CustomHomeVCTableViewCell:UITableViewCell {
         icon.layer.cornerRadius = 18
         return icon
     }()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -35,17 +34,17 @@ class CustomHomeVCTableViewCell:UITableViewCell {
     func setupUI() {
         contentView.addSubview(title)
         contentView.addSubview(backdropPath)
-        backdropPath.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(40)
-            make.top.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-40)
-            make.height.width.equalTo(250)
-        }
         title.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(40)
-            make.top.equalTo(backdropPath.snp.bottom).offset(10)
-            make.right.equalToSuperview().offset(-40)
-            make.bottom.equalToSuperview().offset(-10)
+            make.left.equalToSuperview().offset(12)
+            make.top.equalToSuperview().offset(10)
+            make.right.equalToSuperview().offset(-12)
+        }
+        backdropPath.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(12)
+            make.right.equalToSuperview().offset(-12)
+            make.top.equalTo(title.snp.bottom).offset(10)
+            make.height.width.equalTo(250)
+            make.bottom.equalToSuperview().offset(-50)
         }
     }
     
