@@ -8,17 +8,17 @@ public struct MovieEntity {
         self.results = results
     }
     public struct ResultEntity {
-        public let adult: Bool?
-        public let backdropPath: String?
-        public let genreIDS: [Int]?
-        public let id: Int
-        public let originalLanguage: String?
-        public let originalTitle, overview: String?
-        public let popularity: Double?
-        public let posterPath, releaseDate, title: String?
-        public let video: Bool?
-        public let voteAverage: Double?
-        public let voteCount: Int?
+        public var adult: Bool?
+        public var backdropPath: String?
+        public var genreIDS: [Int]?
+        public var id: Int
+        public var originalLanguage: String?
+        public var originalTitle, overview: String?
+        public var popularity: Double?
+        public var posterPath, releaseDate, title: String?
+        public var video: Bool?
+        public var voteAverage: Double?
+        public var voteCount: Int?
         public init(adult: Bool?,
                     backdropPath: String?,
                     genreIDS: [Int]?,

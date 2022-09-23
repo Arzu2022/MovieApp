@@ -3,6 +3,8 @@ import UIKit
 import RxSwift
 import SnapKit
 import domain
+import FirebaseAuth
+import FirebaseFirestore
     public class HomeVC: BaseViewController<MovieViewModel> {
     private var segmentedControl:UISegmentedControl = {
         let view = UISegmentedControl(items: ["General","Top Rated","Kids"])
@@ -15,7 +17,7 @@ import domain
     }()
     let baseImageUrl = "https://image.tmdb.org/t/p/w500"
     var dataForTableView: [MovieEntity.ResultEntity] = []
-    var checkLike = 0
+    var checkRow = 0
     private lazy var tableViewTopMovie: UITableView = {
         let tbView = UITableView()
         tbView.delegate = self
@@ -77,7 +79,7 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource {
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomHomeVCTableViewCell
-        let tapComment = UITapGestureRecognizer(target: self, action: #selector(onClickComment(_ :)))
+        let tapComment = UITapGestureRecognizer(target: self, action: #selector(onClickComment(_:)))
                 
         let tapLike = UITapGestureRecognizer(target: self, action: #selector(onClickLike(_ :)))
          lazy var commentIcon:UIImageView = {
@@ -117,15 +119,47 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource {
         return cell
     
        }
+    func makeAlert(title:String,message:String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let btn = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(btn)
+        self.present(alert, animated: true)
+    }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        checkRow = indexPath.row
         let vc = self.router.detailsVC(allData: dataForTableView[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
     }
-    @objc func onClickComment(_ sender:UITapGestureRecognizer){
+        @objc func onClickComment(_ sender:UITapGestureRecognizer){
         print("clicked to comment")
     }
     @objc func onClickLike(_ sender:UITapGestureRecognizer){
-        // firebase...
+        let db = Firestore.firestore()
+        let auth = Auth.auth().currentUser
+        var ref: DocumentReference? = nil
+        ref = db.collection("save_\(auth!.uid)").addDocument(data: [
+                "adult": dataForTableView[checkRow].adult!,
+                "backdropPath": dataForTableView[checkRow].backdropPath!,
+                "genreIDS": dataForTableView[checkRow].genreIDS!,
+                "id": dataForTableView[checkRow].id,
+                "originalLanguage": dataForTableView[checkRow].originalLanguage!,
+                "originalTitle": dataForTableView[checkRow].originalTitle!,
+                "overview": dataForTableView[checkRow].overview!,
+                "popularity": dataForTableView[checkRow].popularity!,
+                "posterPath": dataForTableView[checkRow].posterPath!,
+                "releaseDate": dataForTableView[checkRow].releaseDate!,
+                "title": dataForTableView[checkRow].title!,
+                "video": dataForTableView[checkRow].video!,
+                "voteAverage": dataForTableView[checkRow].voteAverage!,
+                "voteCount": dataForTableView[checkRow].voteCount!,
+                "time": Date.now
+            ]) { err in
+                if let err = err {
+                    self.makeAlert(title: "Error", message: err.localizedDescription)
+                } else {
+                    print("Document added with ID: \(ref!.documentID)")
+                }
+        }
         showToast(message: "Successfully, saved", seconds: 1.2)
         
     }

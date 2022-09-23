@@ -3,7 +3,6 @@ import Swinject
 import domain
 import data
 import presentation
-//import Firebase
 import FirebaseAuth
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -7,15 +7,34 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
+import domain
 
 public class ProfileVC: BaseViewController<MovieViewModel> {
+    var auth = Auth.auth()
+    let db = Firestore.firestore()
+    var newUsername = "wrap"
+    let baseImageUrl = "https://image.tmdb.org/t/p/w500"
+    var dataForSaved : [MovieEntity.ResultEntity] = []
+    func getDataFromDB(){
+        db.collection("save_\(auth.currentUser?.uid ?? "save_WAJAxzk8eEZD22FYdFkohronlRR6")").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                self.makeAlert(title: "Error", message: err.localizedDescription)
+            } else {
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let q = MovieEntity.ResultEntity(adult: data["adult"] as? Bool ?? true, backdropPath: data["backdropPath"] as? String ?? "", genreIDS: data["genreIDS"] as? [Int] ?? [], id: data["id"] as! Int, originalLanguage: data["originalLanguage"] as? String ?? "", originalTitle: data["originalTitle"] as? String ?? "", overview: data["overview"] as? String ?? "", popularity: data["popularity"] as? Double ?? 0.0, posterPath: data["posterPath"] as? String ?? "", video: data["video"] as? Bool ?? false, releaseDate: data["releaseDate"] as? String ?? "", title: data["title"] as? String ?? "", voteAverage: data["voteAverage"] as? Double ?? 0.0, voteCount: (data["voteCount"] as? Int ?? 0))
+                    self.dataForSaved.append(q)
+                    self.tableForLiked.reloadData()
+                }
+            }
+        }
+    }
     private func moveProfileTologin(){
         let loginvc:UIViewController = self.router.loginVC()
         let tabBar = self.router.tabbarController()
         tabBar.navigationController?.viewControllers = [loginvc]
     }
-    var auth = Auth.auth()
-    var newUsername = "wrap"
     private lazy var settingBtn:UIButton = {
         let btn = UIButton()
         btn.setImage(Asset.icSetting.image, for: .normal)
@@ -63,7 +82,7 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
     private lazy var editProfile:UIButton = {
         let btn = UIButton()
         btn.setTitle("Edit Profile", for: .normal)
-        btn.setTitleColor(UIColor.black, for: .normal)
+        btn.setTitleColor(UIColor.blue, for: .normal)
         btn.addTarget(self, action: #selector(onClickEditProfile), for: .touchUpInside)
         return btn
     }()
@@ -97,6 +116,7 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
             }
         }
         alert.addAction(btn2)
+        ////////////////
         let btn3 = UIAlertAction(title: "Change Image", style: .default){ (action) in
             //next time
             
@@ -115,7 +135,7 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
     private lazy var username:UILabel = {
         let text = UILabel()
         text.text = auth.currentUser?.displayName
-        text.font = UIFont(font: FontFamily.PTSans.regular, size: 20)
+        text.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         text.textColor = .black
         return text
     }()
@@ -124,26 +144,21 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
         //image.image = From Storage
         image.image = Asset.icEmpty.image
         image.layer.masksToBounds = true
-        image.layer.cornerRadius = 30
+        image.layer.cornerRadius = 40
         return image
     }()
-    private lazy var bio:UILabel = {
+    private lazy var savedMovie:UILabel = {
         let text = UILabel()
-        text.text = "From Firestore"
-        text.font = UIFont(font: FontFamily.PTSans.regular, size: 16)
-        text.textColor = .darkGray
-        return text
-    }()
-    private lazy var numberOfLikedMovie:UILabel = {
-        let text = UILabel()
-        text.text = "From Firestore-Liked"
+        text.text = "Saved Movies"
         text.font = UIFont(font: FontFamily.PTSans.regular, size: 18)
-        text.textColor = .darkGray
+        text.textColor = .black
         return text
     }()
     private lazy var tableForLiked:UITableView = {
         let view = UITableView()
-        
+        view.delegate = self
+        view.dataSource = self
+        view.register(CustomHomeVCTableViewCell.self, forCellReuseIdentifier: "cell")
         return view
     }()
     override init(vm: MovieViewModel, router: RouterProtocol) {
@@ -154,9 +169,15 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
     }
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+        view.backgroundColor = .white
+        //getDataFromDB()
         setup()
-        
+    }
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        dataForSaved = []
+        getDataFromDB()
+        //setup()
     }
     func makeAlert(title:String,message:String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -168,23 +189,18 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
         self.title = "Profile Page"
         self.view.addSubview(settingBtn)
         self.view.addSubview(username)
-        self.view.addSubview(bio)
         self.view.addSubview(profileImage)
-        self.view.addSubview(numberOfLikedMovie)
+        self.view.addSubview(savedMovie)
         self.view.addSubview(editProfile)
         self.view.addSubview(tableForLiked)
         profileImage.snp.makeConstraints { make in
             make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(12)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.width.height.equalTo(60)
+            make.width.height.equalTo(80)
         }
         username.snp.makeConstraints { make in
             make.left.equalTo(self.profileImage.safeAreaLayoutGuide.snp.right).offset(6)
             make.top.equalTo(self.profileImage.safeAreaLayoutGuide.snp.top).offset(4)
-        }
-        bio.snp.makeConstraints { make in
-            make.left.equalTo(self.username.safeAreaLayoutGuide.snp.left)
-            make.top.equalTo(self.username.safeAreaLayoutGuide.snp.bottom).offset(3)
         }
         settingBtn.snp.makeConstraints { make in
             make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right).offset(-12)
@@ -192,18 +208,91 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
             make.height.width.equalTo(20)
         }
         editProfile.snp.makeConstraints { make in
-            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(12)
-            make.top.equalTo(self.profileImage.safeAreaLayoutGuide.snp.bottom).offset(6)
+            make.left.equalTo(self.username.safeAreaLayoutGuide.snp.left)
+            make.top.equalTo(self.username.safeAreaLayoutGuide.snp.bottom).offset(3)
         }
-        numberOfLikedMovie.snp.makeConstraints { make in
+        savedMovie.snp.makeConstraints { make in
             make.centerX.equalTo(self.view.safeAreaLayoutGuide.snp.centerX)
             make.top.equalTo(self.editProfile.safeAreaLayoutGuide.snp.bottom).offset(6)
         }
         tableForLiked.snp.makeConstraints { make in
-            make.top.equalTo(self.numberOfLikedMovie.safeAreaLayoutGuide.snp.bottom).offset(6)
+            make.top.equalTo(self.savedMovie.safeAreaLayoutGuide.snp.bottom).offset(6)
             make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(12)
             make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right).offset(-12)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
     }
 }
+extension ProfileVC:UITableViewDelegate,UITableViewDataSource {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataForSaved.count
+    }
+
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        as! CustomHomeVCTableViewCell
+        let tapComment = UITapGestureRecognizer(target: self, action: #selector(onClickComment(_:)))
+        let tapLike = UITapGestureRecognizer(target: self, action: #selector(onClickLike(_ :)))
+         lazy var commentIcon:UIImageView = {
+                let image = UIImageView()
+                image.image = Asset.icComment.image
+                image.addGestureRecognizer(tapComment)
+                image.isUserInteractionEnabled = true
+                tapComment.numberOfTapsRequired = 1
+                return image
+            }()
+         lazy var saveIcon:UIImageView = {
+                let image = UIImageView()
+                image.addGestureRecognizer(tapLike)
+                image.isUserInteractionEnabled = true
+                tapComment.numberOfTapsRequired = 1
+                image.image = Asset.icSaved.image
+                return image
+            }()
+        cell.backgroundColor = .systemBackground
+                let url = "\(self.baseImageUrl)\((self.dataForSaved[indexPath.row].backdropPath) ?? "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")"
+                cell.backdropPath.imageFromServerURL(url, placeHolder:nil)
+                cell.title.text = self.dataForSaved[indexPath.row].title
+        cell.addSubview(saveIcon)
+        cell.addSubview(commentIcon)
+        
+        saveIcon.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-12)
+            make.bottom.equalToSuperview().offset(-10)
+            make.height.equalTo(25)
+            make.width.equalTo(30)
+    }
+        commentIcon.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(12)
+            make.bottom.equalToSuperview().offset(-10)
+            make.height.width.equalTo(25)
+    }
+        return cell
+    }
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        let vc = self.router.detailsVC(allData: dataForSaved[indexPath.row])
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    @objc func onClickComment(_ sender:UITapGestureRecognizer){
+        print("clicked to comment")
+}
+    @objc func onClickLike(_ sender:UITapGestureRecognizer){
+        var db = Firestore.firestore()
+        var auth = Auth.auth().currentUser
+        print("collectionID = \(db.collection("save_\(auth?.uid ?? "")").collectionID)")
+//        self.db.collection("SaleOrders").whereField("orderid", isEqualTo: "ji20190205091948").getDocuments
+        
+//        db.collection("save_\(auth?.uid ?? "")").document("").delete() { err in
+//            if let err = err {
+//                self.makeAlert(title: "Error", message: err.localizedDescription)
+//            } else {
+//                let db = Firestore.firestore()
+//                auth = Auth.auth().currentUser
+//                self.getDataFromDB()
+//                self.showToast(message: "Document successfully removed!", seconds: 1.2)
+//
+//            }
+//        }
+    }
+
+    }

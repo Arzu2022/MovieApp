@@ -27,19 +27,6 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         view.translatesAutoresizingMaskIntoConstraints = false
     return view
     }()
-//    private lazy var addComment:UITextField = {
-//        let view = UITextField()
-//        view.placeholder = "add comment"
-//        view.textColor = .black
-//        return view
-//    }()
-//    private lazy var addCommentTableView:UITableView = {
-//        let view = UITableView()
-//        view.delegate = self
-//        view.dataSource = self
-//        view.register(CustomDidSelectTableViewCell.self, forCellReuseIdentifier: "cell")
-//        return view
-//    }()
     init(allData: MovieEntity.ResultEntity,
          vm: TrailerViewModel,
          router: RouterProtocol

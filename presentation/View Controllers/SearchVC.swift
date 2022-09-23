@@ -7,10 +7,12 @@
 
 import UIKit
 import domain
-
+import FirebaseFirestore
+import FirebaseAuth
 public class SearchVC: BaseViewController<MovieViewModel> {
     var dataForTableView: [MovieEntity.ResultEntity] = []
     let baseImageUrl = "https://image.tmdb.org/t/p/w500"
+    var checkRow = 0
     private lazy var tableView:UITableView = {
         let view = UITableView()
         view.delegate = self
@@ -51,6 +53,12 @@ public class SearchVC: BaseViewController<MovieViewModel> {
     
 }
 extension SearchVC:UISearchResultsUpdating,UITableViewDelegate,UITableViewDataSource {
+    func makeAlert(title:String,message:String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let btn = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(btn)
+        self.present(alert, animated: true)
+    }
     public func updateSearchResults(for searchController: UISearchController) {
         if searchController.searchBar.text != "" {
             if searchController.searchBar.text != " " {
@@ -110,10 +118,36 @@ extension SearchVC:UISearchResultsUpdating,UITableViewDelegate,UITableViewDataSo
         print("clicked to comment")
     }
     @objc func onClickLike(_ sender:UITapGestureRecognizer){
-        // firebase...
+        let db = Firestore.firestore()
+        let auth = Auth.auth().currentUser
+        var ref: DocumentReference? = nil
+        ref = db.collection("save_\(auth!.uid)").addDocument(data: [
+                "adult": dataForTableView[checkRow].adult!,
+                "backdropPath": dataForTableView[checkRow].backdropPath!,
+                "genreIDS": dataForTableView[checkRow].genreIDS!,
+                "id": dataForTableView[checkRow].id,
+                "originalLanguage": dataForTableView[checkRow].originalLanguage!,
+                "originalTitle": dataForTableView[checkRow].originalTitle!,
+                "overview": dataForTableView[checkRow].overview!,
+                "popularity": dataForTableView[checkRow].popularity!,
+                "posterPath": dataForTableView[checkRow].posterPath!,
+                "releaseDate": dataForTableView[checkRow].releaseDate!,
+                "title": dataForTableView[checkRow].title!,
+                "video": dataForTableView[checkRow].video!,
+                "voteAverage": dataForTableView[checkRow].voteAverage!,
+                "voteCount": dataForTableView[checkRow].voteCount!,
+                "time": Date.now
+            ]) { err in
+                if let err = err {
+                    self.makeAlert(title: "Error", message: err.localizedDescription)
+                } else {
+                    print("Document added with ID: \(ref!.documentID)")
+                }
+        }
         showToast(message: "Successfully, saved", seconds: 1.2)
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        checkRow = indexPath.row
         let vc = self.router.detailsVC(allData: dataForTableView[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
     }

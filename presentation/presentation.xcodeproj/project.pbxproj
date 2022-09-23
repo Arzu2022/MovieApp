@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		FA0C29A728DB75B400233A49 /* Apploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C29A628DB75B400233A49 /* Apploader.swift */; };
-		FA0C29B428DCF31E00233A49 /* FireBaseFireStoreClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C29B328DCF31E00233A49 /* FireBaseFireStoreClass.swift */; };
+		FA0C29B628DDF90C00233A49 /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C29B528DDF90C00233A49 /* CommentVC.swift */; };
 		FA1C255E28DA5B0E006678BF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1C255D28DA5B0E006678BF /* GoogleService-Info.plist */; };
 		FA1C256128DA600B006678BF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FA1C256028DA600B006678BF /* FirebaseAnalytics */; };
 		FA1C256328DA600B006678BF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FA1C256228DA600B006678BF /* FirebaseAuth */; };
 		FA1C256528DA600B006678BF /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FA1C256428DA600B006678BF /* FirebaseDatabase */; };
 		FA1C256728DA600B006678BF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FA1C256628DA600B006678BF /* FirebaseFirestore */; };
 		FA1C256928DA600B006678BF /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FA1C256828DA600B006678BF /* FirebaseStorage */; };
+		FA68D28828DE00440049D516 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = FA68D28728DE00440049D516 /* Lottie */; };
 		FA8A845928D5CE9F004F4CCF /* CustomDidSelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A845828D5CE9F004F4CCF /* CustomDidSelectTableViewCell.swift */; };
 		FA8A848A28D7B6E0004F4CCF /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A848928D7B6E0004F4CCF /* LogInVC.swift */; };
 		FAB4E02428BAC1A8009C394D /* ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E02328BAC1A8009C394D /* ViewModels.swift */; };
@@ -55,7 +56,7 @@
 
 /* Begin PBXFileReference section */
 		FA0C29A628DB75B400233A49 /* Apploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apploader.swift; sourceTree = "<group>"; };
-		FA0C29B328DCF31E00233A49 /* FireBaseFireStoreClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseFireStoreClass.swift; sourceTree = "<group>"; };
+		FA0C29B528DDF90C00233A49 /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
 		FA1C255D28DA5B0E006678BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA8A845828D5CE9F004F4CCF /* CustomDidSelectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDidSelectTableViewCell.swift; sourceTree = "<group>"; };
 		FA8A848928D7B6E0004F4CCF /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
@@ -93,6 +94,7 @@
 				FA1C256928DA600B006678BF /* FirebaseStorage in Frameworks */,
 				FA1C256328DA600B006678BF /* FirebaseAuth in Frameworks */,
 				FA1C256728DA600B006678BF /* FirebaseFirestore in Frameworks */,
+				FA68D28828DE00440049D516 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,7 +199,7 @@
 				FAB4E07128C8F063009C394D /* ProfileVC.swift */,
 				FAB4E0C328CFEA2A009C394D /* DidSelectVC.swift */,
 				FA8A848928D7B6E0004F4CCF /* LogInVC.swift */,
-				FA0C29B328DCF31E00233A49 /* FireBaseFireStoreClass.swift */,
+				FA0C29B528DDF90C00233A49 /* CommentVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -246,6 +248,7 @@
 				FA1C256428DA600B006678BF /* FirebaseDatabase */,
 				FA1C256628DA600B006678BF /* FirebaseFirestore */,
 				FA1C256828DA600B006678BF /* FirebaseStorage */,
+				FA68D28728DE00440049D516 /* Lottie */,
 			);
 			productName = presentation;
 			productReference = FAE9826128BAB50A00D9C0AC /* presentation.framework */;
@@ -278,6 +281,7 @@
 			packageReferences = (
 				FAE982C328BAB5FC00D9C0AC /* XCRemoteSwiftPackageReference "SnapKit" */,
 				FA1C255F28DA600B006678BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				FA68D28628DE00440049D516 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = FAE9826228BAB50A00D9C0AC /* Products */;
 			projectDirPath = "";
@@ -315,8 +319,8 @@
 				FAB4E08828CB55A4009C394D /* CustomHomeVCTableViewCell.swift in Sources */,
 				FAB4E08628CB5531009C394D /* Extentions.swift in Sources */,
 				FA8A845928D5CE9F004F4CCF /* CustomDidSelectTableViewCell.swift in Sources */,
-				FA0C29B428DCF31E00233A49 /* FireBaseFireStoreClass.swift in Sources */,
 				FAB4E02F28BAC7D9009C394D /* BaseViewController.swift in Sources */,
+				FA0C29B628DDF90C00233A49 /* CommentVC.swift in Sources */,
 				FA8A848A28D7B6E0004F4CCF /* LogInVC.swift in Sources */,
 				FAB4E03128BAC7F8009C394D /* Router.swift in Sources */,
 				FAB4E06C28C8EEDB009C394D /* TabBar.swift in Sources */,
@@ -543,6 +547,14 @@
 				kind = branch;
 			};
 		};
+		FA68D28628DE00440049D516 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		FAE982C328BAB5FC00D9C0AC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -578,6 +590,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FA1C255F28DA600B006678BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		FA68D28728DE00440049D516 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA68D28628DE00440049D516 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		FAE982C428BAB5FC00D9C0AC /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
