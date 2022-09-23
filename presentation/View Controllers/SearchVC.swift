@@ -12,7 +12,9 @@ import FirebaseAuth
 public class SearchVC: BaseViewController<MovieViewModel> {
     var dataForTableView: [MovieEntity.ResultEntity] = []
     let baseImageUrl = "https://image.tmdb.org/t/p/w500"
-    var checkRow = 0
+    //var checkRow = 0
+    let db = Firestore.firestore()
+    let auth = Auth.auth().currentUser
     private lazy var tableView:UITableView = {
         let view = UITableView()
         view.delegate = self
@@ -115,7 +117,22 @@ extension SearchVC:UISearchResultsUpdating,UITableViewDelegate,UITableViewDataSo
     
        }
     @objc func onClickComment(_ sender:UITapGestureRecognizer){
-        print("clicked to comment")
+        dataForComment = []
+        db.collection("comment").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                self.makeAlert(title: "Error", message: err.localizedDescription)
+            } else {
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    if data["id"] as! Int == checkID {
+                        let q = CommentStruct(name: data["name"] as! String, comment: data["comment"] as! String)
+                        dataForComment.append(q)
+                    }
+                }
+            }
+        }
+        let coment = CommentVC()
+        self.present(coment, animated: true)
     }
     @objc func onClickLike(_ sender:UITapGestureRecognizer){
         let db = Firestore.firestore()

@@ -135,7 +135,7 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
     private lazy var username:UILabel = {
         let text = UILabel()
         text.text = auth.currentUser?.displayName
-        text.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        text.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         text.textColor = .black
         return text
     }()
@@ -144,7 +144,7 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
         //image.image = From Storage
         image.image = Asset.icEmpty.image
         image.layer.masksToBounds = true
-        image.layer.cornerRadius = 40
+        image.layer.cornerRadius = 30
         return image
     }()
     private lazy var savedMovie:UILabel = {
@@ -172,6 +172,7 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
         view.backgroundColor = .white
         //getDataFromDB()
         setup()
+       // AppLoader.instance.showLoaderView()
     }
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -196,7 +197,7 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
         profileImage.snp.makeConstraints { make in
             make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(12)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.width.height.equalTo(80)
+            make.width.height.equalTo(60)
         }
         username.snp.makeConstraints { make in
             make.left.equalTo(self.profileImage.safeAreaLayoutGuide.snp.right).offset(6)
@@ -270,8 +271,11 @@ extension ProfileVC:UITableViewDelegate,UITableViewDataSource {
         return cell
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        AppLoader.instance.showLoaderView()
         let vc = self.router.detailsVC(allData: dataForSaved[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
+        AppLoader.instance.hideLoaderView()
+        
     }
     @objc func onClickComment(_ sender:UITapGestureRecognizer){
         print("clicked to comment")
@@ -284,7 +288,7 @@ extension ProfileVC:UITableViewDelegate,UITableViewDataSource {
         
 //        db.collection("save_\(auth?.uid ?? "")").document("").delete() { err in
 //            if let err = err {
-//                self.makeAlert(title: "Error", message: err.localizedDescription)
+//              self.makeAlert(title: "Error", message: err.localizedDescription)
 //            } else {
 //                let db = Firestore.firestore()
 //                auth = Auth.auth().currentUser

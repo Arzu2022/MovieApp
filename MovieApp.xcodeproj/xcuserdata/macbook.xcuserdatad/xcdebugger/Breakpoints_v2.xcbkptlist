@@ -78,8 +78,8 @@
             filePath = "presentation/View Controllers/ProfileVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "tableView(_:numberOfRowsInSection:)"
             landmarkType = "7">
             <Locations>
@@ -126,8 +126,8 @@
             filePath = "presentation/View Controllers/ProfileVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
             <Locations>
@@ -167,47 +167,63 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AA5D4066-1E51-4340-A961-716CCF373ECC"
+            uuid = "D7C4D572-83EA-4C52-8483-F4E5F044612D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "presentation/View Controllers/ProfileVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "getDataFromDB()"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
+            landmarkName = "onClickLike(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A40D2FD7-342A-4AE6-A224-9D03C808F07C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "presentation/View Controllers/CommentVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "onClickSignup()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "AA5D4066-1E51-4340-A961-716CCF373ECC - f3047ff3fba57601"
+                  uuid = "A40D2FD7-342A-4AE6-A224-9D03C808F07C - 29d7004256bb5851"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in presentation.ProfileVC.getDataFromDB() -&gt; ()"
+                  symbolName = "presentation.CommentVC.onClickSignup() -&gt; ()"
                   moduleName = "presentation"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Desktop/MovieApp/presentation/View%20Controllers/ProfileVC.swift"
+                  urlString = "file:///Users/macbook/Desktop/MovieApp/presentation/View%20Controllers/CommentVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "41"
-                  endingLineNumber = "41"
-                  offsetFromSymbolStart = "5286">
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "79">
                </Location>
                <Location
-                  uuid = "AA5D4066-1E51-4340-A961-716CCF373ECC - f3047ff3fba57477"
+                  uuid = "A40D2FD7-342A-4AE6-A224-9D03C808F07C - 29d7004256bb5870"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in presentation.ProfileVC.getDataFromDB() -&gt; ()"
+                  symbolName = "presentation.CommentVC.onClickSignup() -&gt; ()"
                   moduleName = "presentation"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Desktop/MovieApp/presentation/View%20Controllers/ProfileVC.swift"
+                  urlString = "file:///Users/macbook/Desktop/MovieApp/presentation/View%20Controllers/CommentVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
-                  offsetFromSymbolStart = "5286">
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "79">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -215,62 +231,47 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D7C4D572-83EA-4C52-8483-F4E5F044612D"
-            shouldBeEnabled = "Yes"
+            uuid = "69DD8DDF-A45A-4B77-8FF9-49F3A0A72126"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "presentation/View Controllers/ProfileVC.swift"
+            filePath = "presentation/View Controllers/CommentVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
-            landmarkName = "onClickLike(_:)"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "onClickSignup()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "D7C4D572-83EA-4C52-8483-F4E5F044612D - 564dbe33cf4d26f8"
+                  uuid = "69DD8DDF-A45A-4B77-8FF9-49F3A0A72126 - 29d7004256bba79e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "presentation.ProfileVC.onClickLike(__C.UITapGestureRecognizer) -&gt; ()"
+                  symbolName = "presentation.CommentVC.onClickSignup() -&gt; ()"
                   moduleName = "presentation"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Desktop/MovieApp/presentation/View%20Controllers/ProfileVC.swift"
+                  urlString = "file:///Users/macbook/Desktop/MovieApp/presentation/View%20Controllers/CommentVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "282"
-                  endingLineNumber = "282"
-                  offsetFromSymbolStart = "115">
+                  startingLineNumber = "68"
+                  endingLineNumber = "68"
+                  offsetFromSymbolStart = "56">
                </Location>
                <Location
-                  uuid = "D7C4D572-83EA-4C52-8483-F4E5F044612D - 564dbe33cf4d26f8"
+                  uuid = "69DD8DDF-A45A-4B77-8FF9-49F3A0A72126 - 29d7004256bb598f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "presentation.ProfileVC.onClickLike(__C.UITapGestureRecognizer) -&gt; ()"
+                  symbolName = "presentation.CommentVC.onClickSignup() -&gt; ()"
                   moduleName = "presentation"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Desktop/MovieApp/presentation/View%20Controllers/ProfileVC.swift"
+                  urlString = "file:///Users/macbook/Desktop/MovieApp/presentation/View%20Controllers/CommentVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "282"
-                  endingLineNumber = "282"
-                  offsetFromSymbolStart = "259">
-               </Location>
-               <Location
-                  uuid = "D7C4D572-83EA-4C52-8483-F4E5F044612D - 564dbe33cf4d26f8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "presentation.ProfileVC.onClickLike(__C.UITapGestureRecognizer) -&gt; ()"
-                  moduleName = "presentation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Desktop/MovieApp/presentation/View%20Controllers/ProfileVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "282"
-                  endingLineNumber = "282"
-                  offsetFromSymbolStart = "317">
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "419">
                </Location>
             </Locations>
          </BreakpointContent>

@@ -5,7 +5,11 @@ import SnapKit
 import domain
 import FirebaseAuth
 import FirebaseFirestore
+    public var checkRow: Int = 0
+    public var checkID: Int = 0
     public class HomeVC: BaseViewController<MovieViewModel> {
+        let db = Firestore.firestore()
+        let auth = Auth.auth().currentUser
     private var segmentedControl:UISegmentedControl = {
         let view = UISegmentedControl(items: ["General","Top Rated","Kids"])
         view.backgroundColor = .black
@@ -17,7 +21,7 @@ import FirebaseFirestore
     }()
     let baseImageUrl = "https://image.tmdb.org/t/p/w500"
     var dataForTableView: [MovieEntity.ResultEntity] = []
-    var checkRow = 0
+    
     private lazy var tableViewTopMovie: UITableView = {
         let tbView = UITableView()
         tbView.delegate = self
@@ -126,16 +130,31 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource {
         self.present(alert, animated: true)
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        checkID = dataForTableView[indexPath.row].id
         checkRow = indexPath.row
         let vc = self.router.detailsVC(allData: dataForTableView[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
     }
         @objc func onClickComment(_ sender:UITapGestureRecognizer){
+            dataForComment = []
+            db.collection("comment").getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    self.makeAlert(title: "Error", message: err.localizedDescription)
+                } else {
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        if data["id"] as! Int == checkID {
+                            let q = CommentStruct(name: data["name"] as! String, comment: data["comment"] as! String)
+                            dataForComment.append(q)
+                        }
+                    }
+                }
+            }
+            let coment = CommentVC()
+            self.present(coment, animated: true)
         print("clicked to comment")
     }
     @objc func onClickLike(_ sender:UITapGestureRecognizer){
-        let db = Firestore.firestore()
-        let auth = Auth.auth().currentUser
         var ref: DocumentReference? = nil
         ref = db.collection("save_\(auth!.uid)").addDocument(data: [
                 "adult": dataForTableView[checkRow].adult!,
@@ -157,10 +176,10 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource {
                 if let err = err {
                     self.makeAlert(title: "Error", message: err.localizedDescription)
                 } else {
-                    print("Document added with ID: \(ref!.documentID)")
+                    self.showToast(message: "Successfully, saved", seconds: 1.2)
                 }
         }
-        showToast(message: "Successfully, saved", seconds: 1.2)
+        
         
     }
 }
