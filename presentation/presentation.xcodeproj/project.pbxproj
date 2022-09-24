@@ -17,6 +17,7 @@
 		FA1C256928DA600B006678BF /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FA1C256828DA600B006678BF /* FirebaseStorage */; };
 		FA68D28828DE00440049D516 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = FA68D28728DE00440049D516 /* Lottie */; };
 		FA68D28A28DE13ED0049D516 /* CustomCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA68D28928DE13ED0049D516 /* CustomCommentTableViewCell.swift */; };
+		FA68D29728DF507E0049D516 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = FA68D29628DF507E0049D516 /* SDWebImage */; };
 		FA8A845928D5CE9F004F4CCF /* CustomDidSelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A845828D5CE9F004F4CCF /* CustomDidSelectTableViewCell.swift */; };
 		FA8A848A28D7B6E0004F4CCF /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A848928D7B6E0004F4CCF /* LogInVC.swift */; };
 		FAB4E02428BAC1A8009C394D /* ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB4E02328BAC1A8009C394D /* ViewModels.swift */; };
@@ -95,6 +96,7 @@
 				FA1C256128DA600B006678BF /* FirebaseAnalytics in Frameworks */,
 				FA1C256928DA600B006678BF /* FirebaseStorage in Frameworks */,
 				FA1C256328DA600B006678BF /* FirebaseAuth in Frameworks */,
+				FA68D29728DF507E0049D516 /* SDWebImage in Frameworks */,
 				FA1C256728DA600B006678BF /* FirebaseFirestore in Frameworks */,
 				FA68D28828DE00440049D516 /* Lottie in Frameworks */,
 			);
@@ -252,6 +254,7 @@
 				FA1C256628DA600B006678BF /* FirebaseFirestore */,
 				FA1C256828DA600B006678BF /* FirebaseStorage */,
 				FA68D28728DE00440049D516 /* Lottie */,
+				FA68D29628DF507E0049D516 /* SDWebImage */,
 			);
 			productName = presentation;
 			productReference = FAE9826128BAB50A00D9C0AC /* presentation.framework */;
@@ -285,6 +288,7 @@
 				FAE982C328BAB5FC00D9C0AC /* XCRemoteSwiftPackageReference "SnapKit" */,
 				FA1C255F28DA600B006678BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				FA68D28628DE00440049D516 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				FA68D29528DF507D0049D516 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = FAE9826228BAB50A00D9C0AC /* Products */;
 			projectDirPath = "";
@@ -471,7 +475,9 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = presentation/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow Camera";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow Photos";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -502,7 +508,9 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = presentation/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow Camera";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow Photos";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -559,6 +567,14 @@
 				kind = branch;
 			};
 		};
+		FA68D29528DF507D0049D516 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		FAE982C328BAB5FC00D9C0AC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -599,6 +615,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FA68D28628DE00440049D516 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		FA68D29628DF507E0049D516 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA68D29528DF507D0049D516 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
 		};
 		FAE982C428BAB5FC00D9C0AC /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

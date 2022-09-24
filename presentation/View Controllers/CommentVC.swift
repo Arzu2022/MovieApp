@@ -17,6 +17,7 @@ public struct CommentStruct{
 }
 public var dataForComment: [CommentStruct] = []
 public class CommentVC: UIViewController {
+    var authCU = Auth.auth().currentUser
     private lazy var tableView:UITableView = {
         let view = UITableView()
         view.delegate = self
@@ -68,14 +69,10 @@ public class CommentVC: UIViewController {
                     self.makeAlert(title: "Error", message: err.localizedDescription)
                 } else {
                     self.showToast(message: "Posted succesfully", seconds: 1.8)
+                    let t = CommentStruct(name: (auth?.displayName!)!, comment: self.textFiel.text!)
+                    dataForComment.append(t)
                     self.textFiel.text = ""
-                    // tezeden cagirmaq
-                    
-                    
-                    
-                    
-                    
-                    
+                    self.dismiss(animated: true)
                 }
         }
         }
@@ -133,6 +130,13 @@ extension CommentVC:UITableViewDelegate,UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomCommentTableViewCell
         cell.name.text = "\(dataForComment[indexPath.row].name): "
         cell.comment.text = dataForComment[indexPath.row].comment
+        if authCU?.displayName == "Samir" {
+            cell.image.image = Asset.pro1.image
+        }else if authCU?.displayName == "yunka" {
+            cell.image.image = Asset.pro2.image
+        }else {
+            cell.image.image = Asset.icEmpty.image
+        }
         return cell
     }
     func makeAlert(title:String,message:String){

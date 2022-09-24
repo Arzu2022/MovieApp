@@ -9,10 +9,12 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 import domain
-
+import FirebaseStorage
+public var authCurrent = Auth.auth().currentUser
 public class ProfileVC: BaseViewController<MovieViewModel> {
     var auth = Auth.auth()
-    let db = Firestore.firestore()
+    var db = Firestore.firestore()
+    var profile = ""
     var newUsername = "wrap"
     let baseImageUrl = "https://image.tmdb.org/t/p/w500"
     var dataForSaved : [MovieEntity.ResultEntity] = []
@@ -116,11 +118,21 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
             }
         }
         alert.addAction(btn2)
-        ////////////////
         let btn3 = UIAlertAction(title: "Change Image", style: .default){ (action) in
-            //next time
-            
-            
+            let ac = UIAlertController(title: "Select image", message: "Select with", preferredStyle: .actionSheet)
+            let cameraBtn = UIAlertAction(title: "Camera", style: .default){ (_) in
+                self.showImagePicker(selectedSource: .camera)
+                
+            }
+            ac.addAction(cameraBtn)
+            let libraryBtn = UIAlertAction(title: "Library", style: .default){ (_) in
+                self.showImagePicker(selectedSource: .photoLibrary)
+                 
+            }
+            ac.addAction(libraryBtn)
+            let cancelBtn = UIAlertAction(title: "Cancel", style: .cancel)
+            ac.addAction(cancelBtn)
+            self.present(ac, animated: true,completion: nil)
         }
         alert.addAction(btn3)
         let btn4 = UIAlertAction(title: "Cancel", style: .cancel)
@@ -141,7 +153,6 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
     }()
     private lazy var profileImage:UIImageView = {
         let image = UIImageView()
-        //image.image = From Storage
         image.image = Asset.icEmpty.image
         image.layer.masksToBounds = true
         image.layer.cornerRadius = 30
@@ -170,15 +181,15 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        //getDataFromDB()
-        setup()
-       // AppLoader.instance.showLoaderView()
-    }
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        if auth.currentUser?.displayName == "Samir" {
+            profileImage.image = Asset.pro1.image
+        }
+        else if auth.currentUser?.displayName == "yunka" {
+            profileImage.image = Asset.pro2.image
+        }
         dataForSaved = []
         getDataFromDB()
-        //setup()
+        setup()
     }
     func makeAlert(title:String,message:String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -224,7 +235,7 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
         }
     }
 }
-extension ProfileVC:UITableViewDelegate,UITableViewDataSource {
+extension ProfileVC:UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataForSaved.count
     }
@@ -279,24 +290,76 @@ extension ProfileVC:UITableViewDelegate,UITableViewDataSource {
     }
     @objc func onClickComment(_ sender:UITapGestureRecognizer){
         print("clicked to comment")
+        
+    
+        
 }
-    @objc func onClickLike(_ sender:UITapGestureRecognizer){
+    func showImagePicker(selectedSource:UIImagePickerController.SourceType){
+        guard UIImagePickerController.isSourceTypeAvailable(selectedSource) else {
+            self.makeAlert(title: "Error", message: "Source is not avaible")
+            return
+        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = selectedSource
+        imagePicker.delegate = self
+        imagePicker.isEditing = false
+        self.present(imagePicker, animated: true)
+    }
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            profileImage.image = selectedImage
+            uploadPhotoToStroage(image: profileImage.image!)
+            self.dismiss(animated: true)
+        } else {
+            self.makeAlert(title: "Error", message: "Some problem occured, try again")
+        }
+    }
+    public func downloadImage(email:String) -> UIImage{
+        print("images/\(email).jpg")
+        let storage = Storage.storage().reference().child("images").child(email)
+        var imageV = Asset.icEmpty.image
+        storage.getData(maxSize:12345673){ data, error in
+                if error != nil {
+                    print(error?.localizedDescription ?? "errror")
+                }else{
+                    imageV = UIImage(data: data!)!
+                    print("data => \(data!)")
+                }
+            }
+        return imageV
+    }
+    public func uploadPhotoToStroage(image:UIImage){
+        let storage = Storage.storage()
+        let ref = storage.reference()
+        let imageData = image.jpegData(compressionQuality: 0.8)
+        guard image != nil else {
+            self.makeAlert(title: "Error", message: "Image in not selected")
+            return
+        }
+        let fileRef = ref.child("images/\(auth.currentUser?.email ?? "azik").jpg")
+        let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
+            if metadata != nil && error == nil {
+                fileRef.downloadURL { url, error in
+                                        if error == nil {
+                                            let imageUrl = url?.absoluteString
+                                            let firestoreDB = Firestore.firestore()
+                                            let firestoreUserPhoto =
+                                            ["email" : "\(self.auth.currentUser?.email ?? "")profile", "image" : imageUrl ?? "", "date" : Date()] as [String : Any]
+                                            firestoreDB.collection("UserProfile").addDocument(data: firestoreUserPhoto) { error in
+                                                if let error = error {
+                                                    self.makeAlert(title: "Error", message: error.localizedDescription)
+                                                }else{
+                                                    print("add sucsesly")
+                                                }
+                                            }
+                self.showToast(message: "Successfully, saved", seconds: 1.2)
+            }
+        }
+            }}}
+    
+    @objc func onClickLike(_ sender:UITapGestureRecognizer) {
         var db = Firestore.firestore()
         var auth = Auth.auth().currentUser
-        print("collectionID = \(db.collection("save_\(auth?.uid ?? "")").collectionID)")
-//        self.db.collection("SaleOrders").whereField("orderid", isEqualTo: "ji20190205091948").getDocuments
-        
-//        db.collection("save_\(auth?.uid ?? "")").document("").delete() { err in
-//            if let err = err {
-//              self.makeAlert(title: "Error", message: err.localizedDescription)
-//            } else {
-//                let db = Firestore.firestore()
-//                auth = Auth.auth().currentUser
-//                self.getDataFromDB()
-//                self.showToast(message: "Document successfully removed!", seconds: 1.2)
-//
-//            }
-//        }
     }
+}
 
-    }

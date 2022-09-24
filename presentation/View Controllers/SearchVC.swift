@@ -12,7 +12,6 @@ import FirebaseAuth
 public class SearchVC: BaseViewController<MovieViewModel> {
     var dataForTableView: [MovieEntity.ResultEntity] = []
     let baseImageUrl = "https://image.tmdb.org/t/p/w500"
-    //var checkRow = 0
     let db = Firestore.firestore()
     let auth = Auth.auth().currentUser
     private lazy var tableView:UITableView = {
@@ -158,10 +157,9 @@ extension SearchVC:UISearchResultsUpdating,UITableViewDelegate,UITableViewDataSo
                 if let err = err {
                     self.makeAlert(title: "Error", message: err.localizedDescription)
                 } else {
-                    print("Document added with ID: \(ref!.documentID)")
+                    self.showToast(message: "Successfully, saved", seconds: 1.2)
                 }
         }
-        showToast(message: "Successfully, saved", seconds: 1.2)
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         checkRow = indexPath.row
