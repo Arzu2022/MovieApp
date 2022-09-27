@@ -7,6 +7,7 @@ import FirebaseAuth
 import FirebaseFirestore
     public var checkRow: Int = 0
     public var checkID: Int = 0
+    public var checkSavedList: Bool = false
     public class HomeVC: BaseViewController<MovieViewModel> {
         var db = Firestore.firestore()
         var auth = Auth.auth().currentUser
@@ -193,6 +194,7 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource {
                 if let err = err {
                     self.makeAlert(title: "Error", message: err.localizedDescription)
                 } else {
+                    checkSavedList = true
                     self.showToast(message: "Successfully, saved", seconds: 1.2)
                 }
         }

@@ -196,10 +196,13 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateAllData()
-//        dataForSaved = []
-//        getDataFromDB()
+        if checkSavedList == true {
+            checkSavedList = false
+            dataForSaved = []
+            getDataFromDB()
+            self.tableForLiked.reloadData()
+        }
         self.tableForLiked.reloadData()
-//        setup()
     }
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
