@@ -11,13 +11,13 @@ import FirebaseFirestore
 import domain
 import FirebaseStorage
 public var authCurrent = Auth.auth().currentUser
+public var dataForSaved : [MovieEntity.ResultEntity] = []
 public class ProfileVC: BaseViewController<MovieViewModel> {
     var auth = Auth.auth()
     var db = Firestore.firestore()
-    var profile = ""
+    var checkRowForSaved = 0
     var newUsername = "wrap"
     let baseImageUrl = "https://image.tmdb.org/t/p/w500"
-    var dataForSaved : [MovieEntity.ResultEntity] = []
     func getDataFromDB(){
         db.collection("save_\(auth.currentUser?.uid ?? "save_WAJAxzk8eEZD22FYdFkohronlRR6")").getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -26,16 +26,20 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
                 for document in querySnapshot!.documents {
                     let data = document.data()
                     let q = MovieEntity.ResultEntity(adult: data["adult"] as? Bool ?? true, backdropPath: data["backdropPath"] as? String ?? "", genreIDS: data["genreIDS"] as? [Int] ?? [], id: data["id"] as! Int, originalLanguage: data["originalLanguage"] as? String ?? "", originalTitle: data["originalTitle"] as? String ?? "", overview: data["overview"] as? String ?? "", popularity: data["popularity"] as? Double ?? 0.0, posterPath: data["posterPath"] as? String ?? "", video: data["video"] as? Bool ?? false, releaseDate: data["releaseDate"] as? String ?? "", title: data["title"] as? String ?? "", voteAverage: data["voteAverage"] as? Double ?? 0.0, voteCount: (data["voteCount"] as? Int ?? 0))
-                    self.dataForSaved.append(q)
+                    dataForSaved.append(q)
                     self.tableForLiked.reloadData()
                 }
             }
         }
     }
     private func moveProfileTologin(){
-        let loginvc:UIViewController = self.router.loginVC()
-        let tabBar = self.router.tabbarController()
-        tabBar.navigationController?.viewControllers = [loginvc]
+        let yourVc = LogInVC(vm: vm, router: router)
+        yourVc.modalTransitionStyle = .crossDissolve
+        yourVc.modalPresentationStyle = .overFullScreen
+        self.present(yourVc, animated: true, completion: nil)
+//        let loginvc:UIViewController = self.router.loginVC()
+//        let tabBar = self.router.tabbarController()
+//        tabBar.navigationController?.viewControllers = [loginvc]
     }
     private lazy var settingBtn:UIButton = {
         let btn = UIButton()
@@ -153,7 +157,6 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
     }()
     private lazy var profileImage:UIImageView = {
         let image = UIImageView()
-        image.image = Asset.icEmpty.image
         image.layer.masksToBounds = true
         image.layer.cornerRadius = 30
         return image
@@ -178,18 +181,28 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    func updateAllData(){
+        self.auth = Auth.auth()
+        self.db = Firestore.firestore()
+    }
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        if auth.currentUser?.displayName == "Samir" {
-            profileImage.image = Asset.pro1.image
-        }
-        else if auth.currentUser?.displayName == "yunka" {
-            profileImage.image = Asset.pro2.image
-        }
+        updateAllData()
         dataForSaved = []
         getDataFromDB()
         setup()
+    }
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateAllData()
+//        dataForSaved = []
+//        getDataFromDB()
+        self.tableForLiked.reloadData()
+//        setup()
+    }
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
     func makeAlert(title:String,message:String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -205,6 +218,9 @@ public class ProfileVC: BaseViewController<MovieViewModel> {
         self.view.addSubview(savedMovie)
         self.view.addSubview(editProfile)
         self.view.addSubview(tableForLiked)
+        getImageFromFB { imageP in
+            self.profileImage.image = imageP
+        }
         profileImage.snp.makeConstraints { make in
             make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(12)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
@@ -262,9 +278,9 @@ extension ProfileVC:UITableViewDelegate,UITableViewDataSource,UIImagePickerContr
                 return image
             }()
         cell.backgroundColor = .systemBackground
-                let url = "\(self.baseImageUrl)\((self.dataForSaved[indexPath.row].backdropPath) ?? "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")"
+                let url = "\(self.baseImageUrl)\((dataForSaved[indexPath.row].backdropPath) ?? "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg")"
                 cell.backdropPath.imageFromServerURL(url, placeHolder:nil)
-                cell.title.text = self.dataForSaved[indexPath.row].title
+                cell.title.text = dataForSaved[indexPath.row].title
         cell.addSubview(saveIcon)
         cell.addSubview(commentIcon)
         
@@ -282,14 +298,28 @@ extension ProfileVC:UITableViewDelegate,UITableViewDataSource,UIImagePickerContr
         return cell
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        AppLoader.instance.showLoaderView()
+        checkRowForSaved = indexPath.row
         let vc = self.router.detailsVC(allData: dataForSaved[indexPath.row])
-        navigationController?.pushViewController(vc, animated: true)
-        AppLoader.instance.hideLoaderView()
-        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     @objc func onClickComment(_ sender:UITapGestureRecognizer){
-        print("clicked to comment")
+        db = Firestore.firestore()
+        dataForComment = []
+        db.collection("comment").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                self.makeAlert(title: "Error", message: err.localizedDescription)
+            } else {
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    if data["id"] as! Int == checkID {
+                        let q = CommentStruct(name: data["name"] as! String, comment: data["comment"] as! String, imageURL: data["imageurl"] as! String)
+                        dataForComment.append(q)
+                    }
+                }
+            }
+        }
+        let coment = CommentVC()
+        self.present(coment, animated: true)
         
     
         
@@ -314,20 +344,7 @@ extension ProfileVC:UITableViewDelegate,UITableViewDataSource,UIImagePickerContr
             self.makeAlert(title: "Error", message: "Some problem occured, try again")
         }
     }
-    public func downloadImage(email:String) -> UIImage{
-        print("images/\(email).jpg")
-        let storage = Storage.storage().reference().child("images").child(email)
-        var imageV = Asset.icEmpty.image
-        storage.getData(maxSize:12345673){ data, error in
-                if error != nil {
-                    print(error?.localizedDescription ?? "errror")
-                }else{
-                    imageV = UIImage(data: data!)!
-                    print("data => \(data!)")
-                }
-            }
-        return imageV
-    }
+
     public func uploadPhotoToStroage(image:UIImage){
         let storage = Storage.storage()
         let ref = storage.reference()
@@ -336,30 +353,45 @@ extension ProfileVC:UITableViewDelegate,UITableViewDataSource,UIImagePickerContr
             self.makeAlert(title: "Error", message: "Image in not selected")
             return
         }
-        let fileRef = ref.child("images/\(auth.currentUser?.email ?? "azik").jpg")
-        let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
+        let fileRef = ref.child("images/\(auth.currentUser?.email ?? "empty").jpg")
+        let uploadTask = fileRef.putData(imageData!, metadata: nil)
+        { metadata, error in
             if metadata != nil && error == nil {
                 fileRef.downloadURL { url, error in
-                                        if error == nil {
-                                            let imageUrl = url?.absoluteString
-                                            let firestoreDB = Firestore.firestore()
-                                            let firestoreUserPhoto =
-                                            ["email" : "\(self.auth.currentUser?.email ?? "")profile", "image" : imageUrl ?? "", "date" : Date()] as [String : Any]
-                                            firestoreDB.collection("UserProfile").addDocument(data: firestoreUserPhoto) { error in
-                                                if let error = error {
-                                                    self.makeAlert(title: "Error", message: error.localizedDescription)
-                                                }else{
-                                                    print("add sucsesly")
-                                                }
-                                            }
+                        if error == nil {
+                            let imageUrl = url?.absoluteString
+                            let firestoreDB = Firestore.firestore()
+                            firestoreDB.collection("UserProfileImages").document("\((self.auth.currentUser?.email)!)").setData(["imageUrl" : imageUrl!,"time":Date()]) { [weak self] err in
+                                guard let self = self else { return }
+                                if let err = err {
+                                    self.makeAlert(title: "Error", message: err.localizedDescription)
+                                    }
+                                    else {
+                                        self.showToast(message: "Posted succesfully", seconds: 1.8)
+                                        self.dismiss(animated: true)
+                                    }
+                            }
                 self.showToast(message: "Successfully, saved", seconds: 1.2)
             }
         }
-            }}}
+            }
+            
+        }
+    }
     
     @objc func onClickLike(_ sender:UITapGestureRecognizer) {
-        var db = Firestore.firestore()
-        var auth = Auth.auth().currentUser
+        db.collection("save_\(auth.currentUser?.uid ?? "azik")").document("\(dataForSaved[checkRowForSaved].id)").delete() { err in
+            if let err = err {
+                self.makeAlert(title: "Error", message: err.localizedDescription)
+            } else {
+                self.db = Firestore.firestore()
+                self.auth = Auth.auth()
+                dataForSaved = []
+                self.getDataFromDB()
+                self.tableForLiked.reloadData()
+                self.showToast(message: "Movie removed from Saved List", seconds: 1.2)
+            }
+        }
     }
 }
 

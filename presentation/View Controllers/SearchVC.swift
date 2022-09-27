@@ -18,9 +18,7 @@ public class SearchVC: BaseViewController<MovieViewModel> {
         let view = UITableView()
         view.delegate = self
         view.dataSource = self
-        //view.backgroundColor = .red
         view.register(CustomHomeVCTableViewCell.self, forCellReuseIdentifier: "cell")
-      //tbView.separatorStyle = .none
         return view
     }()
     private var searchBar: UISearchController = {
@@ -30,6 +28,8 @@ public class SearchVC: BaseViewController<MovieViewModel> {
            return sb
        }()
     override init(vm: MovieViewModel, router: RouterProtocol) {
+        checkRow = 0
+        dataForComment = []
         super.init(vm: vm, router: router)
     }
     
@@ -38,7 +38,8 @@ public class SearchVC: BaseViewController<MovieViewModel> {
     }
     public override func viewDidLoad() {
         super.viewDidLoad()
-        //view.backgroundColor = .yellow
+        checkRow = 0
+        dataForComment = []
         setup()
     }
     private func setup(){
@@ -124,7 +125,7 @@ extension SearchVC:UISearchResultsUpdating,UITableViewDelegate,UITableViewDataSo
                 for document in querySnapshot!.documents {
                     let data = document.data()
                     if data["id"] as! Int == checkID {
-                        let q = CommentStruct(name: data["name"] as! String, comment: data["comment"] as! String)
+                        let q = CommentStruct(name: data["name"] as! String, comment: data["comment"] as! String, imageURL: data["imageurl"] as! String)
                         dataForComment.append(q)
                     }
                 }

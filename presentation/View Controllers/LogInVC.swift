@@ -170,9 +170,13 @@ public class LogInVC:BaseViewController<MovieViewModel> {
                         else {
                             self.auth.currentUser?.reload(completion: { error in
                                 if error == nil {
-                                    if ((self.auth.currentUser?.isEmailVerified) != nil) {
-                                        let tabbar:UITabBarController = self.router.tabbarController()
-                                        self.navigationController?.pushViewController(tabbar, animated: true)
+                                    if (self.auth.currentUser?.isEmailVerified) == true {
+                                        let yourVc = TabBar(vm: self.vm, router: self.router)
+                                        yourVc.modalTransitionStyle = .crossDissolve
+                                        yourVc.modalPresentationStyle = .overFullScreen
+                                        self.present(yourVc, animated: true, completion: nil)
+//                                        let tabbar:UITabBarController = self.router.tabbarController()
+//                                        self.navigationController?.pushViewController(tabbar, animated: true)
                                     } else {
                                         self.showToast(message: "Please, verify email.", seconds: 1.5)
                                     }
@@ -201,8 +205,15 @@ public class LogInVC:BaseViewController<MovieViewModel> {
                 strongSelf.auth.currentUser?.reload(completion: { error in
                     if error == nil {
                         if ((strongSelf.auth.currentUser?.isEmailVerified) != nil) {
-                            let tabbar:UITabBarController = strongSelf.router.tabbarController()
-                                   strongSelf.navigationController?.pushViewController(tabbar, animated: true)
+                            let yourVc = TabBar(vm: strongSelf.vm, router: strongSelf.router)
+                            yourVc.modalTransitionStyle = .crossDissolve
+                            yourVc.modalPresentationStyle = .overFullScreen
+                            strongSelf.present(yourVc, animated: true, completion: nil)
+                            
+                            
+//                            let tabbar:UITabBarController = strongSelf.router.tabbarController()
+//                                   strongSelf.navigationController?.pushViewController(tabbar, animated: true)
+//
                                 }
                             }
                             else {

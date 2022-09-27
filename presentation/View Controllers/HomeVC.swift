@@ -8,8 +8,8 @@ import FirebaseFirestore
     public var checkRow: Int = 0
     public var checkID: Int = 0
     public class HomeVC: BaseViewController<MovieViewModel> {
-        let db = Firestore.firestore()
-        let auth = Auth.auth().currentUser
+        var db = Firestore.firestore()
+        var auth = Auth.auth().currentUser
     private var segmentedControl:UISegmentedControl = {
         let view = UISegmentedControl(items: ["General","Top Rated","Kids"])
         view.backgroundColor = .black
@@ -29,8 +29,16 @@ import FirebaseFirestore
         tbView.register(CustomHomeVCTableViewCell.self, forCellReuseIdentifier: "cell")
         return tbView
     }()
-    
-    public override func viewDidLoad() {
+        override init(vm: MovieViewModel, router: RouterProtocol) {
+            checkRow = 0
+            dataForComment = []
+            super.init(vm: vm, router: router)
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(tableViewTopMovie)
         setup()
@@ -53,7 +61,9 @@ import FirebaseFirestore
         }
     }
         private func getData(typeOf:String) {
+            AppLoader.instance.showLoaderView()
         self.vm.getMovie(typeOfMovie: typeOf).then({ m in
+            AppLoader.instance.hideLoaderView()
             self.dataForTableView = m.results ?? []
                 self.tableViewTopMovie.reloadData()
         }).catch({ err in
@@ -64,14 +74,20 @@ import FirebaseFirestore
     @objc func handleChanged(){
         if segmentedControl.selectedSegmentIndex == 0 {
             getData(typeOf: "general")
+            checkRow = 0
+            dataForComment = []
             tableViewTopMovie.scrollToRow(at: NSIndexPath(row: 0, section: 0) as IndexPath, at: .top, animated: true)
         }
         else if segmentedControl.selectedSegmentIndex == 1 {
             getData(typeOf: "top_rated")
+            checkRow = 0
+            dataForComment = []
             tableViewTopMovie.scrollToRow(at: NSIndexPath(row: 0, section: 0) as IndexPath, at: .top, animated: true)
         }
         else if segmentedControl.selectedSegmentIndex == 2 {
             getData(typeOf: "kids")
+            checkRow = 0
+            dataForComment = []
             tableViewTopMovie.scrollToRow(at: NSIndexPath(row: 0, section: 0) as IndexPath, at: .top, animated: true)
         }
     }
@@ -121,7 +137,6 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource {
             make.height.width.equalTo(25)
     }
         return cell
-    
        }
     func makeAlert(title:String,message:String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -136,6 +151,8 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource {
         navigationController?.pushViewController(vc, animated: true)
     }
         @objc func onClickComment(_ sender:UITapGestureRecognizer){
+            db = Firestore.firestore()
+            auth = Auth.auth().currentUser
             dataForComment = []
             db.collection("comment").getDocuments() { (querySnapshot, err) in
                 if let err = err {
@@ -144,7 +161,7 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource {
                     for document in querySnapshot!.documents {
                         let data = document.data()
                         if data["id"] as! Int == checkID {
-                            let q = CommentStruct(name: data["name"] as! String, comment: data["comment"] as! String)
+                            let q = CommentStruct(name: data["name"] as! String, comment: data["comment"] as! String, imageURL: data["imageurl"] as! String)
                             dataForComment.append(q)
                         }
                     }
@@ -152,27 +169,27 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource {
             }
             let coment = CommentVC()
             self.present(coment, animated: true)
-        print("clicked to comment")
     }
     @objc func onClickLike(_ sender:UITapGestureRecognizer){
-        var ref: DocumentReference? = nil
-        ref = db.collection("save_\(auth!.uid)").addDocument(data: [
-                "adult": dataForTableView[checkRow].adult!,
-                "backdropPath": dataForTableView[checkRow].backdropPath!,
-                "genreIDS": dataForTableView[checkRow].genreIDS!,
-                "id": dataForTableView[checkRow].id,
-                "originalLanguage": dataForTableView[checkRow].originalLanguage!,
-                "originalTitle": dataForTableView[checkRow].originalTitle!,
-                "overview": dataForTableView[checkRow].overview!,
-                "popularity": dataForTableView[checkRow].popularity!,
-                "posterPath": dataForTableView[checkRow].posterPath!,
-                "releaseDate": dataForTableView[checkRow].releaseDate!,
-                "title": dataForTableView[checkRow].title!,
-                "video": dataForTableView[checkRow].video!,
-                "voteAverage": dataForTableView[checkRow].voteAverage!,
-                "voteCount": dataForTableView[checkRow].voteCount!,
-                "time": Date.now
-            ]) { err in
+        db = Firestore.firestore()
+        auth = Auth.auth().currentUser
+        db.collection("save_\(auth!.uid)").document("\(dataForTableView[checkRow].id )").setData([
+            "adult": dataForTableView[checkRow].adult!,
+            "backdropPath": dataForTableView[checkRow].backdropPath!,
+            "genreIDS": dataForTableView[checkRow].genreIDS!,
+            "id": dataForTableView[checkRow].id,
+            "originalLanguage": dataForTableView[checkRow].originalLanguage!,
+            "originalTitle": dataForTableView[checkRow].originalTitle!,
+            "overview": dataForTableView[checkRow].overview!,
+            "popularity": dataForTableView[checkRow].popularity!,
+            "posterPath": dataForTableView[checkRow].posterPath!,
+            "releaseDate": dataForTableView[checkRow].releaseDate!,
+            "title": dataForTableView[checkRow].title!,
+            "video": dataForTableView[checkRow].video!,
+            "voteAverage": dataForTableView[checkRow].voteAverage!,
+            "voteCount": dataForTableView[checkRow].voteCount!,
+            "time": Date.now
+        ]) { err in
                 if let err = err {
                     self.makeAlert(title: "Error", message: err.localizedDescription)
                 } else {

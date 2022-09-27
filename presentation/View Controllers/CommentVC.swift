@@ -7,17 +7,43 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
 public struct CommentStruct{
     var name:String
     var comment:String
-    public init(name:String,comment:String) {
+    var imageURL:String
+    public init(name:String,comment:String,imageURL:String) {
         self.name = name
         self.comment = comment
+        self.imageURL = imageURL
+    }
+}
+public func getImageFromFB(completion:@escaping (UIImage)->()) {
+    let db = Firestore.firestore()
+    let auth = Auth.auth().currentUser
+    let imageV = UIImageView()
+    db.collection("UserProfileImages").document("\((auth?.email) ?? "empty")").getDocument { (query, error) in
+        if let error = error {
+            print("error: \(error)")
+        } else {
+            let data = query?.data()
+            if let t = data?["imageUrl"] as? String {
+                do {
+                    let d = try Data(contentsOf: URL(string:t)!)
+                        imageV.image = UIImage(data: d)
+                        print(imageV.image)
+                } catch {
+                    print(error)
+                }
+            }
+            completion(imageV.image ?? Asset.icEmpty.image)
+        }
     }
 }
 public var dataForComment: [CommentStruct] = []
 public class CommentVC: UIViewController {
-    var authCU = Auth.auth().currentUser
+    var db = Firestore.firestore()
+    var auth = Auth.auth().currentUser
     private lazy var tableView:UITableView = {
         let view = UITableView()
         view.delegate = self
@@ -50,31 +76,48 @@ public class CommentVC: UIViewController {
         text.addTarget(self, action: #selector(onClickSignup), for: .touchUpInside)
         return text
     }()
+    func getURLofImage(completion:@escaping (String)->()){
+        self.auth = Auth.auth().currentUser
+        var imageUrl = ""
+        let storage = Storage.storage()
+        let refStorage = storage.reference()
+        let fileRef = refStorage.child("images/\(auth?.email ?? "empty").jpg") ?? refStorage.child("images/empty.jpg")
+           fileRef.downloadURL { url, error in
+                   if error == nil {
+                       imageUrl = url!.absoluteString
+                       completion(imageUrl)
+                   }
+           }
+    }
     @objc func onClickSignup() {
         if textFiel.text?.isEmpty == true{
             self.showToast(message: "Please, add comment before post", seconds: 2.0)
         }
         else {
-        var db = Firestore.firestore()
-        var auth = Auth.auth().currentUser
-        var ref: DocumentReference? = nil
-        print(checkRow)
-        ref = db.collection("comment").addDocument(data: [
-            "id": checkID,
-            "name": auth?.displayName ?? "Emil",
-            "comment": textFiel.text!,
-                "time": Date.now
-            ]) { err in
-                if let err = err {
-                    self.makeAlert(title: "Error", message: err.localizedDescription)
-                } else {
-                    self.showToast(message: "Posted succesfully", seconds: 1.8)
-                    let t = CommentStruct(name: (auth?.displayName!)!, comment: self.textFiel.text!)
-                    dataForComment.append(t)
-                    self.textFiel.text = ""
-                    self.dismiss(animated: true)
-                }
-        }
+         db = Firestore.firestore()
+         auth = Auth.auth().currentUser
+         var ref: DocumentReference? = nil
+            getURLofImage { url in
+                ref = self.db.collection("comment").addDocument(data: [
+                     "id" : checkID,
+                     "name": self.auth?.displayName ?? "auth is not exist",
+                     "comment": self.textFiel.text!,
+                     "imageurl": url,
+                     "time": Date.now
+                 ]) { [weak self] err in
+                     guard let self = self else { return }
+                     if let err = err {
+                         self.makeAlert(title: "Error", message: err.localizedDescription)
+                     }
+                     else {
+                         self.showToast(message: "Posted succesfully", seconds: 1.8)
+                             let t = CommentStruct(name: (self.auth?.displayName!)!, comment: self.textFiel.text!, imageURL: url)
+                             dataForComment.append(t)
+                             self.textFiel.text = ""
+                             self.dismiss(animated: true)
+                     }
+                 }
+            }
         }
     }
     
@@ -95,6 +138,8 @@ public class CommentVC: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        dataForComment = []
+        checkRow = 0
         setup()
     }
     private func setup(){
@@ -128,17 +173,17 @@ extension CommentVC:UITableViewDelegate,UITableViewDataSource {
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomCommentTableViewCell
-        cell.name.text = "\(dataForComment[indexPath.row].name): "
-        cell.comment.text = dataForComment[indexPath.row].comment
-        if authCU?.displayName == "Samir" {
-            cell.image.image = Asset.pro1.image
-        }else if authCU?.displayName == "yunka" {
-            cell.image.image = Asset.pro2.image
-        }else {
-            cell.image.image = Asset.icEmpty.image
+        
+        do {
+            let data = try Data(contentsOf: URL(string: dataForComment[indexPath.row].imageURL)!)
+            cell.imageP.image = UIImage(data: data)
+            cell.name.text = dataForComment[indexPath.row].name
+            cell.comment.text = dataForComment[indexPath.row].comment
+        } catch {
+            self.makeAlert(title: "Error", message: error.localizedDescription)
         }
         return cell
-    }
+        }
     func makeAlert(title:String,message:String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let btn = UIAlertAction(title: "OK", style: .default)
@@ -146,3 +191,4 @@ extension CommentVC:UITableViewDelegate,UITableViewDataSource {
         self.present(alert, animated: true)
     }
 }
+

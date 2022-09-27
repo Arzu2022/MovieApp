@@ -22,7 +22,7 @@ class CustomCommentTableViewCell:UITableViewCell {
         text.font = UIFont(font: FontFamily.PTSans.regular, size: 16)
         return text
     }()
-    lazy var image: UIImageView = {
+    lazy var imageP: UIImageView = {
         let icon = UIImageView()
         icon.layer.masksToBounds = true
         icon.layer.cornerRadius = 10
@@ -39,15 +39,15 @@ class CustomCommentTableViewCell:UITableViewCell {
     func setupUI() {
         contentView.addSubview(name)
         contentView.addSubview(comment)
-        contentView.addSubview(image)
-        image.snp.makeConstraints { make in
+        contentView.addSubview(imageP)
+        imageP.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(12)
             make.top.equalToSuperview().offset(5)
             make.width.height.equalTo(20)
             make.bottom.equalToSuperview().offset(-5)
         }
         name.snp.makeConstraints { make in
-            make.left.equalTo(image.snp.right).offset(2)
+            make.left.equalTo(imageP.snp.right).offset(2)
             make.top.equalToSuperview().offset(5)
             make.bottom.equalToSuperview().offset(-5)
         }

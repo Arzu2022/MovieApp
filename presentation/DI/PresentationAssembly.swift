@@ -20,7 +20,7 @@ public class PresentationAssembly:Assembly {
            TabBar(vm: r.resolve(MovieViewModel.self)!,
                   router: r.resolve(RouterProtocol.self)!
            )
-       }.inObjectScope(.container)
+       }
        
        container.register(RouterProtocol.self) { r in
            Router(resolver: r)

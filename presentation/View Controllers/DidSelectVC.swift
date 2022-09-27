@@ -41,8 +41,10 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = allData.title
+        AppLoader.instance.showLoaderView()
         self.vm.getTrailer(id: allData.id)
             .then({ tr in
+                AppLoader.instance.hideLoaderView()
                 if let key = tr.results.first?.key {
                     self.urlTrailer = URL(string: "https://www.youtube.com/watch?v=\(key)")!
                     self.keyForYoutube = key
@@ -431,28 +433,28 @@ public class DidSelectVC: BaseViewController<TrailerViewModel> {
         return view
     }
 }
-extension DidSelectVC : UITableViewDelegate, UITableViewDataSource {
-    
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomDidSelectTableViewCell
-        let label = UILabel()
-        cell.addSubview(label)
-        let name = ["azik","yunka"]
-        let surname = ["Heydarov","Azizli"]
-        let comment = ["That is so good","perfect!"]
-        let time = ["00:17 AM","03:13 AM"]
-        cell.backgroundColor = .systemBackground
-        label.text = name[indexPath.row]
-        cell.name = label
-        label.text = surname[indexPath.row]
-        cell.surname = label
-        label.text = comment[indexPath.row]
-        cell.comment = label
-        label.text = time[indexPath.row]
-        cell.time = label
-        return cell
-    }
-}
+//extension DidSelectVC : UITableViewDelegate, UITableViewDataSource {
+//
+//    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return 2
+//    }
+//    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomDidSelectTableViewCell
+//        let label = UILabel()
+//        cell.addSubview(label)
+//        let name = ["azik","yunka"]
+//        let surname = ["Heydarov","Azizli"]
+//        let comment = ["That is so good","perfect!"]
+//        let time = ["00:17 AM","03:13 AM"]
+//        cell.backgroundColor = .systemBackground
+//        label.text = name[indexPath.row]
+//        cell.name = label
+//        label.text = surname[indexPath.row]
+//        cell.surname = label
+//        label.text = comment[indexPath.row]
+//        cell.comment = label
+//        label.text = time[indexPath.row]
+//        cell.time = label
+//        return cell
+//    }
+//}
